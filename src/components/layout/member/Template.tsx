@@ -14,21 +14,10 @@ export const Template = (props: TemplateProps) => {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50 ">
-      {/* HEADER */}
-      {/* <NavigationHeader
-        showLogo={true}
-      /> */}
       <StickyTopBar />
-
-      {/* BREADCRUMBS */}
-      {/* <Breadcrumbs /> */}
-
-      {/* CONTENT */}
-      <main className="flex-1 overflow-auto px-4 sm:px-8 p-4 md:p-6">
+      <main className="p-6">
         {props.content}
       </main>
-
-      {/* SIDE NAVIGATION */}
       <SideNavigation
         isOpen={isSideNavOpen}
         onClose={() => setIsSideNavOpen(false)}

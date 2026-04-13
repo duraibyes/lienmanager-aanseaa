@@ -101,7 +101,7 @@ export default function ProjectDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50/70 font-sans antialiased">
-      <div className="max-w-7xl mx-auto py-4 px-2">
+      <div className="px-2 sm:px-6">
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
           <div className="flex-">
@@ -161,7 +161,7 @@ export default function ProjectDashboard() {
               sx={{
                 border: "none",
                 "& .MuiDataGrid-columnHeader": {
-                  backgroundColor: "#0075be", // slate-100
+                  backgroundColor: "#0075be",
                 },
                 "& .MuiDataGrid-columnHeaderTitle": {
                   fontWeight: 600,

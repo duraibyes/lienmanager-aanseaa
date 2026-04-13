@@ -32,10 +32,9 @@ const MemberProfile = () => {
   }
 
   return (
-    <div className="p-4 pb-20 mx-auto max-w-(--breakpoint-2xl) md:p-6 md:pb-24">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-      </div>
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+    <div className="px-2 sm:px-6">
+
+      <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] ">
 
         <div className="space-y-6">
           <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -56,7 +55,6 @@ const MemberProfile = () => {
                   )}
                 </div>
 
-                {/* Name + Company */}
                 <div>
                   {profile?.user?.name && (
                     <h4 className="mb-1 text-lg font-semibold text-gray-800 dark:text-white/90">

@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2";
+import { Eye } from "lucide-react";
+
 import { DBProject } from "../../../types/project"
 import { useDeleteWizardDraftMutation } from "../../../features/project/projectDataApi";
 import DeleteIconButton from "../../Button/DeleteIconButton";
 import EditIconButton from "../../Button/EditIconButton";
+import { handleViewProject } from "../../../utils/navigation";
 
 interface ActionColumnProps {
     data: DBProject;
@@ -58,13 +61,13 @@ const ActionColumn = ({ data }: ActionColumnProps) => {
 
     return (
         <div className="text-center">
-            {/* <button
+            <button
                 className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
                 title="View"
                 onClick={() => handleViewProject(navigate, data.id)}
             >
-                <FolderOpen className="w-4 h-4" />
-            </button> */}
+                <Eye className="w-4 h-4" />
+            </button>
 
             <EditIconButton
                 onClick={() => navigate(`/project/create/${data.id}`)}

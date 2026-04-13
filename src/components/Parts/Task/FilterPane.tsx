@@ -43,7 +43,7 @@ const FilterPane = ({
     <div className="flex flex-col gap-2 mb-6">
       {/* ── Main Bar ── */}
       <div className="flex items-center gap-2 flex-wrap bg-white rounded-2xl border border-slate-100 shadow-sm px-4 py-2.5">
-        
+
         {/* Search Input */}
         <div className={`flex items-center gap-2 flex-1 min-w-[240px] ${H} px-3 bg-slate-50 border border-slate-100 rounded-xl`}>
           <Search className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />

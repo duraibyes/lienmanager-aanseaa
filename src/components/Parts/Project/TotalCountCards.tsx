@@ -2,10 +2,8 @@ import { Calendar, CheckSquare, FileText, FolderOpen } from "lucide-react";
 import { useGetProjectStatusCountQuery } from "../../../features/project/projectDataApi";
 
 const TotalCountCards = () => {
-  const { data, isFetching } = useGetProjectStatusCountQuery();
 
-  const primaryGradient = "linear-gradient(-30deg, #0075be, #00aeea 100%)";
-  const secondaryGradient = "linear-gradient(-30deg, #334756, #003F58 100%)";
+  const { data, isFetching } = useGetProjectStatusCountQuery();
 
   const Card = ({
     title,
@@ -16,35 +14,28 @@ const TotalCountCards = () => {
     value: number | undefined;
     icon: React.ElementType;
   }) => (
-    <div className="flex flex-row flex-wrap items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all hover:shadow-md h-[60px] sm:h-[64px] w-full min-w-0">
+    <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-slate-100 shadow-md hover:shadow-sm transition-all w-full h-[64px]">
 
       <div
-        className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center text-white shrink-0"
-        style={{ background: primaryGradient }}
+        className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0 bg-primary-gradient"
       >
-        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <Icon className="w-4 h-4" />
       </div>
 
-      <div className="flex flex-col justify-center min-w-0 flex-1">
-        <p
-          className="text-lg sm:text-xl font-bold leading-none"
-          style={{
-            backgroundImage: secondaryGradient,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
+      <div className="flex flex-col justify-center flex-1 overflow-hidden">
+
+        <p className="text-lg sm:text-xl font-bold leading-tight truncate">
           {isFetching ? (
-            <span className="inline-block w-8 h-5 bg-slate-100 animate-pulse rounded" />
+            <span className="inline-block w-10 h-5 bg-slate-200 animate-pulse rounded" />
           ) : (
             value ?? 0
           )}
         </p>
 
-        <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1 leading-tight lg:whitespace-nowrap">
+        <p className="text-sm text-slate-500 truncate">
           {title}
         </p>
+
       </div>
     </div>
   );

@@ -29,14 +29,14 @@ const StickyTopBar = () => {
     }, []);
 
     return (
-        <div className="sticky top-0 z-30">
+        <div className="sticky top-0 ">
             <Topbar setIsSideBarOpen={setIsSideBarOpen} />
             <nav
                 role="navigation"
                 aria-label="Main navigation"
-                className="hidden border-b border-border bg-background/80 backdrop-blur-xl md:block"
+                className="hidden border-b border-border bg-gray-100  md:block sm:px-12 px-4"
             >
-                <div className="flex h-11 items-center gap-1 px-6">
+                <div className="flex h-11 items-center gap-1">
                     <div className="flex items-center gap-3">
                         <LinkButton
                             to="/dashboard"

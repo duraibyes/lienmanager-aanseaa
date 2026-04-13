@@ -12,9 +12,9 @@ const ProjectViewScreen = () => {
         { projectId: Number(projectId) },
         { skip: !projectId }
     );
-    
+
     return (
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8">
+        <div className="px-2 sm:px-6 overflow-hidden">
             <div className="mb-6">
                 <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
                     {project?.data?.projectName}
@@ -39,7 +39,7 @@ const ProjectViewScreen = () => {
                 </div>
             </div>
 
-            <div className="space-y-4 md:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
                     <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                         <Building className="w-5 h-5 text-blue-600" />
@@ -64,80 +64,87 @@ const ProjectViewScreen = () => {
                         </div>
                     </div>
                 </div>
-
-              <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
-                    <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <MapPin className="w-5 h-5 text-blue-600" />
-                        Job Site Information
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Job Name</label>
-                            <p className="text-slate-900">{project?.data?.jobName || 'N/A'}</p>
+                <div className="flex flex-col gap-4">
+                    <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
+                        <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <MapPin className="w-5 h-5 text-blue-600" />
+                            Job Site Information
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Job Name</label>
+                                <p className="text-slate-900">{project?.data?.jobName || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Job Address</label>
+                                <p className="text-slate-900">{project?.data?.jobAddress || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">City</label>
+                                <p className="text-slate-900">{project?.data?.jobCity || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">State</label>
+                                <p className="text-slate-900">{project?.data?.state || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">ZIP Code</label>
+                                <p className="text-slate-900">{project?.data?.jobZip || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Country</label>
+                                <p className="text-slate-900">{project?.data?.country || 'N/A'}</p>
+                            </div>
                         </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Job Address</label>
-                            <p className="text-slate-900">{project?.data?.jobAddress || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">City</label>
-                            <p className="text-slate-900">{project?.data?.jobCity || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">State</label>
-                            <p className="text-slate-900">{project?.data?.state || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">ZIP Code</label>
-                            <p className="text-slate-900">{project?.data?.jobZip || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Country</label>
-                            <p className="text-slate-900">{project?.data?.country || 'N/A'}</p>
+                    </div>
+                    <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
+                        <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <DollarSign className="w-5 h-5 text-green-600" />
+                            Financial Information
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Contract Amount</label>
+                                <p className="text-slate-900 text-xl md:text-2xl font-bold text-green-600">
+                                    ${project?.data?.contracts?.total_claim_amount.toLocaleString() || '0'}
+                                </p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Base Contract Amount</label>
+                                <p className="text-slate-900">
+                                    ${project?.data?.contracts?.baseContractAmount?.toLocaleString() || '0'}
+                                </p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Additional Costs</label>
+                                <p className="text-slate-900">
+                                    ${project?.data?.contracts?.additionalCosts?.toLocaleString() || '0'}
+                                </p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Payments/Credits</label>
+                                <p className="text-slate-900">
+                                    ${project?.data?.contracts?.paymentsCredits?.toLocaleString() || '0'}
+                                </p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold text-slate-600">Unpaid Balance</label>
+                                <p className="text-slate-900 text-base md:text-lg font-semibold text-red-600">
+                                    ${project?.data?.contracts?.total_claim_amount?.toLocaleString() || '0'}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div className="space-y-4 md:space-y-6">
+
+
+
 
                 <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
-                    <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <DollarSign className="w-5 h-5 text-green-600" />
-                        Financial Information
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Contract Amount</label>
-                            <p className="text-slate-900 text-xl md:text-2xl font-bold text-green-600">
-                                ${project?.data?.contracts?.total_claim_amount.toLocaleString() || '0'}
-                            </p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Base Contract Amount</label>
-                            <p className="text-slate-900">
-                                ${project?.data?.contracts?.baseContractAmount?.toLocaleString() || '0'}
-                            </p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Additional Costs</label>
-                            <p className="text-slate-900">
-                                ${project?.data?.contracts?.additionalCosts?.toLocaleString() || '0'}
-                            </p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Payments/Credits</label>
-                            <p className="text-slate-900">
-                                ${project?.data?.contracts?.paymentsCredits?.toLocaleString() || '0'}
-                            </p>
-                        </div>
-                        <div>
-                            <label className="text-sm font-semibold text-slate-600">Unpaid Balance</label>
-                            <p className="text-slate-900 text-base md:text-lg font-semibold text-red-600">
-                                ${project?.data?.contracts?.total_claim_amount?.toLocaleString() || '0'}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                 <div className="bg-white rounded-lg border border-slate-200 p-4 md:p-6">
                     <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-blue-600" />
                         Timeline
@@ -184,7 +191,7 @@ const ProjectViewScreen = () => {
                             ))}
                         </div>
                     </div>
-                )} 
+                )}
             </div>
 
             <div className="mt-6 md:mt-8">

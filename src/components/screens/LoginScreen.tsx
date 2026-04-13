@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../../features/auth/authApi';
 import { setCredentials } from '../../features/auth/authSlice';
-import { validateEmail, validatePassword } from '../../utils/validation';
+import { validateEmail } from '../../utils/validation';
 import { COPY_RIGHT } from '../../utils/config';
 import { AuthLeftPanel } from '../layout/auth/AuthLeftPanel';
 import { PrimaryButton } from '../Button/PrimaryButton';
@@ -39,7 +39,7 @@ export default function LoginScreen() {
   const validateForm = (): boolean => {
     const validationErrors: LoginErrors = {
       email: validateEmail(email) || undefined,
-      password: validatePassword(password) || undefined,
+      password: password.length === 0 ? 'Password is required' : undefined,
     };
 
     Object.keys(validationErrors).forEach(
@@ -49,6 +49,7 @@ export default function LoginScreen() {
     );
 
     setErrors(validationErrors);
+    console.log('  validationErrors ', validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
 

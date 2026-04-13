@@ -8,48 +8,63 @@ type TotalContactCardProps = {
 }
 
 const TotalContactCard = (props: TotalContactCardProps) => {
-    const renderCount = (value: number) =>
-        props.isLoading ? (
-            <span className="inline-block w-8 h-4 bg-slate-200 rounded animate-pulse"></span>
-        ) : value;
-        
+    const renderCount = (value: number) => value;
+
+    const Card = ({
+        title,
+        value,
+        icon: Icon,
+    }: {
+        title: string;
+        value: number | undefined;
+        icon: React.ElementType;
+    }) => (
+        <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-2xl border border-slate-100 shadow-md hover:shadow-sm transition-all w-full h-[64px]">
+
+            <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0 bg-primary-gradient"
+            >
+                <Icon className="w-4 h-4" />
+            </div>
+
+            <div className="flex flex-col justify-center flex-1 overflow-hidden">
+
+                <p className="text-lg sm:text-xl font-bold leading-tight truncate">
+                    {props.isLoading ? (
+                        <span className="inline-block w-10 h-5 bg-slate-200 animate-pulse rounded" />
+                    ) : (
+                        value ?? 0
+                    )}
+                </p>
+
+                <p className="text-sm text-slate-500 truncate">
+                    {title}
+                </p>
+
+            </div>
+        </div>
+    );
+
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-
-            {/* Total Contacts */}
-            <div className="bg-white rounded-lg border border-slate-200 p-5 flex items-center gap-4">
-                <Users className="w-8 h-8 text-blue-600 flex-shrink-0" />
-                <div>
-                    <p className="text-sm text-slate-600">Total Contacts</p>
-                    <p className="text-2xl font-bold text-slate-900">
-                        {renderCount(props.totalCount)}
-                    </p>
-                </div>
-            </div>
-
-            {/* Customer Contacts */}
-            <div className="bg-white rounded-lg border border-slate-200 p-5 flex items-center gap-4">
-                <Users className="w-8 h-8 text-blue-600 flex-shrink-0" />
-                <div>
-                    <p className="text-sm text-slate-600">Customer Contacts</p>
-                    <p className="text-2xl font-bold text-slate-900">
-                        {renderCount(props.customerContactCount)}
-                    </p>
-                </div>
-            </div>
-
-            {/* Industry Contacts */}
-            <div className="bg-white rounded-lg border border-slate-200 p-5 flex items-center gap-4">
-                <Users className="w-8 h-8 text-blue-600 flex-shrink-0" />
-                <div>
-                    <p className="text-sm text-slate-600">Industry Contacts</p>
-                    <p className="text-2xl font-bold text-slate-900">
-                        {renderCount(props.projectContactCount)}
-                    </p>
-                </div>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:flex lg:flex-row items-center gap-2 sm:gap-3 w-full lg:w-auto">
+            <Card
+                title="Total Contacts"
+                value={renderCount(props.totalCount)}
+                icon={Users}
+            />
+            <Card
+                title="Customer Contacts"
+                value={renderCount(props.customerContactCount)}
+                icon={Users}
+            />
+            <Card
+                title="Industry Contacts"
+                value={renderCount(props.projectContactCount)}
+                icon={Users}
+            />
 
         </div>
+
     )
 }
 
