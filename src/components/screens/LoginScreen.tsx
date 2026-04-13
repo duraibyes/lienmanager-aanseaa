@@ -175,6 +175,15 @@ export default function LoginScreen() {
               <LinkButton to="/signup" label='Create an account' />
             </p>
           </div>
+          <p className="text-slate-600 mt-6 text-center">
+            Switch to
+            <Link
+              to="/"
+              className="text-primary font-semibold hover:text-blue-700 transition-colors ml-2"
+            >
+              Main View
+            </Link>
+          </p>
         </div>
       </div>
     </div>
