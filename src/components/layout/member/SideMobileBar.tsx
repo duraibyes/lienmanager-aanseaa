@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { menuMobileSections } from "../../../utils/menu";
 import { LogOut, X } from "lucide-react";
 import { useAppDispatch } from "../../../store/hooks";

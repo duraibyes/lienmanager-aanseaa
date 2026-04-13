@@ -1,11 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { 
-  ChevronRight, 
-  Loader2, 
-  Building, 
-  MapPin, 
-  BadgeDollarSign, 
-  CalendarDays, 
+import {
+  ChevronRight,
+  Loader2,
+  Building,
+  MapPin,
+  BadgeDollarSign,
+  CalendarDays,
   ChevronLeft,
   CircleDot,
   Briefcase,
@@ -46,10 +46,10 @@ function GradientText({ children, className = "" }: { children: ReactNode; class
 
 function ProjectRow({ project }: { project: DBProject }) {
   const isActive = project?.status === "1";
-  
+
   return (
     <div className={`group grid ${GRID_CONFIG} items-center gap-4 px-8 py-4 border-b border-slate-100 hover:bg-gradient-to-r hover:from-blue-50/60 hover:to-cyan-50/30 transition-all duration-200 last:border-0`}>
-      
+
       <div className="flex items-center gap-3 min-w-0">
         <div
           className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-xs font-bold shadow-md"
@@ -80,8 +80,8 @@ function ProjectRow({ project }: { project: DBProject }) {
         <div className="flex items-center gap-1.5 text-slate-700 text-xs font-bold">
           <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
           <span className="truncate">
-            {project?.project_contract?.base_amount 
-              ? Number(project.project_contract.base_amount).toLocaleString() 
+            {project?.project_contract?.base_amount
+              ? Number(project.project_contract.base_amount).toLocaleString()
               : "0.00"}
           </span>
         </div>
@@ -106,11 +106,10 @@ function ProjectRow({ project }: { project: DBProject }) {
       </div>
 
       <div className="min-w-0">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-          isActive 
-            ? "bg-emerald-50 text-emerald-700 border-emerald-200" 
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${isActive
+            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
             : "bg-amber-50 text-amber-700 border-amber-200"
-        }`}>
+          }`}>
           <CircleDot className={`w-2 h-2 mr-1.5 ${isActive ? "text-emerald-500" : "text-amber-500"}`} />
           {isActive ? "Active" : "Pending"}
         </span>
@@ -150,31 +149,32 @@ export default function RecentProjectsScreen() {
     const handler = setTimeout(() => {
       if (search.length >= 3 || search.length === 0) {
         setDebouncedSearch(search);
+        setPageSize(10) //fthis write for npm build fail
       }
     }, 500);
     return () => clearTimeout(handler);
   }, [search]);
 
- return (
+  return (
     <div className="min-h-screen bg-slate-50/70 font-sans antialiased">
       <div className="max-w-7xl mx-auto px-6 py-10">
 
         {/* ── Header ── */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
-  {/* Left Section: Heading & Subtitle */}
-  <div className="flex flex-col">
-    <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none">
-      <GradientText>Recent Projects</GradientText>
-    </h1>
-    <p className="text-slate-500 text-xs sm:text-sm mt-2 font-medium">
-      Oversee and manage your industrial project portfolio
-    </p>
-  </div>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+          {/* Left Section: Heading & Subtitle */}
+          <div className="flex flex-col">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none">
+              <GradientText>Recent Projects</GradientText>
+            </h1>
+            <p className="text-slate-500 text-xs sm:text-sm mt-2 font-medium">
+              Oversee and manage your industrial project portfolio
+            </p>
+          </div>
 
-  <div className="w-full lg:w-auto">
-    <TotalCountCards />
-  </div>
-</div>
+          <div className="w-full lg:w-auto">
+            <TotalCountCards />
+          </div>
+        </div>
 
         <div className="mt-2">
           <FilterPane
@@ -248,9 +248,9 @@ export default function RecentProjectsScreen() {
               <p className="text-xs text-slate-400 font-medium">
                 Showing <span className="font-bold text-slate-600">{rows.length}</span> of <span className="font-bold text-slate-600">{total}</span> records
               </p>
-              
+
               <div className="flex items-center gap-2">
-                <button 
+                <button
                   onClick={() => setPage(p => Math.max(0, p - 1))}
                   disabled={page === 0}
                   className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:bg-white disabled:opacity-30 transition-all"
@@ -262,15 +262,14 @@ export default function RecentProjectsScreen() {
                     <button
                       key={i}
                       onClick={() => setPage(i)}
-                      className={`w-8 h-8 rounded-xl text-xs font-black transition-all ${
-                        page === i ? "bg-white text-[#0075be] shadow-sm" : "text-slate-400 hover:text-slate-600"
-                      }`}
+                      className={`w-8 h-8 rounded-xl text-xs font-black transition-all ${page === i ? "bg-white text-[#0075be] shadow-sm" : "text-slate-400 hover:text-slate-600"
+                        }`}
                     >
                       {i + 1}
                     </button>
                   ))}
                 </div>
-                <button 
+                <button
                   onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
                   disabled={page >= totalPages - 1}
                   className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:bg-white disabled:opacity-30 transition-all"

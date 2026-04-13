@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2";
-import { FolderOpen } from "lucide-react"
-import { handleViewProject } from "../../../utils/navigation"
 import { DBProject } from "../../../types/project"
 import { useDeleteWizardDraftMutation } from "../../../features/project/projectDataApi";
 import DeleteIconButton from "../../Button/DeleteIconButton";

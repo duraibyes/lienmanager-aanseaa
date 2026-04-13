@@ -8,13 +8,13 @@ const TotalCountCards = () => {
   const primaryGradient = "linear-gradient(-30deg, #0075be, #00aeea 100%)";
   const secondaryGradient = "linear-gradient(-30deg, #334756, #003F58 100%)";
 
-  const Card = ({ title, value, icon: Icon, isOverdue = false }) => (
+  const Card = ({ title, value, icon: Icon, isOverdue = false }: { title: string; value: number | undefined; icon: typeof CheckCircle2; isOverdue?: boolean }) => (
     <div className="flex items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-slate-100 shadow-sm self-start sm:self-auto transition-all hover:shadow-md">
       <div
         className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0"
         style={{ background: isOverdue ? 'linear-gradient(-30deg, #ef4444, #f87171 100%)' : primaryGradient }}
       >
-        <Icon className="w-4 h-4" /> 
+        <Icon className="w-4 h-4" />
       </div>
       <div>
         <p
@@ -41,19 +41,19 @@ const TotalCountCards = () => {
 
   return (
     <div className="flex flex-wrap gap-4 mb-8">
-      <Card 
-        title="Total Tasks" 
-        value={data?.data?.total_count} 
-        icon={CheckCircle2} 
+      <Card
+        title="Total Tasks"
+        value={Number(data?.data?.total_count)}
+        icon={CheckCircle2}
       />
-      <Card 
-        title="Upcoming (7 days)" 
-        value={data?.data?.upcoming_count} 
-        icon={Clock} 
+      <Card
+        title="Upcoming (7 days)"
+        value={Number(data?.data?.upcoming_count)}
+        icon={Clock}
       />
-      <Card 
-        title="Overdue" 
-        value={data?.data?.overdue_count} 
+      <Card
+        title="Overdue"
+        value={Number(data?.data?.overdue_count)}
         icon={AlertCircle}
         isOverdue={Number(data?.data?.overdue_count) > 0}
       />

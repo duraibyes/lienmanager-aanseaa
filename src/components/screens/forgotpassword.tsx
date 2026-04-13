@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Mail, AlertCircle, CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/validation';
 import { COPY_RIGHT } from '../../utils/config';
 import { AuthLeftPanel } from '../layout/auth/AuthLeftPanel';
 import { PrimaryButton } from '../Button/PrimaryButton';
 import { BUTTON_TEXT } from '../../types/button';
-import BackBtn from '../Button/BackBtn';
 import CancelButton from '../Button/CancelButton';
 
 export default function ForgotPasswordScreen() {

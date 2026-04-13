@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import NavigationHeader from './NavigationHeader';
 import SideNavigation from './SideNavigation';
-import Breadcrumbs from './Breadcrumbs';
 import StickyTopBar from './StickyTopBar';
 
 interface TemplateProps {

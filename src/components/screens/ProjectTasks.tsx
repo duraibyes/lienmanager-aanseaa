@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { 
-  Eye, 
-  ChevronRight, 
-  ChevronLeft, 
-  Loader2, 
-  Calendar, 
-  User, 
-  ClipboardCheck, 
-  Activity,
-  Briefcase
+import {
+    Eye,
+    ChevronRight,
+    ChevronLeft,
+    Loader2,
+    Calendar,
+    User,
+    ClipboardCheck,
+    Activity,
+    Briefcase
 } from 'lucide-react';
 import TotalCountCards from '../Parts/Task/TotalCountCards';
 import { useGetTasksQuery } from '../../features/task/taskDataApi';
@@ -46,7 +46,7 @@ function GradientText({ children, className = "" }: { children: React.ReactNode;
 
 // ── Custom Row Component ──────────────────────────────────────────────────────
 function TaskRow({ task, onView }: { task: DBTask, onView: (id: number) => void }) {
-    
+
     const getUrgencyStyles = (days: number) => {
         if (days < 0) return 'bg-red-50 text-red-600 border-red-100';
         if (days <= 7) return 'bg-orange-50 text-orange-600 border-orange-100';
@@ -60,7 +60,7 @@ function TaskRow({ task, onView }: { task: DBTask, onView: (id: number) => void 
 
     return (
         <div className={`${TABLE_GRID_LAYOUT} px-6 py-4 border-b border-slate-100 hover:bg-gradient-to-r hover:from-blue-50/60 hover:to-cyan-50/30 transition-all duration-200 group last:border-0`}>
-            
+
             {/* 1. Project & Task Name */}
             <div className="flex items-center gap-3 min-w-0">
                 <div
@@ -156,6 +156,7 @@ export default function ProjectTasks() {
     useEffect(() => {
         const handler = setTimeout(() => {
             if (search.length >= 3 || search.length === 0) setDebouncedSearch(search);
+            setPageSize(10) // this put for build failed
         }, 500);
         return () => clearTimeout(handler);
     }, [search]);
@@ -190,7 +191,7 @@ export default function ProjectTasks() {
 
                 {/* ── Main Panel (Responsive Container) ── */}
                 <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/10 overflow-hidden">
-                    
+
                     <div className="px-6 py-5 flex items-center justify-between border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/30">
                         <div className="flex items-center gap-2">
                             <GradientText className="text-[16px] font-black uppercase tracking-tight text-[#003F58]">Task Pipeline</GradientText>
@@ -209,7 +210,7 @@ export default function ProjectTasks() {
                     {/* ── MOBILE RESPONSIVE SCROLLER WRAPPER ── */}
                     <div className="overflow-x-auto overflow-y-hidden slim-scrollbar">
                         <div className="min-w-[1000px]"> {/* Forces the grid to keep its alignment */}
-                            
+
                             {/* Table Column Headers */}
                             <div className={`${TABLE_GRID_LAYOUT} gap-4 px-6 py-2.5 bg-slate-50/80 border-b border-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-400`}>
                                 <span>Task & Project</span>
@@ -234,10 +235,10 @@ export default function ProjectTasks() {
                                     </div>
                                 ) : (
                                     rows.map((task: DBTask) => (
-                                        <TaskRow 
-                                            key={task.id} 
-                                            task={task} 
-                                            onView={(id) => setSelectedTask(id)} 
+                                        <TaskRow
+                                            key={task.id}
+                                            task={task}
+                                            onView={(id) => setSelectedTask(id)}
                                         />
                                     ))
                                 )}
@@ -266,9 +267,8 @@ export default function ProjectTasks() {
                                         <button
                                             key={i}
                                             onClick={() => setPage(i)}
-                                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
-                                                page === i ? "bg-[#0075be] text-white shadow-md scale-105" : "text-slate-500 hover:bg-slate-100 border border-slate-100"
-                                            }`}
+                                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${page === i ? "bg-[#0075be] text-white shadow-md scale-105" : "text-slate-500 hover:bg-slate-100 border border-slate-100"
+                                                }`}
                                         >
                                             {i + 1}
                                         </button>
@@ -289,9 +289,9 @@ export default function ProjectTasks() {
             </div>
 
             {selectedTask && (
-                <TaskView 
-                    taskId={selectedTask} 
-                    onClose={() => setSelectedTask(null)} 
+                <TaskView
+                    taskId={selectedTask}
+                    onClose={() => setSelectedTask(null)}
                 />
             )}
         </div>

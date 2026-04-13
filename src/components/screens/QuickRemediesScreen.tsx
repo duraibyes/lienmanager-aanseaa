@@ -43,7 +43,7 @@ export default function QuickRemediesScreen() {
     } catch (err) {
       const errorResponse = (err as any)?.data as any;
       let errorMessage = errorResponse?.message || "Something went wrong";
-      if (errorResponse?.errors) errorMessage = Object.values(errorResponse.errors)[0][0] as string;
+      if (errorResponse?.errors) errorMessage = "Unknown error, please try some times";
       Swal.fire({ icon: "error", title: "Error", text: errorMessage });
     }
   };
