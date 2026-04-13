@@ -12,7 +12,7 @@ const QuickActionColumn = ({ data }: QuickActionColumnProps) => {
         <div className="text-center">
             {data.project_date.length > 0 &&
                 <button
-                    className="p-1.5 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                    className="p-1.5 text-slate-600 hover:primary hover:bg-blue-50 rounded transition-colors"
                     title="Deadlines"
                     onClick={() => navigate(`/deadlines?projectId=${data.id}`)}
                 >
@@ -21,7 +21,7 @@ const QuickActionColumn = ({ data }: QuickActionColumnProps) => {
             }
             {data.tasks.length > 0 &&
                 <button
-                    className="p-1.5 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                    className="p-1.5 text-slate-600 hover:primary hover:bg-blue-50 rounded transition-colors"
                     title="Tasks"
                     onClick={() => navigate('/tasks', { state: { project_name: data.project_name } })}
                 >
@@ -30,7 +30,7 @@ const QuickActionColumn = ({ data }: QuickActionColumnProps) => {
             }
             {data.documents.length > 0 &&
                 <button
-                    className="p-1.5 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                    className="p-1.5 text-slate-600 hover:primary hover:bg-blue-50 rounded transition-colors"
                     title="Documents"
                     onClick={() => navigate('/documents', { state: { project_id: data.id } })}
                 >

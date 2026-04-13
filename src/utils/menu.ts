@@ -47,3 +47,28 @@ export  const menuSections = [
     }
   ];
   
+
+  export  const menuMobileSections = [
+    {
+      title: 'Dashboard',
+      items: [
+        { id: 'home', label: 'Home', icon: Home, path: '/dashboard' },
+        { id: 'projects', label: 'Projects', icon: FolderOpen, path: '/projects' },
+        { id: 'contacts', label: 'Contacts', icon: Users, path: '/contacts' }
+      ]
+    },
+    {
+      title: 'Tools',
+      items: [
+        { id: 'quick_remedies', label: 'Quick Remedies', icon: Calculator, path: '/quick-remedies' },
+         { id: 'deadlines', label: 'Deadlines', icon: Clock, path: '/deadlines' },
+        { id: 'tasks', label: 'Tasks', icon: CheckSquare, path: '/tasks' }
+      ]
+    },
+    {
+      title: 'Help',
+      items: [
+        { id: 'onboarding_demo', label: 'Tour Demo', icon: Sparkles, path: '/tour' }
+      ]
+    }
+  ];

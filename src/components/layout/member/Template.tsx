@@ -2,6 +2,7 @@ import { useState } from 'react';
 import NavigationHeader from './NavigationHeader';
 import SideNavigation from './SideNavigation';
 import Breadcrumbs from './Breadcrumbs';
+import StickyTopBar from './StickyTopBar';
 
 interface TemplateProps {
   content: React.ReactNode;
@@ -14,18 +15,18 @@ export const Template = (props: TemplateProps) => {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50 ">
       {/* HEADER */}
-      <NavigationHeader
+      {/* <NavigationHeader
         showLogo={true}
-        onMenuClick={() => setIsSideNavOpen(true)}
-      />
+      /> */}
+      <StickyTopBar />
 
       {/* BREADCRUMBS */}
-      <Breadcrumbs />
+      {/* <Breadcrumbs /> */}
 
       {/* CONTENT */}
-      <main className="flex-1 overflow-auto p-4 md:p-6">
+      <main className="flex-1 overflow-auto px-4 sm:px-8 p-4 md:p-6">
         {props.content}
       </main>
 
