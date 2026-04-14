@@ -7,7 +7,7 @@ import { logout } from "../../../features/auth/authSlice";
 import { useAppDispatch } from "../../../store/hooks";
 
 type Props = {
-    setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSideBarOpen: () => void;
 }
 
 const Topbar = ({ setIsSideBarOpen }: Props) => {
@@ -36,7 +36,7 @@ const Topbar = ({ setIsSideBarOpen }: Props) => {
             <div className="flex items-center gap-3">
                 <button
                     aria-label="Open menu"
-                    onClick={() => setIsSideBarOpen(true)}
+                    onClick={setIsSideBarOpen}
                     className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
                 >
                     <svg
@@ -67,7 +67,7 @@ const Topbar = ({ setIsSideBarOpen }: Props) => {
                     <div className="mx-1 h-6 w-px bg-border"></div>
                 </div>
                 <div
-                    className={`flex items-center gap-2 flex-1 min-w-[200px] h-[38px] px-3 mr-2 bg-slate-50 border border-slate-200 rounded-lg`}
+                    className={`hidden md:flex items-center gap-2 flex-1 min-w-[200px] h-[38px] px-3 mr-2 bg-slate-50 border border-slate-200 rounded-lg`}
                 >
                     <Search className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
                     <input
@@ -125,7 +125,7 @@ const Topbar = ({ setIsSideBarOpen }: Props) => {
                     </svg>
                     <span className="absolute ltr:right-1.5 rtl:left-1.5 top-1.5 h-2 w-2 rounded-full bg-destructive"></span>
                 </button>
-                <div className="flex items-end justify-end">
+                <div className="hidden md:flex items-end justify-end">
                     <div className="relative" ref={profileRef}>
                         <button
                             onClick={() => setProfileOpen(!profileOpen)}

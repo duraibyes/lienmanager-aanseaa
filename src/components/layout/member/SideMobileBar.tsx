@@ -27,7 +27,7 @@ const SideMobileBar = ({ setIsSideBarOpen, profile }: Props) => {
     }
 
     return (
-        <aside className="fixed ltr:left-0 rtl:right-0 top-0 z-50 flex h-screen w-[260px] flex-col bg-gray-900 shadow-xl transition-transform duration-300 ease-in-out translate-x-0">
+        <aside className="fixed ltr:left-0 rtl:right-0 top-0 z-[9999] flex h-screen w-[260px] flex-col bg-gray-900 shadow-xl transition-transform duration-300 ease-in-out translate-x-0">
             <div className="flex h-16 items-center justify-between gap-3 border-b border-sidebar-border px-4">
                 <div className="flex flex-col">
                     <span className="text-sm font-bold tracking-tight text-white">

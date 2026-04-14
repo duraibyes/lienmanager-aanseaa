@@ -3,19 +3,14 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import LinkButton from "../../Button/LinkButton";
 import { useNavigate } from "react-router-dom";
-import SideMobileBar from "./SideMobileBar";
-import { useGetProfileQuery } from "../../../features/lienAuth/profileApi";
 import Topbar from "./Topbar";
 
-const StickyTopBar = () => {
+const StickyTopBar = ({ openSidebar }: { openSidebar: () => void }) => {
 
     const ref = useRef<HTMLDivElement>(null);
-    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     const [isToolsOpen, setIsToolsOpen] = useState(false);
     const navigate = useNavigate();
 
-    const { data: profileData } = useGetProfileQuery();
-    const profile = profileData?.data || null;
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -30,7 +25,8 @@ const StickyTopBar = () => {
 
     return (
         <div className="sticky top-0 ">
-            <Topbar setIsSideBarOpen={setIsSideBarOpen} />
+
+            <Topbar setIsSideBarOpen={openSidebar} />
             <nav
                 role="navigation"
                 aria-label="Main navigation"
@@ -100,9 +96,7 @@ const StickyTopBar = () => {
                     />
                 </div>
             </nav>
-            {isSideBarOpen && (
-                <SideMobileBar setIsSideBarOpen={setIsSideBarOpen} profile={profile} />
-            )}
+
         </div>
     );
 };

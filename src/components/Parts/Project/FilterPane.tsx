@@ -1,9 +1,6 @@
 import { SetStateAction, useCallback, useMemo } from "react";
 import { Search, X, ChevronDown } from "lucide-react";
 import { State } from "../../../types/master";
-
-const primaryGradient = "linear-gradient(-30deg, #0075be, #00aeea 100%)";
-
 interface FilterProps {
   search: string;
   statusFilter: string;
@@ -36,9 +33,9 @@ export default function FilterPane({
 
   const activeCount = useMemo(() => {
     let n = 0;
-    if (search !== "")        n++;
+    if (search !== "") n++;
     if (statusFilter !== "all") n++;
-    if (stateFilter  !== "all") n++;
+    if (stateFilter !== "all") n++;
     return n;
   }, [search, statusFilter, stateFilter]);
 
@@ -49,8 +46,8 @@ export default function FilterPane({
   }, []);
 
   const statusOptions = [
-    { value: "all",     label: "All"     },
-    { value: "active",  label: "Active"  },
+    { value: "all", label: "All" },
+    { value: "active", label: "Active" },
     { value: "pending", label: "Pending" },
   ] as const;
 
@@ -87,11 +84,10 @@ export default function FilterPane({
               <button
                 key={value}
                 onClick={() => setStatusFilter(value)}
-                className={`px-3.5 py-1.5 rounded-[9px] text-xs font-semibold transition-all duration-150 whitespace-nowrap ${
-                  active
-                    ? "bg-white text-[#0075be] border border-slate-200 shadow-sm"
-                    : "text-slate-500 hover:text-slate-700"
-                }`}
+                className={`px-3.5 py-1.5 rounded-[9px] text-xs font-semibold transition-all duration-150 whitespace-nowrap ${active
+                  ? "bg-white text-[#0075be] border border-slate-200 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
+                  }`}
               >
                 {label}
               </button>
@@ -137,8 +133,7 @@ export default function FilterPane({
       {hasActiveFilters && (
         <div className="flex items-center gap-1.5 px-1 text-[11px] text-slate-400 font-medium">
           <span
-            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-            style={{ background: primaryGradient }}
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-primary-gradient"
           />
           {activeCount} filter{activeCount > 1 ? "s" : ""} active
         </div>

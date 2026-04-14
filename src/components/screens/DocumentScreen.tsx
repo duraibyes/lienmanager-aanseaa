@@ -13,7 +13,7 @@ const DocumentScreen = () => {
 
     const { data, isLoading } = useGetProjectDocumentQuery();
 
-    const {data: projects} = useGetAllProjectsQuery();
+    const { data: projects } = useGetAllProjectsQuery();
 
     const projectOptions = useMemo(() => {
         if (!projects?.data) return [];
@@ -141,7 +141,7 @@ const DocumentScreen = () => {
           focus:border-transparent
           appearance-none 
           bg-white 
-          cursor-pointer
+          cursor-pointer z-1
         "
                         >
                             <option value="all">All Projects</option>
