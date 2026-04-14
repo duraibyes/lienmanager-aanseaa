@@ -9,7 +9,7 @@ const TotalCountCards = () => {
   const secondaryGradient = "linear-gradient(-30deg, #334756, #003F58 100%)";
 
   const Card = ({ title, value, icon: Icon, isOverdue = false }: { title: string; value: number | undefined; icon: typeof CheckCircle2; isOverdue?: boolean }) => (
-    <div className="flex items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-slate-100 shadow-sm self-start sm:self-auto transition-all hover:shadow-md">
+    <div className="flex w-full items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-slate-100 shadow-md self-start sm:self-auto transition-all hover:shadow-sm">
       <div
         className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0"
         style={{ background: isOverdue ? 'linear-gradient(-30deg, #ef4444, #f87171 100%)' : primaryGradient }}

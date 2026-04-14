@@ -60,7 +60,7 @@ const SideMobileBar = ({ setIsSideBarOpen, profile }: Props) => {
                                         return (
                                             <button
                                                 key={item.id}
-                                                onClick={() => navigate(item.path)}
+                                                onClick={() => { navigate(item.path); setIsSideBarOpen(false) }}
                                                 className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-2xl text-sm font-medium transition-all duration-200 group ${isActive
                                                     ? 'bg-primaryHover '
                                                     : 'hover:bg-gray-50/80 text-gray-900 hover:scale-[1.01]'

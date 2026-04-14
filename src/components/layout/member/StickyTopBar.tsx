@@ -24,7 +24,7 @@ const StickyTopBar = ({ openSidebar }: { openSidebar: () => void }) => {
     }, []);
 
     return (
-        <div className="sticky top-0 ">
+        <div className="relative top-0 ">
 
             <Topbar setIsSideBarOpen={openSidebar} />
             <nav

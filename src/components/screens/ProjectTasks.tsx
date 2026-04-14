@@ -103,7 +103,7 @@ export default function ProjectTasks() {
         <div className="min-h-screen bg-slate-50">
 
             <div className="px-2 sm:px-6">
-                <div className='flex flex-row justify-between items-center'>
+                <div className='flex flex-col sm:flex-row justify-between items-center'>
                     <div className="mb-6">
                         <h1 className="text-3xl font-bold text-slate-900 mb-2">Project Tasks</h1>
                         <p className="text-lg text-slate-600">

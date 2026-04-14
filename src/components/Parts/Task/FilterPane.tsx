@@ -9,8 +9,6 @@ type FilterPaneProps = {
   setFilterStatus: (status: string) => void;
 };
 
-// ── Shared Design Tokens ──────────────────────────────────────────────────
-const primaryGradient = "linear-gradient(-30deg, #0075be, #00aeea 100%)";
 const H = "h-[38px]";
 
 function Divider() {
@@ -102,8 +100,7 @@ const FilterPane = ({
       {hasActiveFilters && (
         <div className="flex items-center gap-1.5 px-1 text-[11px] text-slate-400 font-medium">
           <span
-            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-            style={{ background: primaryGradient }}
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-primary-gradient"
           />
           {activeCount} filter{activeCount > 1 ? "s" : ""} active
         </div>

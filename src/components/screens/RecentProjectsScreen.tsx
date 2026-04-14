@@ -106,7 +106,7 @@ export default function RecentProjectsScreen() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
           <div className="flex flex-col">
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-none">
-              Recent Projects
+              Projects
             </h1>
             <p className="text-slate-500 text-xs sm:text-sm mt-2 font-normal">
               Oversee and manage your industrial project portfolio
