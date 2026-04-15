@@ -6,17 +6,15 @@ import {
   EyeOff,
   Eye,
   ArrowRight,
+  Scale,
+  Home,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../../features/auth/authApi';
 import { setCredentials } from '../../features/auth/authSlice';
 import { validateEmail } from '../../utils/validation';
-import { COPY_RIGHT } from '../../utils/config';
-import { AuthLeftPanel } from '../layout/auth/AuthLeftPanel';
-import { PrimaryButton } from '../Button/PrimaryButton';
-import { BUTTON_TEXT } from '../../types/button';
-import LinkButton from '../Button/LinkButton';
+import { Button } from '../ui/button';
 
 export interface LoginErrors {
   email?: string;
@@ -82,30 +80,89 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-white font-sans">
+    <div className="min-h-screen flex">
+      {/* Left Side - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 gradient-hero relative overflow-hidden">
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="auth-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#auth-grid)" />
+          </svg>
+        </div>
 
-      {/* Left Section*/}
-      <AuthLeftPanel
-        title="Optimize your workflow with precision."
-        subtitle="Join thousands of teams managing their projects with our intuitive interface and powerful analytics."
-        footer={<span>{COPY_RIGHT}</span>}
-      />
+        {/* Decorative Elements */}
+        <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl" />
 
-      {/* Right Section: Form Content */}
-      <div className="flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-slate-50/30">
-        <div className="w-full max-w-[400px]">
+        <div className="relative z-10 flex flex-col justify-center items-center w-full p-12">
+          <div className="max-w-md text-center space-y-8">
+            <Link to="/" className="inline-flex items-center gap-3">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl gradient-primary glow-primary">
+                <Scale className="h-6 w-6 text-white" />
+              </div>
+              <span className="font-serif font-bold text-3xl text-white">LienPilot</span>
+            </Link>
 
-          <div className="mb-10">
-            <h1 className="text-4xl text-text font-bold"
-            >
-              Welcome back
+            <h1 className="text-3xl font-serif font-bold text-white text-balance">
+              Manage Your Construction Liens with Confidence
             </h1>
-            <p className="mt-2 text-textMuted">
-              Login to your account to continue
+
+            <p className="text-white/70 text-lg leading-relaxed">
+              Track deadlines, organize documents, and ensure compliance with state-specific lien laws
+              all in one powerful platform.
             </p>
+
+            <div className="flex flex-col gap-4 pt-4">
+              <div className="flex items-center gap-3 text-white/80">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <span className="text-sm font-semibold">1</span>
+                </div>
+                <span>Never miss critical deadlines</span>
+              </div>
+              <div className="flex items-center gap-3 text-white/80">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <span className="text-sm font-semibold">2</span>
+                </div>
+                <span>Keep all documents organized</span>
+              </div>
+              <div className="flex items-center gap-3 text-white/80">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <span className="text-sm font-semibold">3</span>
+                </div>
+                <span>Stay compliant with ease</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-background">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden mb-8 text-center">
+            <Link to="/" className="inline-flex items-center gap-2">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg gradient-primary glow-primary">
+                <Scale className="h-5 w-5 text-white" />
+              </div>
+              <span className="font-serif font-bold text-2xl text-foreground">LienPilot</span>
+            </Link>
+          </div>
+          <div>
+            <div className="space-y-2 mb-4">
+
+              <h2 className="text-3xl font-serif font-bold text-foreground">Welcome back</h2>
+              <p className="text-muted-foreground">
+                Sign in to access your legal practice dashboard
+              </p>
+            </div>
           </div>
 
-          {/* Error Message */}
+
           {(errorMessage || Object.keys(errors).length > 0) && (
             <div className="error-box">
               <AlertCircle className="text-red-500 w-5 h-5 mt-0.5 shrink-0" />
@@ -114,8 +171,7 @@ export default function LoginScreen() {
               </p>
             </div>
           )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 ">
             {/* Email */}
             <div className="space-y-2">
               <label className="text-sm font-semibold ml-1"
@@ -161,31 +217,44 @@ export default function LoginScreen() {
               </div>
             </div>
 
-            <PrimaryButton
-              type='submit'
-              label={BUTTON_TEXT.SIGN_IN}
-              loading={loading}
-              icon={<ArrowRight size={18} />}
-            />
-          </form>
 
-          <div className="mt-10 text-center">
-            <p className="text-slate-500 text-sm font-medium">
-              Don't have an account?{" "}
-              <LinkButton to="/signup" label='Create an account' />
-            </p>
-          </div>
-          <p className="text-slate-600 mt-6 text-center">
-            Switch to
-            <Link
-              to="/"
-              className="text-primary font-semibold hover:text-blue-700 transition-colors ml-2"
-            >
-              Main View
-            </Link>
-          </p>
+            <div className="space-y-3">
+              <Button
+                type="submit"
+                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                size="lg"
+                disabled={loading}
+              >
+                {loading ? "Signing in..." : "Sign In"}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+
+
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                size="lg"
+                onClick={() => navigate('/')}
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Go to Main View
+              </Button>
+
+              <p className="text-sm text-center text-muted-foreground">
+                Don’t have an account?{" "}
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="text-primary font-semibold hover:underline"
+                >
+                  Sign Up
+                </button>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+
   );
 }
