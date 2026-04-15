@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOut, Plus, Search, UserRound, X } from "lucide-react";
-import LogoImg from "../../../../public/logo.png";
+import LogoImg from "../../../../public/logo.svg";
 import { useGetProfileQuery } from "../../../features/lienAuth/profileApi";
 import { logout } from "../../../features/auth/authSlice";
 import { useAppDispatch } from "../../../store/hooks";
+import { handleAddProject } from "../../../utils/navigation";
 
 type Props = {
     setIsSideBarOpen: () => void;
@@ -89,6 +90,7 @@ const Topbar = ({ setIsSideBarOpen }: Props) => {
             </div>
             <div className="flex items-center gap-2">
                 <button
+                    onClick={() => handleAddProject(navigate)}
                     className="items-center justify-center whitespace-nowrap font-medium transition-all disabled:pointer-events-none 
                         disabled:opacity-50 shrink-0 outline-none  bg-primary text-textOnPrimary hover:bg-primary/90 rounded-md px-3 gap-1.5 h-8 sm:inline-flex"
                 >

@@ -45,7 +45,7 @@ const DeadlineViewModal = ({ isOpen, onClose, data }: DeadlineInfoProps) => {
             </DialogTitle>
             <DialogContent>
                 <div className="p-2 sm:p-6 space-y-4">
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Project Information</h4>
                         <div className="space-y-3">
                             <div>
@@ -75,7 +75,7 @@ const DeadlineViewModal = ({ isOpen, onClose, data }: DeadlineInfoProps) => {
                         </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Deadline Information</h4>
                         <div className="space-y-3">
                             <div className="flex items-start gap-3">
@@ -133,37 +133,36 @@ const DeadlineViewModal = ({ isOpen, onClose, data }: DeadlineInfoProps) => {
                             {(() => {
                                 const days = Number(data?.deadline?.daysRemaining);
 
-
                                 if (days < 0) {
                                     return (
                                         <>
-                                            <li className="list-disc">Contact all parties immediately to address this overdue deadline</li>
-                                            <li className="list-disc">Consult with legal counsel about potential remedies or extensions</li>
-                                            <li className="list-disc">Document all attempts to comply and any extenuating circumstances</li>
+                                            <li className="list-disc">Take immediate action to resolve this missed deadline and minimize impact</li>
+                                            <li className="list-disc">Evaluate available options, including legal guidance if required</li>
+                                            <li className="list-disc">Maintain records of all communications and efforts taken after the deadline</li>
                                         </>
                                     );
                                 } else if (days <= 3) {
                                     return (
                                         <>
-                                            <li className="list-disc">Finalize all required documents and verify accuracy</li>
-                                            <li className="list-disc">Confirm delivery method and recipient contact information</li>
-                                            <li className="list-disc">Prepare proof of delivery/filing for your records</li>
+                                            <li className="list-disc">Complete and double-check all required documents for accuracy</li>
+                                            <li className="list-disc">Verify recipient details and ensure delivery method is ready</li>
+                                            <li className="list-disc">Arrange proper tracking or confirmation for submission</li>
                                         </>
                                     );
                                 } else if (days <= 7) {
                                     return (
                                         <>
-                                            <li className="list-disc">Gather all necessary project documentation and supporting materials</li>
-                                            <li className="list-disc">Review state-specific requirements and filing procedures</li>
-                                            <li className="list-disc">Schedule time to prepare and review notices before submission</li>
+                                            <li className="list-disc">Prepare all necessary documents and supporting information</li>
+                                            <li className="list-disc">Review applicable rules and filing requirements</li>
+                                            <li className="list-disc">Allocate time to finalize and validate everything before submission</li>
                                         </>
                                     );
                                 } else {
                                     return (
                                         <>
-                                            <li className="list-disc">Review project details and verify all party information is current</li>
-                                            <li className="list-disc">Set calendar reminder for 7 days before deadline</li>
-                                            <li className="list-disc">Organize relevant contracts, invoices, and supporting documents</li>
+                                            <li className="list-disc">Check project details and ensure all information is up to date</li>
+                                            <li className="list-disc">Plan ahead by setting reminders before the deadline</li>
+                                            <li className="list-disc">Organize key documents such as contracts and invoices</li>
                                         </>
                                     );
                                 }
@@ -176,15 +175,15 @@ const DeadlineViewModal = ({ isOpen, onClose, data }: DeadlineInfoProps) => {
                         let tip = '';
 
                         if (action.includes('preliminary notice') || action.includes('prelim')) {
-                            tip = 'Preliminary notices must be sent within statutory timeframes (typically 20 days from first furnishing labor or materials). Missing this deadline may affect your lien rights.';
+                            tip = 'Preliminary notices should be issued within required timelines (commonly within 20 days of starting work). Delays may limit or affect your lien rights.';
                         } else if (action.includes('lien')) {
-                            tip = 'Mechanic\'s liens must typically be filed within 90 days of project completion or last work performed. Verify your state\'s specific deadline requirements.';
+                            tip = 'Mechanic’s liens generally need to be filed within a specific period (often around 90 days after last work or project completion). Always confirm local regulations.';
                         } else if (action.includes('notice of intent')) {
-                            tip = 'A Notice of Intent to Lien gives property owners advance warning and often motivates payment. Send it 10-20 days before filing an actual lien.';
+                            tip = 'Sending a Notice of Intent to Lien can encourage timely payment. It is typically recommended to send it a few weeks before filing the lien.';
                         } else if (action.includes('payment')) {
-                            tip = 'Include detailed line items, supporting documentation, and reference your contract terms. Keep copies of all submitted payment applications.';
+                            tip = 'Ensure payment requests include clear breakdowns, supporting documents, and contract references. Maintain records of all submissions.';
                         } else {
-                            tip = 'Always send notices via certified mail or another trackable delivery method. Keep proof of delivery and copies of all sent documents.';
+                            tip = 'Use reliable delivery methods such as certified or trackable services. Always retain proof of delivery and copies for future reference.';
                         }
 
                         return tip && (
@@ -204,7 +203,7 @@ const DeadlineViewModal = ({ isOpen, onClose, data }: DeadlineInfoProps) => {
             <DialogActions>
                 <button
                     onClick={onClose}
-                    className="w-full sm:w-auto px-6 py-3 text-slate-700 font-medium rounded-lg border border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 text-slate-700 font-medium rounded-lg border border-slate-300 hover:bg-primary/10 transition-colors flex items-center justify-center gap-2"
                 >
                     Cancel
                 </button>

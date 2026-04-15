@@ -8,6 +8,7 @@ type IconButtonProps = {
   size?: "sm" | "md" | "lg";
   className?: string;
   title?: string;
+  label?: string;
 };
 
 const variantStyles = {
@@ -34,19 +35,22 @@ const IconButton: React.FC<IconButtonProps> = ({
   size = "md",
   className,
   title,
+  label
 }) => {
   return (
     <button
       onClick={onClick}
       title={title}
       className={clsx(
-        "flex items-center justify-center rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/40",
+        "flex items-center gap-2 justify-center rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/40 w-auto px-4",
         variantStyles[variant],
         sizeStyles[size],
         className
       )}
     >
       <Icon className="w-4 h-4" />
+
+      {label}
     </button>
   );
 };

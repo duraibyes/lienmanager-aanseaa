@@ -20,6 +20,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
     const [previewFile, setPreviewFile] = useState<File | null>(null);
     const [data, setData] = useState<File[]>([]);
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(projectId || null);
+    const [loading, setLoading] = useState(false);
 
     const [uploadAzureDocument, { isLoading }] = useUploadAzureDocumentMutation();
 
@@ -91,6 +92,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
             Swal.fire("Error", "Please select files", "error");
             return;
         }
+        setLoading(true)
         try {
             let uploadedDocs = [];
             if (uploadedDocs.length === 0) {
@@ -126,6 +128,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
 
             setData([]);
             onClose();
+            setLoading(false)
 
         } catch (error) {
 
@@ -134,6 +137,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
                 title: "Error",
                 text: "Upload failed",
             });
+            setLoading(false)
 
         }
 
@@ -146,64 +150,83 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
             maxWidth="xl"
             fullWidth
         >
-            <DialogTitle>
+            <DialogTitle className="flex items-center justify-between">
                 Add Document
                 <ModalCloseBtn onClose={onClose} />
             </DialogTitle>
 
             <DialogContent>
                 <div className="bg-white rounded-xl mt-4 border border-slate-200 p-4 md:p-8">
-                    {projects?.length > 0 && (
-                        <div className="mb-6 w-full">
-                            <label htmlFor="project-select" className="block text-sm md:text-base font-medium text-slate-700 mb-2">
-                                Select Project *
-                            </label>
-                            <div className="relative w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-[3fr_1fr] gap-4">
+                        <div>
 
-                                <select
-                                    value={selectedProjectId ?? "0"}
-                                    required
-                                    onChange={(e) =>
-                                        setSelectedProjectId(
-                                            e.target.value === "0"
-                                                ? null
-                                                : Number(e.target.value)
-                                        )
-                                    }
-                                    className="w-full pl-4 pr-10 py-2.5 md:py-3 text-sm md:text-base 
+                            {projects?.length > 0 && (
+                                <div className="mb-6 w-full">
+                                    <label htmlFor="project-select" className="block text-sm md:text-base font-medium text-slate-700 mb-2">
+                                        Select Project *
+                                    </label>
+                                    <div className="relative w-full">
+
+                                        <select
+                                            value={selectedProjectId ?? "0"}
+                                            required
+                                            onChange={(e) =>
+                                                setSelectedProjectId(
+                                                    e.target.value === "0"
+                                                        ? null
+                                                        : Number(e.target.value)
+                                                )
+                                            }
+                                            className="w-full pl-4 pr-10 py-2.5 md:py-3 text-sm md:text-base 
                  border-2 border-slate-300 rounded-lg 
                  focus:ring-2 focus:ring-blue-500 focus:border-transparent 
                  appearance-none bg-white cursor-pointer"
-                                >
-                                    <option value="0">Select Project</option>
+                                        >
+                                            <option value="0">Select Project</option>
 
-                                    {projects?.map((project) => (
-                                        <option key={project.id} value={project.id}>
-                                            {project.name}
-                                        </option>
-                                    ))}
-                                </select>
+                                            {projects?.map((project) => (
+                                                <option key={project.id} value={project.id}>
+                                                    {project.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
+                                <input
+                                    type="file"
+                                    multiple
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                    id="file-upload"
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls"
+                                />
+                                <label htmlFor="file-upload" className="cursor-pointer">
+                                    <Upload className="w-10 h-10 md:w-16 md:h-16 text-slate-400 mx-auto mb-4" />
+                                    <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                                        Click to upload or drag and drop
+                                    </h3>
+                                    <p className="text-sm text-slate-600">
+                                        PDF, Word, Excel, or Image files (up to 2MB each)
+                                    </p>
+                                </label>
                             </div>
                         </div>
-                    )}
-                    <div className="border-2 border-dashed border-slate-300 rounded-xl p-12 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
-                        <input
-                            type="file"
-                            multiple
-                            onChange={handleFileChange}
-                            className="hidden"
-                            id="file-upload"
-                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls"
-                        />
-                        <label htmlFor="file-upload" className="cursor-pointer">
-                            <Upload className="w-10 h-10 md:w-16 md:h-16 text-slate-400 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                                Click to upload or drag and drop
-                            </h3>
-                            <p className="text-sm text-slate-600">
-                                PDF, Word, Excel, or Image files (up to 2MB each)
-                            </p>
-                        </label>
+                        <div>
+                            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h3 className="text-sm font-semibold text-blue-900 mb-2">Recommended Documents</h3>
+                                <ul className="text-sm text-blue-800 space-y-1">
+                                    <li>• Contract or Purchase Order</li>
+                                    <li>• Preliminary Notice (if already sent)</li>
+                                    <li>• Invoices and Payment Applications</li>
+                                    <li>• Change Orders or Amendments</li>
+                                    <li>• Proof of Delivery or Work Performed</li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
 
                     {/* Attachment Grid */}
@@ -288,16 +311,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
                         </div>
                     )}
 
-                    <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h3 className="text-sm font-semibold text-blue-900 mb-2">Recommended Documents</h3>
-                        <ul className="text-sm text-blue-800 space-y-1">
-                            <li>• Contract or Purchase Order</li>
-                            <li>• Preliminary Notice (if already sent)</li>
-                            <li>• Invoices and Payment Applications</li>
-                            <li>• Change Orders or Amendments</li>
-                            <li>• Proof of Delivery or Work Performed</li>
-                        </ul>
-                    </div>
+
                 </div>
             </DialogContent>
             <DialogActions>
@@ -311,7 +325,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
 
                 <button
                     onClick={handleSubmit}
-                    disabled={isLoading || data.length === 0 || !selectedProjectId}
+                    disabled={isLoading || data.length === 0 || !selectedProjectId || loading}
                     className={`
     px-8 py-2 font-semibold rounded-lg flex items-center gap-2 shadow-lg transition-colors
     ${isLoading || data.length === 0 || !selectedProjectId

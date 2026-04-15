@@ -44,7 +44,7 @@ const TaskView = ({ taskId, onClose }: TaskViewProps) => {
                 </div>
 
                 <div className="p-6 space-y-6">
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Task Information</h4>
                         <div className="space-y-3">
                             <div>
@@ -68,7 +68,7 @@ const TaskView = ({ taskId, onClose }: TaskViewProps) => {
                         </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Timeline</h4>
                         <div className="space-y-3">
                             <div className="flex items-start gap-3">
@@ -122,7 +122,7 @@ const TaskView = ({ taskId, onClose }: TaskViewProps) => {
                         </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Task User Details</h4>
                         <div className="space-y-3">
                             <div>
@@ -140,7 +140,7 @@ const TaskView = ({ taskId, onClose }: TaskViewProps) => {
                         </div>
                     </div>
 
-                    <div className="bg-slate-50 rounded-lg p-4">
+                    <div className="bg-primary/10 rounded-lg p-4">
                         <h4 className="text-sm font-semibold text-slate-600 mb-3">Notifications</h4>
                         <div className="flex items-center gap-3">
                             {taskDetail?.data?.email_alert ? (

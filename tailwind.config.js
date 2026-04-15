@@ -4,22 +4,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#0075be",        // clean blue (professional)
-        primaryHover: "#1d4ed8",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
 
-        textOnPrimary: "#ffffff",
-        textOnPrimaryMuted: "rgba(255,255,255,0.8)",
-        text: "#1f2937",
-        textMuted: "#6b7280",
+        card: "var(--card)",
+        "card-foreground": "var(--card-foreground)",
 
-        border: "#e5e7eb",
+        primary: "var(--primary)",
+        "primary-foreground": "var(--primary-foreground)",
 
-        danger: "#ef4444",
-        dangerBg: "#fef2f2",
+        secondary: "var(--secondary)",
+        "secondary-foreground": "var(--secondary-foreground)",
+
+        accent: "var(--accent)",
+        "accent-foreground": "var(--accent-foreground)",
+
+        muted: "var(--muted)",
+        "muted-foreground": "var(--muted-foreground)",
+
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
       },
-      backgroundImage: {
-        "primary-gradient":
-          "linear-gradient(-30deg, #0075be, #00aeea 100%)",
+
+      borderRadius: {
+        lg: "var(--radius)",
       },
     },
   },

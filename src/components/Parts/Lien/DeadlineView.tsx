@@ -6,12 +6,12 @@ const DeadlineView = ({ deadlines }: { deadlines: CalculatedDeadline[] }) => {
     return (
         <div className="space-y-3">
             {deadlines.length === 0 ? (
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-primary/10 rounded-lg shadow p-6">
                     <p className="text-gray-500">No deadlines set</p>
                 </div>
             ) : (
                 deadlines.map((deadline, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow p-4 sm:p-6">
+                    <div key={index} className="bg-primary/10 rounded-lg shadow p-4 sm:p-6">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                             <div className="flex items-start gap-3 flex-1">
                                 <div className={`p-2 rounded-lg ${deadline.is_late ? 'bg-red-100' : 'bg-green-100'
@@ -25,7 +25,7 @@ const DeadlineView = ({ deadlines }: { deadlines: CalculatedDeadline[] }) => {
                                 <div className="flex-1">
                                     <div className="flex flex-wrap items-center gap-2">
                                         <h3 className="font-medium text-gray-900">{deadline.title}</h3>
-                                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded">
+                                        <span className="px-2 py-1 bg-primary/10 text-gray-700 text-xs font-medium rounded">
                                             {deadline.requirement}
                                         </span>
                                     </div>
