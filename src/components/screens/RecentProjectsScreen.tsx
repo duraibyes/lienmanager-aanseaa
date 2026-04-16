@@ -129,70 +129,67 @@ export default function RecentProjectsScreen() {
         <NewProjectCreateCard />
       )}
 
-      <div className="px-2 sm:px-6">
+      <div className="mt-2">
+        <FilterPane
+          search={search}
+          setSearch={setSearch}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          stateFilter={stateFilter}
+          setStateFilter={setStateFilter}
+          stateData={stateData?.data || []}
+        />
+      </div>
 
-
-        <div className="mt-2">
-          <FilterPane
-            search={search}
-            setSearch={setSearch}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            stateFilter={stateFilter}
-            setStateFilter={setStateFilter}
-            stateData={stateData?.data || []}
+      <div className="bg-white rounded-lg border border-primary/50">
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid<DBProject>
+            rows={rows}
+            loading={isLoading}
+            columns={columns}
+            slots={{
+              noRowsOverlay: () => (
+                <div className="p-6 text-center">
+                  {debouncedSearch
+                    ? `No results for "${debouncedSearch}"`
+                    : "No projects available"}
+                </div>
+              ),
+            }}
+            getRowId={(row) => row.id}
+            rowCount={total}
+            paginationMode="server"
+            sortingMode="server"
+            pageSizeOptions={[10, 25, 50]}
+            paginationModel={{ page, pageSize }}
+            onPaginationModelChange={(model) => {
+              setPage(model.page);
+              setPageSize(model.pageSize);
+            }}
+            onSortModelChange={(model) => setSortModel([...model])}
+            sx={{
+              border: "none",
+              "& .MuiDataGrid-columnHeader": {
+                backgroundColor: "darkorange",
+              },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                fontWeight: 600,
+                color: "#fff", // slate-700
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                borderBottom: "1px solid #e2e8f0",
+              },
+              "& .MuiDataGrid-columnHeader:hover": {
+                backgroundColor: "orange",
+              },
+              "& .MuiDataGrid-row:hover": {
+                backgroundColor: "#f8e9cd",
+              },
+            }}
           />
         </div>
-
-        <div className="bg-white rounded-lg border border-slate-200">
-          <div style={{ height: 600, width: "100%" }}>
-            <DataGrid<DBProject>
-              rows={rows}
-              loading={isLoading}
-              columns={columns}
-              slots={{
-                noRowsOverlay: () => (
-                  <div className="p-6 text-center">
-                    {debouncedSearch
-                      ? `No results for "${debouncedSearch}"`
-                      : "No projects available"}
-                  </div>
-                ),
-              }}
-              getRowId={(row) => row.id}
-              rowCount={total}
-              paginationMode="server"
-              sortingMode="server"
-              pageSizeOptions={[10, 25, 50]}
-              paginationModel={{ page, pageSize }}
-              onPaginationModelChange={(model) => {
-                setPage(model.page);
-                setPageSize(model.pageSize);
-              }}
-              onSortModelChange={(model) => setSortModel([...model])}
-              sx={{
-                border: "none",
-                "& .MuiDataGrid-columnHeader": {
-                  backgroundColor: "#0075be",
-                },
-                "& .MuiDataGrid-columnHeaderTitle": {
-                  fontWeight: 600,
-                  color: "#fff", // slate-700
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  borderBottom: "1px solid #e2e8f0",
-                },
-                "& .MuiDataGrid-columnHeader:hover": {
-                  backgroundColor: "#1d4ed8",
-                },
-                "& .MuiDataGrid-row:hover": {
-                  backgroundColor: "rgb(248 250 252)",
-                },
-              }}
-            />
-          </div>
-        </div>
       </div>
+
     </PageContainer>
   );
 }

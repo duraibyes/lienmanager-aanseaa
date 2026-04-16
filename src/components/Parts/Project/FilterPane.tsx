@@ -58,25 +58,27 @@ export default function FilterPane({
       <div className="flex items-center gap-2 flex-wrap bg-white rounded-2xl border border-slate-100 shadow-sm px-4 py-2.5">
 
         {/* Search */}
-        <div className={`flex items-center gap-2 flex-1 min-w-[200px] ${H} px-3 bg-slate-50 border border-slate-100 rounded-xl`}>
-          <Search className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+        <div className="relative group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
           <input
             type="text"
-            placeholder="Search projects, customers…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder:text-slate-400"
+            placeholder="Search projects, customers…"
+            className="w-full pl-12 pr-12 py-2 bg-white border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all"
           />
           {search && (
-            <button onClick={() => setSearch("")} className="text-slate-400 hover:text-slate-600 transition-colors">
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+            >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
-
         <Divider />
 
-        {/* Status segmented control */}
         <div className="flex items-center gap-0.5 p-0.5 bg-slate-50 border border-slate-100 rounded-xl">
           {statusOptions.map(({ value, label }) => {
             const active = statusFilter === value;
@@ -85,7 +87,7 @@ export default function FilterPane({
                 key={value}
                 onClick={() => setStatusFilter(value)}
                 className={`px-3.5 py-1.5 rounded-[9px] text-xs font-semibold transition-all duration-150 whitespace-nowrap ${active
-                  ? "bg-white text-[#0075be] border border-slate-200 shadow-sm"
+                  ? "bg-white text-primary border border-slate-200 shadow-sm"
                   : "text-slate-500 hover:text-slate-700"
                   }`}
               >
@@ -120,7 +122,7 @@ export default function FilterPane({
             <Divider />
             <button
               onClick={handleClear}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#0075be] bg-blue-50 border border-blue-100 hover:bg-blue-100 transition-colors whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-primary bg-primary/10 border border-border-primary/10 hover:bg-primary/30 transition-colors whitespace-nowrap"
             >
               <X className="w-3.5 h-3.5" />
               Clear filters
