@@ -1,10 +1,13 @@
-import { Plus, Search } from "lucide-react"
-import { useLocation } from "react-router-dom";
+import { ArrowRight, Plus, Search, Upload } from "lucide-react"
+import { Link, useLocation } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { useGetAllProjectsQuery, useGetProjectDocumentQuery } from "../../features/document/DocumentApi";
 import AddDocumentModal from "../Parts/Document/AddDocumentModal";
 import IconButton from "../Button/IconButton";
 import DocumentListCard from "../Parts/Document/DocumentListCard";
+import { PageContainer, PageHeader } from "../layout/page-wrapper";
+import { PageSubtitle, PageTitle } from "../ui/typography";
+import { Button } from "../ui/button";
 
 const DocumentScreen = () => {
     const location = useLocation();
@@ -63,30 +66,31 @@ const DocumentScreen = () => {
         setShowModal(false);
     }
 
-    console.log('  filteredDocuments ', filteredDocuments);
-    console.log(' selectedProject ', selectedProject)
-    console.log(' selectedId ', selectedId)
-
     return (
-        <div className="px-2 sm:px-6">
-            <div className="mb-6 sm:mb-8 px-3 sm:px-0">
-
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-
-                    {/* Title Section */}
-                    <div className="text-center sm:text-left">
-                        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1 sm:mb-2">
-                            Documents
-                        </h1>
-                        <p className="text-sm sm:text-base text-slate-600">
+        <PageContainer>
+            <PageHeader>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <PageTitle> Documents </PageTitle>
+                        <PageSubtitle className="mt-1">
                             Keep all your project files in one centralized place
-                        </p>
+                        </PageSubtitle>
                     </div>
-
-                    <IconButton label="Add Document" icon={Plus} variant="primary" onClick={() => setShowAddModal(true)} />
-
+                    <div className="flex items-center gap-2">
+                        <Button className="gradient-primary hover:opacity-90" onClick={() => setShowAddModal(true)} >
+                            Upload Document
+                            <Upload className="ml-2 h-4 w-4" />
+                        </Button>
+                        <Link to="/project/create">
+                            <Button className="gradient-primary hover:opacity-90">
+                                New Project
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
+            </PageHeader>
+            <div className="mb-6 sm:mb-8 px-3 sm:px-0">
 
                 <div className="flex flex-col lg:flex-row gap-4">
 
@@ -175,7 +179,7 @@ const DocumentScreen = () => {
                 <AddDocumentModal show={showModal} projectId={selectedId} onClose={handleModalClose} />}
 
 
-        </div >
+        </PageContainer>
     )
 }
 

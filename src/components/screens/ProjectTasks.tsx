@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { DataGrid, GridColDef, GridSortModel } from '@mui/x-data-grid';
-import { useLocation } from 'react-router-dom';
-import { Eye } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, Eye } from 'lucide-react';
 import TotalCountCards from '../Parts/Task/TotalCountCards';
 import { useGetTasksQuery } from '../../features/task/taskDataApi';
 import FilterPane from '../Parts/Task/FilterPane';
 import { DBTask } from '../../types/tasks';
 import TaskView from '../Parts/Task/TaskView';
 import IconButton from '../Button/IconButton';
+import { PageContainer, PageHeader } from '../layout/page-wrapper';
+import { PageSubtitle, PageTitle } from '../ui/typography';
+import { Button } from '../ui/button';
 
 export default function ProjectTasks() {
     const location = useLocation();
@@ -100,77 +103,82 @@ export default function ProjectTasks() {
     }, [search]);
 
     return (
-        <div className="min-h-screen bg-slate-50">
-
-            <div className="px-2 sm:px-6">
-                <div className='flex flex-col sm:flex-row justify-between items-center'>
-                    <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-slate-900 mb-2">Project Tasks</h1>
-                        <p className="text-lg text-slate-600">
+        <PageContainer>
+            <PageHeader>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <PageTitle> Tasks </PageTitle>
+                        <PageSubtitle className="mt-1">
                             Track and manage all your construction project tasks and deadlines
-                        </p>
+                        </PageSubtitle>
                     </div>
-                    <TotalCountCards />
+                    <Link to="/project/create">
+                        <Button className="gradient-primary hover:opacity-90">
+                            New Project
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                    </Link>
                 </div>
+            </PageHeader>
+            <TotalCountCards />
 
-                <FilterPane
-                    filterStatus={actionFilter}
-                    setFilterStatus={setActionFilter}
-                    search={search}
-                    setSearch={setSearch}
-                />
+            <FilterPane
+                filterStatus={actionFilter}
+                setFilterStatus={setActionFilter}
+                search={search}
+                setSearch={setSearch}
+            />
 
-                <div className="bg-white rounded-lg border border-slate-200">
-                    <div style={{ height: 600, width: "100%" }}>
-                        <DataGrid<DBTask>
-                            rows={rows}
-                            loading={isLoading}
-                            columns={columns}
-                            slots={{
-                                noRowsOverlay: () => (
-                                    <div className="p-6 text-center">
-                                        {debouncedSearch
-                                            ? `No results for "${debouncedSearch}"`
-                                            : "No projects available"}
-                                    </div>
-                                ),
-                            }}
-                            getRowId={(row) => row.id}
-                            rowCount={total}
-                            paginationMode="server"
-                            sortingMode="server"
-                            pageSizeOptions={[10, 25, 50]}
-                            paginationModel={{ page, pageSize }}
-                            onPaginationModelChange={(model) => {
-                                setPage(model.page);
-                                setPageSize(model.pageSize);
-                            }}
-                            onSortModelChange={(model) => setSortModel([...model])}
-                            sx={{
-                                border: "none",
-                                "& .MuiDataGrid-columnHeader": {
-                                    backgroundColor: "#0075be",
-                                },
-                                "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: 600,
-                                    color: "#fff", // slate-700
-                                },
-                                "& .MuiDataGrid-columnHeaders": {
-                                    borderBottom: "1px solid #e2e8f0",
-                                },
-                                "& .MuiDataGrid-columnHeader:hover": {
-                                    backgroundColor: "#1d4ed8",
-                                },
-                                "& .MuiDataGrid-row:hover": {
-                                    backgroundColor: "rgb(248 250 252)",
-                                },
-                            }}
-                        />
-                    </div>
+            <div className="bg-white rounded-lg border border-slate-200">
+                <div style={{ height: 600, width: "100%" }}>
+                    <DataGrid<DBTask>
+                        rows={rows}
+                        loading={isLoading}
+                        columns={columns}
+                        slots={{
+                            noRowsOverlay: () => (
+                                <div className="p-6 text-center">
+                                    {debouncedSearch
+                                        ? `No results for "${debouncedSearch}"`
+                                        : "No projects available"}
+                                </div>
+                            ),
+                        }}
+                        getRowId={(row) => row.id}
+                        rowCount={total}
+                        paginationMode="server"
+                        sortingMode="server"
+                        pageSizeOptions={[10, 25, 50]}
+                        paginationModel={{ page, pageSize }}
+                        onPaginationModelChange={(model) => {
+                            setPage(model.page);
+                            setPageSize(model.pageSize);
+                        }}
+                        onSortModelChange={(model) => setSortModel([...model])}
+                        sx={{
+                            border: "none",
+                            "& .MuiDataGrid-columnHeader": {
+                                backgroundColor: "#d0744b",
+                            },
+                            "& .MuiDataGrid-columnHeaderTitle": {
+                                fontWeight: 600,
+                                color: "#fff", // slate-700
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                                borderBottom: "1px solid #e2e8f0",
+                            },
+                            "& .MuiDataGrid-columnHeader:hover": {
+                                backgroundColor: "orange",
+                            },
+                            "& .MuiDataGrid-row:hover": {
+                                backgroundColor: "#f8e9cd",
+                            },
+                        }}
+                    />
                 </div>
             </div>
 
             {selectedTask && <TaskView taskId={selectedTask} onClose={() => setSelectedTask(null)} />}
-        </div>
+        </PageContainer >
     );
 }

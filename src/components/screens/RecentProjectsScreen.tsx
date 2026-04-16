@@ -170,7 +170,7 @@ export default function RecentProjectsScreen() {
             sx={{
               border: "none",
               "& .MuiDataGrid-columnHeader": {
-                backgroundColor: "darkorange",
+                backgroundColor: "#d0744b",
               },
               "& .MuiDataGrid-columnHeaderTitle": {
                 fontWeight: 600,

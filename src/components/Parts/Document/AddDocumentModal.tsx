@@ -147,17 +147,23 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
         <Dialog
             open={show}
             onClose={onClose}
-            maxWidth="xl"
+            maxWidth="sm"
             fullWidth
         >
             <DialogTitle className="flex items-center justify-between">
-                Add Document
+                <div>
+                    <p>Upload Document</p>
+                    <p className="text-sm text-slate-500">
+                        Upload a document to one of your projects
+                    </p>
+                </div>
+
                 <ModalCloseBtn onClose={onClose} />
             </DialogTitle>
 
             <DialogContent>
                 <div className="bg-white rounded-xl mt-4 border border-slate-200 p-4 md:p-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-[3fr_1fr] gap-4">
+                    <div className="grid grid-cols-1gap-4">
                         <div>
 
                             {projects?.length > 0 && (
@@ -179,7 +185,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
                                             }
                                             className="w-full pl-4 pr-10 py-2.5 md:py-3 text-sm md:text-base 
                  border-2 border-slate-300 rounded-lg 
-                 focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                 focus:ring-2 focus:ring-input focus:border-primary 
                  appearance-none bg-white cursor-pointer"
                                         >
                                             <option value="0">Select Project</option>
@@ -194,7 +200,7 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
                                 </div>
                             )}
 
-                            <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
+                            <div className="border-2 border-dashed border-primary/90 rounded-xl p-6 text-center hover:border-primary hover:bg-primary/10 transition-all">
                                 <input
                                     type="file"
                                     multiple
@@ -204,29 +210,16 @@ const AddDocumentModal = ({ show, onClose, projectId, projects = [] }: AddDocume
                                     accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls"
                                 />
                                 <label htmlFor="file-upload" className="cursor-pointer">
-                                    <Upload className="w-10 h-10 md:w-16 md:h-16 text-slate-400 mx-auto mb-4" />
+                                    <Upload className="w-10 h-10 md:w-16 md:h-16 text-primary mx-auto mb-4" />
                                     <h3 className="text-lg font-semibold text-slate-900 mb-2">
                                         Click to upload or drag and drop
                                     </h3>
-                                    <p className="text-sm text-slate-600">
+                                    <p className="text-sm text-primary/20">
                                         PDF, Word, Excel, or Image files (up to 2MB each)
                                     </p>
                                 </label>
                             </div>
                         </div>
-                        <div>
-                            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                <h3 className="text-sm font-semibold text-blue-900 mb-2">Recommended Documents</h3>
-                                <ul className="text-sm text-blue-800 space-y-1">
-                                    <li>• Contract or Purchase Order</li>
-                                    <li>• Preliminary Notice (if already sent)</li>
-                                    <li>• Invoices and Payment Applications</li>
-                                    <li>• Change Orders or Amendments</li>
-                                    <li>• Proof of Delivery or Work Performed</li>
-                                </ul>
-                            </div>
-                        </div>
-
                     </div>
 
                     {/* Attachment Grid */}

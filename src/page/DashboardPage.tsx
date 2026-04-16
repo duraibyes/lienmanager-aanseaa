@@ -130,7 +130,7 @@ export default function DashboardPage() {
               Welcome back! Here&apos;s an overview of your projects.
             </PageSubtitle>
           </div>
-          <Link to="/projects/create">
+          <Link to="/project/create">
             <Button className="gradient-primary hover:opacity-90">
               New Project
               <ArrowRight className="ml-2 h-4 w-4" />
