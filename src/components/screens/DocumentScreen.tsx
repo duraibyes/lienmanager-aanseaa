@@ -66,6 +66,10 @@ const DocumentScreen = () => {
         setShowModal(false);
     }
 
+    console.log('  filteredDocuments ', filteredDocuments);
+    console.log(' selectedProject ', selectedProject)
+    console.log(' selectedId ', selectedId)
+
     return (
         <PageContainer>
             <PageHeader>
