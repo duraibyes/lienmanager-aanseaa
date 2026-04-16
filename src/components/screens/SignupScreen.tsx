@@ -2,21 +2,20 @@ import { useState } from 'react';
 import {
   Mail,
   Lock,
-  AlertCircle,
   EyeOff,
   Eye,
   ArrowRight,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
 import { validateEmail, validatePassword } from '../../utils/validation';
 import { useAppDispatch } from '../../store/hooks';
 import { useSignupMutation } from '../../features/auth/authApi';
 import { setCredentials } from '../../features/auth/authSlice';
 import { AuthLeftPanel } from '../layout/auth/AuthLeftPanel';
-import { COPY_RIGHT } from '../../utils/config';
-import { PrimaryButton } from '../Button/PrimaryButton';
-import { BUTTON_TEXT } from '../../types/button';
 import LinkButton from '../Button/LinkButton';
+import { Button } from '../ui/button';
+import ErrorBox from '../Parts/ErrorBox';
 
 export default function SignupScreen() {
   const dispatch = useAppDispatch();
@@ -82,34 +81,27 @@ export default function SignupScreen() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-white font-sans">
+    <div className="min-h-screen flex font-serif">
 
       {/* Left Section: Branding & Social Proof */}
-      <AuthLeftPanel
-        title="Start managing your projects with precision."
-        subtitle="Join a community of professionals who value efficiency and clean design."
-        footer={<span>{COPY_RIGHT}</span>}
-      />
+      <AuthLeftPanel />
 
       {/* Right Section: Form */}
       <div className="flex items-center justify-center p-8 sm:p-12 lg:p-20 bg-slate-50/30">
         <div className="w-full max-w-[420px]">
 
-          <div className="mb-8 text-left">
-            <h1 className="text-4xl text-text font-bold" >
-              Create Account
-            </h1>
-            <p className="text-textMuted mt-2">Get started with your free trial.</p>
+          <div className="space-y-2 mb-4">
+            <h2 className="text-3xl font-serif font-bold text-foreground">Create Account</h2>
+            <p className="text-muted-foreground">
+              Get started with LienPilot to manage your construction projects
+            </p>
           </div>
 
           {error && (
-            <div className="error-box">
-              <AlertCircle className="text-red-500 w-5 h-5 mt-0.5 shrink-0" />
-              <p className="error-text">{error}</p>
-            </div>
+            <ErrorBox error={error} />
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 mt-4">
             {/* Email Address */}
             <div className="space-y-2">
               <label
@@ -184,12 +176,15 @@ export default function SignupScreen() {
               </div>
             </div>
 
-            <PrimaryButton
-              type='submit'
-              label={BUTTON_TEXT.SIGN_UP}
-              loading={loading}
-              icon={<ArrowRight size={18} />}
-            />
+            <Button
+              type="submit"
+              className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+              size="lg"
+              disabled={loading}
+            >
+              {loading ? "Creating ..." : "Create Account"}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </form>
 
           <div className="mt-10 text-center">

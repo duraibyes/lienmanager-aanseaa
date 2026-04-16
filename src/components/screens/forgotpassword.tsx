@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { Mail, AlertCircle, CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../utils/validation';
-import { COPY_RIGHT } from '../../utils/config';
 import { AuthLeftPanel } from '../layout/auth/AuthLeftPanel';
-import { PrimaryButton } from '../Button/PrimaryButton';
 import { BUTTON_TEXT } from '../../types/button';
-import CancelButton from '../Button/CancelButton';
+import { Button } from '../ui/button';
 
 export default function ForgotPasswordScreen() {
     const navigate = useNavigate();
@@ -45,20 +43,12 @@ export default function ForgotPasswordScreen() {
     };
 
     return (
-        <div className="min-h-screen grid lg:grid-cols-2 bg-white font-sans">
+        <div className="min-h-screen flex font-serif">
 
-            {/* Left Section: Branding & Info */}
-            <AuthLeftPanel
-                title="Secure access to your workspace."
-                subtitle="Don't worry, it happens to the best of us. Enter your registered email and we'll help you get back on track."
-                footer={<span>{COPY_RIGHT}</span>}
-            />
+            <AuthLeftPanel />
 
-            {/* Right Section: Form */}
-            <div className="flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-slate-50/30">
-                <div className="w-full max-w-[400px]">
-
-                    {/* Header */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-background">
+                <div className="w-full max-w-md">
                     <div className="mb-10 text-left">
                         <button
                             onClick={() => navigate('/login')}
@@ -73,7 +63,6 @@ export default function ForgotPasswordScreen() {
                         <p className="text-textMuted mt-2">Enter your email to receive a reset link</p>
                     </div>
 
-                    {/* Feedback Messages */}
                     {error && (
                         <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 animate-in fade-in slide-in-from-top-2">
                             <AlertCircle className="text-red-500 w-5 h-5 mt-0.5 shrink-0" />
@@ -89,11 +78,9 @@ export default function ForgotPasswordScreen() {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Email Field */}
                         <div className="space-y-2">
                             <label
                                 className="text-sm font-bold ml-1"
-
                             >
                                 Email Address
                             </label>
@@ -111,16 +98,27 @@ export default function ForgotPasswordScreen() {
                             </div>
                         </div>
 
-                        {/* Action Buttons */}
                         <div className="flex flex-col gap-3">
-                            <PrimaryButton
-                                type='submit'
-                                label={BUTTON_TEXT.RESET_LINK}
-                                loading={loading || !!success}
-                                icon={<ArrowRight size={18} />}
-                            />
+                            <Button
+                                type="submit"
+                                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                                size="lg"
+                                disabled={loading || !!success}
+                            >
+                                {loading ? "Sending ..." : BUTTON_TEXT.RESET_LINK}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
 
-                            <CancelButton label='Cancel' onClick={() => navigate('/login')} />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="w-full"
+                                size="lg"
+                                onClick={() => navigate('/login')}
+                            >
+                                <ArrowLeft className="mr-2 h-4 w-4" />
+                                Cancel
+                            </Button>
                         </div>
                     </form>
 

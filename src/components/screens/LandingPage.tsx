@@ -1,8 +1,6 @@
 
-import { Button } from "../ui/button"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import {
     Scale,
     Shield,
@@ -16,6 +14,8 @@ import {
     Briefcase
 } from "lucide-react"
 import { setView } from "@/store/slices/viewSlice";
+
+import { Button } from "../ui/button"
 
 const memberFeatures = [
     {
@@ -89,9 +89,7 @@ export default function LandingPage() {
 
     return (
         <div className="min-h-screen">
-            {/* Hero Section */}
             <section className="relative overflow-hidden gradient-hero min-h-[90vh] flex items-center">
-                {/* Animated Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
                     <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -103,13 +101,11 @@ export default function LandingPage() {
                     </svg>
                 </div>
 
-                {/* Decorative Elements */}
                 <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-primary/20 blur-3xl" />
                 <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl" />
 
                 <div className="container mx-auto px-4 md:px-6 py-20 relative z-10">
                     <div className="max-w-4xl mx-auto text-center space-y-8">
-                        {/* Logo */}
                         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-dark border border-white/10">
                             <div className="flex items-center justify-center w-10 h-10 rounded-lg gradient-primary glow-primary">
                                 <Scale className="h-5 w-5 text-white" />
@@ -117,7 +113,6 @@ export default function LandingPage() {
                             <span className="font-serif font-bold text-2xl text-white">LienPilot</span>
                         </div>
 
-                        {/* Headline */}
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight text-balance">
                             Master Construction Lien{" "}
                             <span className="text-transparent bg-clip-text gradient-accent bg-gradient-to-r from-primary to-accent">
@@ -125,13 +120,11 @@ export default function LandingPage() {
                             </span>
                         </h1>
 
-                        {/* Subheadline */}
                         <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed text-pretty">
                             The smart platform for managing construction liens, notices, deadlines, and documentation.
                             Never miss a critical deadline again.
                         </p>
 
-                        {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                             <Button size="lg" onClick={handleMemberView} className="w-full sm:w-auto text-lg px-8 py-6 gradient-primary hover:opacity-90 glow-primary">
                                 <Briefcase className="mr-2 h-5 w-5" />
@@ -145,7 +138,6 @@ export default function LandingPage() {
                             </Button>
                         </div>
 
-                        {/* Trust Indicators */}
                         <div className="pt-8 flex flex-wrap gap-6 justify-center text-white/50 text-sm">
                             <span className="flex items-center gap-2">
                                 <CheckCircle2 className="h-4 w-4 text-primary" />
@@ -163,7 +155,6 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                {/* Wave Divider */}
                 <div className="absolute bottom-0 left-0 right-0">
                     <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
                         <path
@@ -174,7 +165,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Why LienPilot Section */}
             <section className="py-20 md:py-32 bg-background">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="text-center max-w-3xl mx-auto mb-16">
@@ -204,7 +194,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Member Portal Features */}
             <section className="py-20 md:py-32 bg-muted/30">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -241,11 +230,9 @@ export default function LandingPage() {
                             </Button>
                         </div>
 
-                        {/* Visual Element */}
                         <div className="relative">
                             <div className="aspect-square rounded-2xl gradient-hero p-8 flex items-center justify-center">
                                 <div className="w-full max-w-sm space-y-4">
-                                    {/* Mock Dashboard Cards */}
                                     <div className="glass rounded-xl p-4 space-y-2">
                                         <div className="flex items-center justify-between">
                                             <span className="text-sm ">Active Projects</span>
@@ -269,22 +256,18 @@ export default function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Decorative */}
                             <div className="absolute -z-10 -bottom-6 -right-6 w-full h-full rounded-2xl border-2 border-primary/20" />
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Attorney Portal Features */}
             <section className="py-20 md:py-32 bg-background">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                        {/* Visual Element */}
                         <div className="relative order-2 lg:order-1">
                             <div className="aspect-square rounded-2xl bg-secondary p-8 flex items-center justify-center">
                                 <div className="w-full max-w-sm space-y-4">
-                                    {/* Mock Attorney Dashboard */}
                                     <div className="bg-card rounded-xl p-4 space-y-2 shadow-lg">
                                         <div className="flex items-center justify-between">
                                             <span className="text-sm text-muted-foreground">Active Cases</span>
@@ -308,7 +291,6 @@ export default function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            {/* Decorative */}
                             <div className="absolute -z-10 -top-6 -left-6 w-full h-full rounded-2xl border-2 border-primary/20" />
                         </div>
 
@@ -348,7 +330,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* CTA Section */}
             <section className="py-20 md:py-32 gradient-hero relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
                     <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -384,7 +365,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer className="py-12 bg-secondary">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -394,8 +374,6 @@ export default function LandingPage() {
                             </div>
                             <span className="font-serif font-bold text-lg text-secondary-foreground">LienPilot</span>
                         </div>
-
-
                         <p className="text-sm text-gray-400">
                             &copy; {new Date().getFullYear()} LienPilot. All rights reserved.
                         </p>
