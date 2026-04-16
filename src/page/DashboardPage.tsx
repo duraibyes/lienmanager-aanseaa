@@ -119,6 +119,7 @@ const chartConfig = {
 }
 
 export default function DashboardPage() {
+
   return (
     <PageContainer>
       <PageHeader>

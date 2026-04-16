@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { DataGrid, GridColDef, GridSortModel } from "@mui/x-data-grid";
 
 import TotalCountCards from "../Parts/Project/TotalCountCards";
@@ -10,6 +12,9 @@ import ActionColumn from "../Parts/Project/ActionColumn";
 import QuickActionColumn from "../Parts/Project/QuickActionColumn";
 import NewProjectCreateCard from "../Parts/Project/NewProjectCreateCard";
 import LinkButton from "../Button/LinkButton";
+import { PageContainer, PageHeader } from "../layout/page-wrapper";
+import { PageSubtitle, PageTitle } from "../ui/typography";
+import { Button } from "../ui/button";
 
 export default function RecentProjectsScreen() {
   const [page, setPage] = useState(0);
@@ -100,26 +105,32 @@ export default function RecentProjectsScreen() {
   }, [search]);
 
   return (
-    <div className="min-h-screen bg-slate-50/70 font-sans antialiased">
+    <PageContainer>
+      <PageHeader>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <PageTitle>Projects</PageTitle>
+            <PageSubtitle className="mt-1">
+              Welcome back! Here&apos;s an overview of your projects.
+            </PageSubtitle>
+          </div>
+          <Link to="/project/create">
+            <Button className="gradient-primary hover:opacity-90">
+              New Project
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </PageHeader>
+      {/* Stats Grid */}
+      <TotalCountCards />
+
+      {overall_total === 0 && !isLoading && (
+        <NewProjectCreateCard />
+      )}
+
       <div className="px-2 sm:px-6">
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
-          <div className="flex flex-col">
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-none">
-              Projects
-            </h1>
-            <p className="text-slate-500 text-xs sm:text-sm mt-2 font-normal">
-              Oversee and manage your industrial project portfolio
-            </p>
-          </div>
-
-          <div className="w-full lg:w-auto">
-            <TotalCountCards />
-          </div>
-        </div>
-        {overall_total === 0 && !isLoading && (
-          <NewProjectCreateCard />
-        )}
 
         <div className="mt-2">
           <FilterPane
@@ -182,6 +193,6 @@ export default function RecentProjectsScreen() {
           </div>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

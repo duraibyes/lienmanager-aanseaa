@@ -6,7 +6,6 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import ProjectCreateWizard from "./components/screens/ProjectCreateWizard";
 import OnboardingScreen from "./components/screens/OnboardingScreen";
-import { Template } from "./components/layout/member/Template";
 import QuickRemediesScreen from "./components/screens/QuickRemediesScreen";
 import RecentProjectsScreen from "./components/screens/RecentProjectsScreen";
 import ProjectViewScreen from "./components/screens/ProjectViewScreen";
@@ -75,37 +74,37 @@ function App() {
           }
           />
           <Route path="/projects" element={
-            <ProtectedRoute><Template content={<RecentProjectsScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<RecentProjectsScreen />} /></ProtectedRoute>
           } />
           <Route path="/profile" element={
-            <ProtectedRoute><Template content={<MemberProfile />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<MemberProfile />} /></ProtectedRoute>
           } />
           <Route path="/project/:projectId" element={
             <ProtectedRoute>
-              <Template content={<ProjectViewScreen />} />
+              <DashboardLayout children={<ProjectViewScreen />} />
             </ProtectedRoute>
           } />
           <Route path="/tasks" element={
-            <ProtectedRoute><Template content={<ProjectTasks />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<ProjectTasks />} /></ProtectedRoute>
           }
           />
           <Route path="/contacts" element={
-            <ProtectedRoute><Template content={<RecentContactsScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<RecentContactsScreen />} /></ProtectedRoute>
           }
           />
           <Route path="/documents" element={
-            <ProtectedRoute><Template content={<DocumentScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<DocumentScreen />} /></ProtectedRoute>
           }
           />
           <Route path="/customer-contacts" element={
-            <ProtectedRoute><Template content={<ContactScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<ContactScreen />} /></ProtectedRoute>
           }
           />
           <Route path="/deadlines" element={
-            <ProtectedRoute><Template content={<DeadlineScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<DeadlineScreen />} /></ProtectedRoute>
           } />
           <Route path="/quick-remedies" element={
-            <ProtectedRoute><Template content={<QuickRemediesScreen />} /></ProtectedRoute>
+            <ProtectedRoute><DashboardLayout children={<QuickRemediesScreen />} /></ProtectedRoute>
           }
           />
           <Route path="/attorney/login" element={

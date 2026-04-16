@@ -8,7 +8,6 @@ import { initialProjectWizardData, ProjectWizardData } from "../../types/project
 import DetailsStep from "../wizard/projects/DetailsStep";
 import DatesStep from "../wizard/projects/DatesStep";
 import { useGetCountriesQuery, useGetProjectRolesQuery, useGetProjectTypesQuery } from "../../features/master/masterDataApi";
-import { Template } from "../layout/member/Template";
 import { useGetProjectInfoQuery, useSubmitProjectMutation } from "../../features/project/projectDataApi";
 import { SESSION_WIZARD_KEY } from "../../utils/constant";
 import DescriptionStep from "../wizard/projects/DescriptionStep";
@@ -20,6 +19,7 @@ import TasksStep from "../wizard/projects/TasksStep";
 import SummaryStep from "../wizard/projects/SummaryStep";
 import InfoSheetStep from "../wizard/projects/InfoSheetStep";
 import { uploadToAzure } from "../../utils/azureUpload";
+import DashboardLayout from "@/page/DashboardLayout";
 
 const ProjectCreateWizard = () => {
     const { projectId: routeProjectId } = useParams<{ projectId?: string }>();
@@ -371,7 +371,7 @@ const ProjectCreateWizard = () => {
         }
     };
     return (
-        <Template content={
+        <DashboardLayout children={
             <>
                 <ProjectWizardStepper
                     currentStep={currentStep}
@@ -383,9 +383,9 @@ const ProjectCreateWizard = () => {
                 </div>
             </>
         }
-            wizardMode={true}
-            saveAndExit={saveAndExit}
-            saveAndExitDisabled={saveLoading}
+        // wizardMode={true}
+        // saveAndExit={saveAndExit}
+        // saveAndExitDisabled={saveLoading}
         />
 
     )

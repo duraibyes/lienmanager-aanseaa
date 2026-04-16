@@ -1,6 +1,6 @@
 
-import { useLocation } from "react-router-dom"
-import { useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useCallback, useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,16 +19,15 @@ import {
     Calendar,
     CheckSquare,
     Calculator,
-    BookOpen,
-    HelpCircle,
     User,
-    Settings,
     LogOut,
     Menu,
     ChevronDown,
     Scale
 } from "lucide-react"
 import { Link } from "react-router-dom"
+import { logout } from "@/features/auth/authSlice"
+import { useDispatch } from "react-redux"
 
 const mainNavItems = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -40,21 +39,30 @@ const mainNavItems = [
 ]
 
 const moreNavItems = [
-    { href: "/quick-calculation", label: "Quick Deadline Calculation", icon: Calculator },
-    { href: "/knowledge-base", label: "Knowledge Base", icon: BookOpen },
-    { href: "/help", label: "Help", icon: HelpCircle },
+    { href: "/quick-remedies", label: "Quick Deadline Calculation", icon: Calculator },
+    // { href: "/knowledge-base", label: "Knowledge Base", icon: BookOpen },
+    // { href: "/help", label: "Help", icon: HelpCircle },
 ]
 
 const userNavItems = [
     { href: "/profile", label: "Profile", icon: User },
-    { href: "/settings", label: "Settings", icon: Settings },
+    // { href: "/settings", label: "Settings", icon: Settings },
 ]
 
 export function Header() {
-    const location = useLocation()
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false)
 
-    const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(href + "/")
+    const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(href + "/");
+
+    const handleSignOut = useCallback(() => {
+        console.log(' logout clicked')
+        dispatch(logout());
+        navigate('/');
+        setMobileOpen(false);
+    }, []);
 
     return (
         <header className="sticky top-0 z-50 w-full glass border-b">
@@ -134,10 +142,10 @@ export function Header() {
                                 ))}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
-                                    <Link to="/" className="flex items-center gap-2 text-destructive">
+                                    <button onClick={handleSignOut} className="flex items-center gap-2 text-destructive">
                                         <LogOut className="h-4 w-4" />
                                         Logout
-                                    </Link>
+                                    </button>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -208,14 +216,13 @@ export function Header() {
                                     </Link>
                                 ))}
 
-                                <Link
-                                    to="/"
-                                    onClick={() => setMobileOpen(false)}
+                                <button
+                                    onClick={handleSignOut}
                                     className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-destructive hover:bg-destructive/10 transition-colors"
                                 >
                                     <LogOut className="h-5 w-5" />
                                     Logout
-                                </Link>
+                                </button>
                             </nav>
                         </SheetContent>
                     </Sheet>
