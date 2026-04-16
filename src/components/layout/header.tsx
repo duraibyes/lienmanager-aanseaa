@@ -88,13 +88,16 @@ export function Header() {
 
                         {/* More Dropdown */}
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            <DropdownMenuTrigger className="hidden">
+                                <Button>More</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuTrigger>
                                 <Button variant="ghost" className="gap-2 text-muted-foreground">
                                     More
                                     <ChevronDown className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuContent align="end" className="w-56 bg-white">
                                 {moreNavItems.map((item) => (
                                     <DropdownMenuItem key={item.href} asChild>
                                         <Link to={item.href} className="flex items-center gap-2">
@@ -110,14 +113,17 @@ export function Header() {
                     {/* User Menu - Desktop */}
                     <div className="hidden lg:flex items-center gap-2">
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            <DropdownMenuTrigger className="hidden">
+                                <Button>More</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuTrigger >
                                 <Button variant="ghost" size="icon" className="rounded-full">
                                     <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
                                         <User className="h-4 w-4 text-primary-foreground" />
                                     </div>
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuContent align="end" className="w-56 bg-white">
                                 {userNavItems.map((item) => (
                                     <DropdownMenuItem key={item.href} asChild>
                                         <Link to={item.href} className="flex items-center gap-2">
