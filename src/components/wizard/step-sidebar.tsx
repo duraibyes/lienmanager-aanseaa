@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import { useWizard } from "@/contexts/wizard-context"
 import { wizardSteps } from "@/lib/wizard-steps"
 import { cn } from "@/lib/utils"
@@ -5,47 +6,33 @@ import {
     Check,
 } from "lucide-react"
 import { ProjectWizardData } from "@/types/project"
-import { useMemo } from "react"
-
-// const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-//     upload: Upload,
-//     "file-text": FileText,
-//     calendar: Calendar,
-//     "align-left": AlignLeft,
-//     "file-signature": FileSignature,
-//     users: Users,
-//     folder: Folder,
-//     clock: Clock,
-//     "check-square": CheckSquare,
-//     "clipboard-list": ClipboardList,
-//     "file-check": FileCheck,
-// }
 
 type Props = {
     readonly data: ProjectWizardData;
 }
 
+export const hasFurnishingDates = (data: ProjectWizardData): boolean =>
+    Object.keys(data?.furnishingDates || {}).length > 0;
+
+export const hasDocuments = (data: ProjectWizardData): boolean =>
+    !!(data?.documents?.length || data?.uploaded_documents?.length);
+
+export const isDetailsFilled = (data: ProjectWizardData): boolean =>
+    Boolean(data.stateId && data.projectTypeId && data.roleId && data.projectName && data.customerTypeId);
+
+export const isContactsFilled = (data: ProjectWizardData) =>
+    Boolean(data.selectedCustomerContacts > 0 &&
+        data.selectedProjectContacts?.length > 0);
+
+export const isDescriptionFilled = (data: ProjectWizardData) =>
+    Boolean(data.jobName && data.jobAddress);
+
+export const isInfoSheetFilled = (data: ProjectWizardData) =>
+    Boolean(data.signatureDate && data.customerSignature);
+
 export function StepSidebar({ data }: Props) {
     const { currentStep, setCurrentStep } = useWizard();
 
-    const hasFurnishingDates = (data: ProjectWizardData): boolean =>
-        Object.keys(data?.furnishingDates || {}).length > 0;
-
-    const hasDocuments = (data: ProjectWizardData): boolean =>
-        !!(data?.documents?.length || data?.uploaded_documents?.length);
-
-    const isDetailsFilled = (data: ProjectWizardData): boolean =>
-        Boolean(data.stateId && data.projectTypeId && data.roleId && data.projectName && data.customerTypeId);
-
-    const isContactsFilled = (data: ProjectWizardData) =>
-        Boolean(data.selectedCustomerContacts > 0 &&
-            data.selectedProjectContacts?.length > 0);
-
-    const isDescriptionFilled = (data: ProjectWizardData) =>
-        Boolean(data.jobName && data.jobAddress);
-
-    const isInfoSheetFilled = (data: ProjectWizardData) =>
-        Boolean(data.signatureDate && data.customerSignature);
 
     const steps = useMemo(() => [
         {

@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { Globe, ChevronRight } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { ProjectWizardData } from '../../../types/project';
 import { ProjectRole, ProjectType, State } from '../../../types/master';
 import { useGetStatesQuery, useLazyGetCustomerTypesQuery } from '../../../features/master/masterDataApi';
-import { Button } from '@/components/ui/button';
 
 interface DetailsStepProps {
   readonly data: ProjectWizardData;
   readonly onUpdate: (data: Partial<ProjectWizardData>) => void;
-  readonly onNext: () => void;
+  readonly onNext?: () => void;
   readonly onBack?: () => void;
   readonly countries: State[];
   readonly projectTypes: ProjectType[];
@@ -16,7 +15,7 @@ interface DetailsStepProps {
 }
 
 
-export default function DetailsStep({ data, onUpdate, onNext, countries, projectTypes, roles }: DetailsStepProps) {
+export default function DetailsStep({ data, onUpdate, countries, projectTypes, roles }: DetailsStepProps) {
 
   const { data: states, isLoading: isStatesLoading, isFetching: isStatesFetching } = useGetStatesQuery(
     { country_id: Number(data.countryId) },
@@ -40,7 +39,7 @@ export default function DetailsStep({ data, onUpdate, onNext, countries, project
     onUpdate({ countryId: Number(country), stateId: 0, country: countryName?.name ?? '' });
   }, []);
 
-  const isValid = data.projectName && data.countryId && data.stateId && data.projectTypeId && data.roleId && data.customerTypeId;
+
   const canSelectRole = Boolean(data.stateId && data.projectTypeId);
 
   useEffect(() => {
@@ -249,19 +248,6 @@ export default function DetailsStep({ data, onUpdate, onNext, countries, project
             </div>
           )}
         </div>
-      </div>
-
-
-      <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
-        <Button
-          size="sm"
-          onClick={onNext}
-          disabled={!isValid}
-          className="gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <span>Continue</span>
-          <ChevronRight className="h-4 w-4" />
-        </Button>
       </div>
     </div>
   );

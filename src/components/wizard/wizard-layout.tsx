@@ -369,7 +369,7 @@ export function WizardLayout() {
             {/* Main Content Area */}
             <div className="flex flex-1 flex-col overflow-hidden">
                 {/* Header with actions */}
-                <WizardHeader saveAndExit={saveAndExit} />
+                <WizardHeader saveAndExit={saveAndExit} data={projectData} />
 
                 {/* Step Content */}
                 <main className="bg-primary/2.5">
