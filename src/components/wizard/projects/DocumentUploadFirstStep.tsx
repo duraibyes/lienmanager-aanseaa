@@ -243,23 +243,26 @@ export default function DocumentUploadFirstStep({ data, onUpdate, onNext }: Docu
             <ArrowRight className="w-5 h-5" />
           </button>
         ) : (
-          <button
-            onClick={handleProceed}
-            disabled={extracting || !uploadedFile}
-            className="px-4 py-4 w-full flex items-center justify-center bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors flex items-center gap-2 shadow-lg"
-          >
-            {extracting ? (
-              <>
-                <Loader className="w-5 h-5 animate-spin" />
-                Extracting...
-              </>
-            ) : (
-              <>
-                <Upload className="w-5 h-5" />
-                Extract Information
-              </>
-            )}
-          </button>
+          uploadedFile && (
+
+            <button
+              onClick={handleProceed}
+              disabled={extracting || !uploadedFile}
+              className="px-4 py-4 w-full flex items-center justify-center bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors flex items-center gap-2 shadow-lg"
+            >
+              {extracting ? (
+                <>
+                  <Loader className="w-5 h-5 animate-spin" />
+                  Extracting...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-5 h-5" />
+                  Extract Information
+                </>
+              )}
+            </button>
+          )
         )}
       </div>
     </div>

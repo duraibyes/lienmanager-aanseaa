@@ -65,7 +65,7 @@ export function Header() {
     }, []);
 
     return (
-        <header className="sticky top-0 z-50 w-full glass border-b">
+        <header className="sticky top-0 z-50 w-full bg-white border-b">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
@@ -134,7 +134,7 @@ export function Header() {
                             <DropdownMenuContent align="end" className="w-56 bg-white">
                                 {userNavItems.map((item) => (
                                     <DropdownMenuItem key={item.href} asChild>
-                                        <Link to={item.href} className="flex items-center gap-2">
+                                        <Link to={item.href} className="flex items-center gap-2 cursor-pointer">
                                             <item.icon className="h-4 w-4" />
                                             {item.label}
                                         </Link>
@@ -142,7 +142,7 @@ export function Header() {
                                 ))}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
-                                    <button onClick={handleSignOut} className="flex items-center gap-2 text-destructive">
+                                    <button onClick={handleSignOut} className="flex items-center gap-2 w-full cursor-pointer">
                                         <LogOut className="h-4 w-4" />
                                         Logout
                                     </button>

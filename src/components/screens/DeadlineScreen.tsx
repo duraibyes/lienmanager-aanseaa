@@ -197,17 +197,17 @@ const DeadlineScreen = () => {
                                         <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                                         Delayed Deadlines
                                     </h2>
-                                    <div className="flex flex-row gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         {overdueProjects?.map((deadline) => {
                                             return (
                                                 <div
                                                     key={deadline?.project_id}
                                                     className="bg-white border-2 border-red-300 rounded-lg p-3 hover:shadow-md transition-shadow"
                                                 >
-                                                    <div className="flex flex-col items-center  gap-3">
-                                                        <div className="">
-                                                            <h3 className="font-semibold text-slate-900 text-sm sm:text-base truncate">{deadline?.deadline?.title}</h3>
-                                                            <h5 className="font-semibold text-slate-800 text-sm truncate">
+                                                    <div className="flex flex-col items-start  justify-between h-full  gap-3">
+                                                        <div className="flex flex-col gap-1 text-left">
+                                                            <h3 className="font-semibold text-slate-900 text-sm sm:text-base line-clamp-1">{deadline?.deadline?.title}</h3>
+                                                            <h5 className="font-medium text-slate-700 text-xs sm:text-sm line-clamp-1">
                                                                 {deadline?.deadline?.requirement}
                                                             </h5>
                                                             <p className="text-xs text-slate-600 truncate">{deadline?.project_name}</p>
@@ -233,6 +233,7 @@ const DeadlineScreen = () => {
                                                 </div>
                                             );
                                         })}
+
                                     </div>
                                 </div>
                             }

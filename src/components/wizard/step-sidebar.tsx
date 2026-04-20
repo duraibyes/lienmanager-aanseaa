@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils"
 import {
     Check,
 } from "lucide-react"
+import { ProjectWizardData } from "@/types/project"
+import { useMemo } from "react"
 
 // const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 //     upload: Upload,
@@ -19,11 +21,128 @@ import {
 //     "file-check": FileCheck,
 // }
 
-export function StepSidebar() {
-    const { currentStep, setCurrentStep, completedSteps } = useWizard()
+type Props = {
+    readonly data: ProjectWizardData;
+}
+
+export function StepSidebar({ data }: Props) {
+    const { currentStep, setCurrentStep, completedSteps } = useWizard();
+    console.log('  data ', data);
 
     // Split steps into two columns for better use of space
     const leftColumnSteps = wizardSteps // Steps 1-6
+
+    const hasFurnishingDates = (data: ProjectWizardData) =>
+        Object.keys(data?.furnishingDates || {}).length > 0;
+
+    const hasDocuments = (data: ProjectWizardData) =>
+        data?.documents?.length > 0 ||
+        (data?.uploaded_documents?.length ?? 0) > 0;
+
+    const isDetailsFilled = (data: ProjectWizardData) =>
+        data.stateId && data.projectTypeId && data.roleId && data.projectName;
+
+    const isContactsFilled = (data: ProjectWizardData) =>
+        data.selectedCustomerContacts > 0 &&
+        data.selectedProjectContacts?.length > 0;
+
+    const isDescriptionFilled = (data: ProjectWizardData) =>
+        data.jobName && data.jobAddress;
+
+    const isInfoSheetFilled = (data: ProjectWizardData) =>
+        data.signatureDate && data.customerSignature;
+
+    const steps = useMemo(() => [
+        {
+            id: 1,
+            title: "Upload Documents",
+            shortTitle: "Upload",
+            icon: "upload",
+            description: "Upload contracts, agreements, or project documents",
+            entered: false
+        },
+        {
+            id: 2,
+            title: "Project Details",
+            shortTitle: "Details",
+            icon: "file-text",
+            description: "Enter basic project information",
+            entered: isDetailsFilled(data)
+        },
+        {
+            id: 3,
+            title: "Important Dates",
+            shortTitle: "Dates",
+            icon: "calendar",
+            description: "Set key project milestones and deadlines",
+            entered: hasFurnishingDates(data)
+        },
+        {
+            id: 4,
+            title: "Description",
+            shortTitle: "Description",
+            icon: "align-left",
+            description: "Add detailed project description",
+            entered: isDescriptionFilled(data)
+        },
+        {
+            id: 5,
+            title: "Contract Info",
+            shortTitle: "Contract",
+            icon: "file-signature",
+            description: "Contract details and terms",
+            entered: false
+        },
+        {
+            id: 6,
+            title: "Contacts",
+            shortTitle: "Contacts",
+            icon: "users",
+            description: "Add project stakeholders and contacts",
+            entered: isContactsFilled(data)
+        },
+        {
+            id: 7,
+            title: "Documents",
+            shortTitle: "Documents",
+            icon: "folder",
+            description: "Manage additional project documents",
+            entered: hasDocuments(data)
+        },
+        {
+            id: 8,
+            title: "Deadlines",
+            shortTitle: "Deadlines",
+            icon: "clock",
+            description: "Set important deadlines and reminders",
+            entered: hasFurnishingDates(data)
+        },
+        {
+            id: 9,
+            title: "Tasks",
+            shortTitle: "Tasks",
+            icon: "check-square",
+            description: "Create and assign project tasks",
+            entered: data.tasks?.length > 0
+        },
+        {
+            id: 10,
+            title: "Summary",
+            shortTitle: "Summary",
+            icon: "clipboard-list",
+            description: "Review all entered information",
+            entered: true
+        },
+        {
+            id: 11,
+            title: "Info Sheet",
+            shortTitle: "Info Sheet",
+            icon: "file-check",
+            description: "Generate final project info sheet",
+            entered: isInfoSheetFilled(data)
+        },
+
+    ], [data]);
 
     const renderStep = (step: typeof wizardSteps[0]) => {
         // const Icon = iconMap[step.icon] || FileText

@@ -367,7 +367,7 @@ export function WizardLayout() {
         <div className="flex  overflow-hidden bg-background">
             {/* Left Sidebar - Step Navigation */}
             <div className="hidden h-full w-64 shrink-0 border-r border-sidebar-border lg:block xl:w-72">
-                <StepSidebar />
+                <StepSidebar data={projectData} />
             </div>
 
             {/* Main Content Area */}
