@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @layer base {
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -73,7 +75,7 @@
   --popover-foreground: oklch(0.20 0.02 30);
 
   /* Premium Orange - Rich, warm, professional */
-  --primary: oklch(0.65 0.18 45);
+  --primary: 0.65 0.18 45;
   --primary-foreground: oklch(1 0 0);
 
   /* Deep Slate Secondary */
@@ -125,7 +127,7 @@
   --popover: oklch(0.15 0.02 250);
   --popover-foreground: oklch(0.95 0 0);
 
-  --primary: oklch(0.70 0.18 45);
+  --primary: 0.70 0.18 45;
   --primary-foreground: oklch(0.12 0.02 250);
 
   --secondary: oklch(0.25 0.02 250);
@@ -250,21 +252,9 @@
     background: linear-gradient(135deg, oklch(0.65 0.18 45) 0%, oklch(0.80 0.14 75) 100%);
   }
 
-  .bg-primary\/5 {
-    background-color: var(--primary);
-  }
-
-  .bg-primary\/10 {
-    background-color: var(--primary);
-  }
-
-  .bg-primary\/20 {
-    background-color: var(--primary);
-  }
-
   /* Advanced support (optional) */
   @supports (color: color-mix(in lab, red, red)) {
-    .bg-primary\/5 {
+    /* .bg-primary\/5 {
       background-color: color-mix(in oklab, var(--primary) 5%, transparent);
     }
 
@@ -274,6 +264,6 @@
 
     .bg-primary\/20 {
       background-color: color-mix(in oklab, var(--primary) 20%, transparent);
-    }
+    } */
   }
 }

@@ -2,20 +2,19 @@ import { Info } from 'lucide-react';
 import { ProjectWizardData } from '../../../types/project';
 import { State } from '../../../types/master';
 import { useGetCountiesQuery, useGetStatesQuery } from '../../../features/master/masterDataApi';
-import WizardFooterButton from '../../Button/WizardFooterButton';
 import AddressAutocomplete from '../../Parts/Project/AddressAutoComplete';
 
 interface DescriptionStepProps {
     readonly data: ProjectWizardData;
     readonly countries: State[];
     readonly onUpdate: (data: Partial<ProjectWizardData>) => void;
-    readonly onNext: () => void;
-    readonly onBack: () => void;
+    readonly onNext?: () => void;
+    readonly onBack?: () => void;
     readonly onSaveAndExit?: () => void;
-    readonly disabled: boolean;
+    readonly disabled?: boolean;
 }
 
-export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSaveAndExit, countries, disabled }: DescriptionStepProps) {
+export default function DescriptionStep({ data, onUpdate, countries }: DescriptionStepProps) {
 
     const { data: states, isLoading: isStatesLoading, isFetching: isStatesFetching } = useGetStatesQuery(
         { country_id: Number(data.countryId) },
@@ -31,16 +30,10 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
         onUpdate({ jobCountyId: Number(county) });
     }
 
-    const isValid = data.jobAddress && data.jobName && data.jobCountyId && data.jobCity && data.jobZip;
+    // const isValid = data.jobAddress && data.jobName && data.jobCountyId && data.jobCity && data.jobZip;
 
     return (
-        <div className="max-w-4xl mx-auto p-4 md:p-8 md:py-12">
-            <div className="mb-8">
-                <h1 className="md:text-3xl text-ml font-bold text-slate-900 mb-3">Job Description</h1>
-                <p className="text-sm md:text-lg text-slate-600">
-                    Provide detailed information about the job site and project location.
-                </p>
-            </div>
+        <div className="">
 
             <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-8 space-y-6">
                 <div>
@@ -52,7 +45,7 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                         value={data.jobName}
                         onChange={(e) => onUpdate({ jobName: e.target.value })}
                         placeholder="Enter Job Name"
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                     />
                     <p className="text-xs text-slate-500 mt-1.5 flex items-center gap-1">
                         <Info className="w-3 h-3" />
@@ -83,7 +76,7 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                         <select
                             value={data.countryId}
                             disabled
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         >
                             <option value="">Select Country</option>
                             {countries.map((country) => (
@@ -103,7 +96,7 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                         <select
                             value={data.stateId}
                             disabled
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         >
                             {isStatesLoading || isStatesFetching ? (
                                 <option value="">Loading states...</option>
@@ -126,7 +119,7 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                         <select
                             value={data.jobCountyId}
                             onChange={(e) => handleCountyChange(e.target.value)}
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         >
                             {isCountiesLoading || isCountiesFetching ? (
                                 <option value="">Loading Counties...</option>
@@ -151,7 +144,7 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                             value={data.jobCity}
                             onChange={(e) => onUpdate({ jobCity: e.target.value })}
                             placeholder="City"
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         />
                     </div>
 
@@ -169,27 +162,20 @@ export default function DescriptionStep({ data, onUpdate, onNext, onBack, onSave
                             placeholder="ZIP"
                             maxLength={6}
                             inputMode="numeric"
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         />
                     </div>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
-                    <h3 className="text-sm font-semibold text-blue-900 mb-2">Why is this information important?</h3>
-                    <p className="text-sm text-blue-800">
+                <div className="bg-primary/20 border border-primary rounded-lg p-4 mt-6">
+                    <h3 className="text-sm font-semibold text-primary mb-2">Why is this information important?</h3>
+                    <p className="text-sm text-slate">
                         The job site address is crucial for mechanics lien filings. It must match the legal description
                         of the property and will appear on all official notices and lien documents.
                     </p>
                 </div>
             </div>
 
-            <WizardFooterButton
-                onBack={onBack}
-                onSaveAndExit={onSaveAndExit}
-                disabled={disabled}
-                continueDisabled={!isValid}
-                onNext={onNext}
-            />
         </div>
     );
 }

@@ -30,13 +30,13 @@ const RemedyDates = ({ dates, onUpdate, data }: RemedyDatesProps) => {
                                     },
                                 })
                             }
-                            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:outline-none"
                         />
 
                         <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                     </div>
 
-                    
+
                 </div>
             ))}
         </>

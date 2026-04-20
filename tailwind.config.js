@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+import animate from "tailwindcss-animate"
+
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -10,7 +13,7 @@ export default {
         card: "var(--card)",
         "card-foreground": "var(--card-foreground)",
 
-        primary: "var(--primary)",
+        primary: "oklch(var(--primary) / <alpha-value>)",
         "primary-foreground": "var(--primary-foreground)",
 
         secondary: "var(--secondary)",
@@ -32,5 +35,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 };

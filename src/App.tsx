@@ -4,7 +4,6 @@ import LoginScreen from "./components/screens/LoginScreen";
 import SignupScreen from "./components/screens/SignupScreen";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
-import ProjectCreateWizard from "./components/screens/ProjectCreateWizard";
 import OnboardingScreen from "./components/screens/OnboardingScreen";
 import QuickRemediesScreen from "./components/screens/QuickRemediesScreen";
 import RecentProjectsScreen from "./components/screens/RecentProjectsScreen";
@@ -29,6 +28,8 @@ import ResetPassword from "./components/screens/ResetPassword";
 import LandingPage from "./components/screens/LandingPage";
 import DashboardLayout from "./page/DashboardLayout";
 import DashboardPage from "./page/DashboardPage";
+import { WizardLayout } from "./components/wizard/wizard-layout";
+import { WizardProvider } from "./contexts/wizard-context";
 
 function App() {
   return (
@@ -69,7 +70,11 @@ function App() {
 
           <Route path="/project/create/:projectId?" element={
             <ProtectedRoute>
-              <ProjectCreateWizard />
+              <DashboardLayout children={
+                <WizardProvider>
+                  <WizardLayout />
+                </WizardProvider>
+              } />
             </ProtectedRoute>
           }
           />

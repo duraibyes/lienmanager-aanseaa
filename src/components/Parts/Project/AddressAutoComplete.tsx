@@ -57,7 +57,6 @@ const AddressAutocomplete = ({ data, onUpdate, states, counties }: AddressProps)
 
         });
 
-        // ✅ Validate STATE
         if (selectedState && selectedState.name !== state) {
             Swal.fire({
                 icon: "error",
@@ -68,7 +67,6 @@ const AddressAutocomplete = ({ data, onUpdate, states, counties }: AddressProps)
             return;
         }
 
-        // ✅ Match COUNTY with DB
         let matchedCounty = counties?.find((c: any) =>
             countyVal.toLowerCase().includes(c.name.toLowerCase())
         );
@@ -97,7 +95,7 @@ const AddressAutocomplete = ({ data, onUpdate, states, counties }: AddressProps)
                         value={data.jobAddress}
                         onChange={(e) => onUpdate({ jobAddress: e.target.value })}
                         placeholder="Street address of job site"
-                        className="w-full px-4 py-3 pl-10 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-1.5 pl-10 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                     />
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
                 </div>
