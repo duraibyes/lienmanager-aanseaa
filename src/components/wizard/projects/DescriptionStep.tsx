@@ -76,7 +76,7 @@ export default function DescriptionStep({ data, onUpdate, countries }: Descripti
                         <select
                             value={data.countryId}
                             disabled
-                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
+                            className="w-full px-4 py-1.5 border border-slate-300 bg-slate-200  rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         >
                             <option value="">Select Country</option>
                             {countries.map((country) => (
@@ -96,7 +96,7 @@ export default function DescriptionStep({ data, onUpdate, countries }: Descripti
                         <select
                             value={data.stateId}
                             disabled
-                            className="w-full px-4 py-1.5 border border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
+                            className="w-full px-4 py-1.5 border bg-slate-200 border-slate-300 rounded-lg focus:ring-4 focus:outline-none focus:ring-primary/40 focus:border-primary"
                         >
                             {isStatesLoading || isStatesFetching ? (
                                 <option value="">Loading states...</option>

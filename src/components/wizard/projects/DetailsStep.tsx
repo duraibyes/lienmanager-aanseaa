@@ -165,6 +165,7 @@ export default function DetailsStep({ data, onUpdate, onNext, countries, project
                       onUpdate({ projectTypeId: Number(e.target.value) });
 
                     }}
+                    style={{ accentColor: '#f97316' }}
                     className="mt-1 w-4 h-4 text-primary bg-primary"
                   />
                   <div className="flex-1">
@@ -201,6 +202,7 @@ export default function DetailsStep({ data, onUpdate, onNext, countries, project
                     onChange={(e) => {
                       onUpdate({ roleId: Number(e.target.value) });
                     }}
+                    style={{ accentColor: '#f97316' }}
                     className="mt-1 w-4 h-4 text-blue-600"
                   />
                   <div className="flex-1">
@@ -233,7 +235,8 @@ export default function DetailsStep({ data, onUpdate, onNext, countries, project
                         value={option.customer.id}
                         checked={data.customerTypeId === option.customer.id}
                         onChange={(e) => onUpdate({ customerTypeId: Number(e.target.value) })}
-                        className="mt-1 w-4 h-4 text-blue-600"
+                        className="mt-1 w-4 h-4 "
+                        style={{ accentColor: '#f97316' }}
                       />
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-slate-900">{option.customer.name}</div>

@@ -296,8 +296,7 @@ export function WizardLayout() {
                         data={projectData}
                         onUpdate={updateProjectData}
                         onNext={goToNextStep}
-                        onBack={prevStep}
-                        onSaveAndExit={saveAndExit}
+
                     />
                 );
             case 7:

@@ -4,6 +4,8 @@ export interface WizardStep {
   shortTitle: string;
   icon: string;
   description: string;
+  entered?: boolean;
+  isClickable?: boolean;
 }
 
 export interface WizardContextType {

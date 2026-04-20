@@ -5,19 +5,18 @@ import PdfThumbnail from '../../../utils/PdfThumbnail';
 import { MAX_FILE_SIZE } from '../../../types/contact';
 import { DocumentViewResponse, ProjectWizardData } from '../../../types/project';
 import { useDeleteDocumentMutation } from '../../../features/document/DocumentApi';
-import WizardFooterButton from '../../Button/WizardFooterButton';
 
 interface DocumentsStepProps {
     readonly data: File[];
     readonly onUpdate: React.Dispatch<React.SetStateAction<File[]>>;
-    readonly onNext: () => void;
-    readonly onBack: () => void;
+    readonly onNext?: () => void;
+    readonly onBack?: () => void;
     readonly onSaveAndExit?: () => void;
     readonly uploadedDocuments?: DocumentViewResponse[];
     readonly updateProjectData?: (data: Partial<ProjectWizardData>) => void;
 }
 
-export default function DocumentsStep({ data, onUpdate, onNext, onBack, onSaveAndExit, uploadedDocuments, updateProjectData }: DocumentsStepProps) {
+export default function DocumentsStep({ data, onUpdate, uploadedDocuments, updateProjectData }: DocumentsStepProps) {
     const [previewFile, setPreviewFile] = useState<File | null>(null);
     const [deleteDocument, { isLoading: isDeleting }] = useDeleteDocumentMutation();
 
@@ -131,16 +130,9 @@ export default function DocumentsStep({ data, onUpdate, onNext, onBack, onSaveAn
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-4 md:p-8 md:py-12">
-            <div className="mb-8">
-                <h1 className="text-xl md:text-3xl font-bold text-slate-900 mb-3">Upload Documents</h1>
-                <p className="text-sm md:text-lg text-slate-600">
-                    Add contracts, invoices, change orders, and other relevant documents for this project.
-                </p>
-            </div>
-
-            <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-8">
-                <div className="border-2 border-dashed border-slate-300 rounded-xl md:p-12 p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
+        <div className="py-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div className="border-2 border-dashed border-primary/40 rounded-xl md:p-12 p-2 text-center hover:border-primary hover:bg-primary/10 transition-all">
                     <input
                         type="file"
                         multiple
@@ -150,18 +142,33 @@ export default function DocumentsStep({ data, onUpdate, onNext, onBack, onSaveAn
                         accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls"
                     />
                     <label htmlFor="file-upload" className="cursor-pointer">
-                        <Upload className="md:w-16 md:h-16 w-10 h-10 text-slate-400 mx-auto mb-4" />
+                        <Upload className="md:w-16 md:h-14 w-10 h-10 text-primary mx-auto mb-4" />
                         <h3 className="text-md md:text-lg font-semibold text-slate-900 mb-2">
                             Click to upload or drag and drop
                         </h3>
-                        <p className="text-xs md:text-sm text-slate-600">
+                        <p className="text-xs md:text-sm text-primary/80">
                             PDF, Word, Excel, or Image files (up to 2MB each)
                         </p>
                     </label>
                 </div>
+                <div className="bg-primary/5 border border-primary rounded-lg p-4">
+                    <h3 className="text-sm font-semibold text-primary mb-2">Suggested Documents</h3>
+                    <ul className="text-sm text-primary/90 space-y-1">
+                        <li>• Signed Contract or Purchase Agreement</li>
+                        <li>• Preliminary Notice (if applicable)</li>
+                        <li>• Billing Invoices or Payment Requests</li>
+                        <li>• Approved Change Orders or Modifications</li>
+                        <li>• Delivery Receipts or Work Completion Proof</li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-8">
 
                 {/* Attachment Grid */}
-                <div className='flex flex-wrap gap-4 md:mt-4 mt-2'>
+                <div className='flex flex-wrap gap-4 md:mt-4 mt-2 bg-primary/5 p-4 rounded-t-lg border border-t-primary'>
 
                     {data?.map((file, index) => {
                         if (!file) {
@@ -171,18 +178,18 @@ export default function DocumentsStep({ data, onUpdate, onNext, onBack, onSaveAn
                         const isPdf = file.type.includes("pdf");
 
                         return (
-                            <div key={index} className="relative border rounded-lg p-2 shadow bg-white w-[150px]" >
+                            <div key={index} className="relative border rounded-lg p-2 shadow bg-white w-[120px]" >
                                 <button
                                     onClick={() => removeFile(index)}
-                                    className="absolute top-2 right-2 bg-black/10
-    p-[5px]
-    rounded
-    text-[12px]
-    text-gray-700
-    transition-all duration-10
-    hover:bg-red-500
-    hover:text-white
-  "
+                                    className="absolute top-2 right-2 bg-primary/10
+                                        p-[5px]
+                                        rounded
+                                        text-[12px]
+                                        text-gray-700
+                                        transition-all duration-10
+                                        hover:bg-red-500
+                                        hover:text-white
+                                    "
                                 >
                                     ✕
                                 </button>
@@ -248,103 +255,91 @@ export default function DocumentsStep({ data, onUpdate, onNext, onBack, onSaveAn
 
 
                 {uploadedDocuments && uploadedDocuments.length > 0 && (
-                    <div className="flex flex-col gap-3 max-h-80 overflow-y-auto pr-1">
-                        <h3 className="font-semibold text-slate-800">Uploaded Documents</h3>
+                    <div className='border border-t-primary mt-3 p-4 rounded-md shadow-xl'>
+                        <h3 className="font-semibold text-slate-800 p-2 mb-4">Uploaded Documents</h3>
+                        <div className="flex flex-col gap-3 max-h-80 overflow-y-auto pr-1">
 
-                        {uploadedDocuments.map((document) => (
 
-                            <div
-                                key={document.id}
-                                className="
-              border border-slate-200 
-              rounded-lg 
-              p-3
-              hover:bg-slate-50
-              transition
-              flex justify-between items-start
-            "
-                            >
-                                <div className="flex flex-col gap-1 flex-1 min-w-0">
-                                    <span className="font-medium text-slate-800 truncate">
-                                        {document.title}
-                                    </span>
+                            {uploadedDocuments.map((document) => (
 
-                                    <div className="flex items-center gap-4 text-xs text-slate-500">
-
-                                        <span className="flex items-center gap-1">
-                                            <Calendar className="w-3 h-3" />
-                                            {document.date}
+                                <div
+                                    key={document.id}
+                                    className="
+                                        border border-primary/20 
+                                        rounded-lg 
+                                        p-3
+                                        hover:bg-primary/10
+                                        transition
+                                        flex justify-between items-start"
+                                >
+                                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                                        <span className="font-medium text-slate-600 truncate">
+                                            {document.title}
                                         </span>
 
-                                        <span>
-                                            {document.file_size}
-                                        </span>
+                                        <div className="flex items-center gap-4 text-xs text-slate-500">
+
+                                            <span className="flex items-center gap-1">
+                                                <Calendar className="w-3 h-3" />
+                                                {document.date}
+                                            </span>
+
+                                            <span>
+                                                {document.file_size}
+                                            </span>
+
+                                        </div>
+
+                                        {document.notes && (
+                                            <span className="text-xs text-amber-600 truncate">
+                                                {document.notes}
+                                            </span>
+                                        )}
 
                                     </div>
 
-                                    {document.notes && (
-                                        <span className="text-xs text-amber-600 truncate">
-                                            {document.notes}
-                                        </span>
-                                    )}
 
-                                </div>
+                                    {/* Right side actions */}
+                                    <div className="flex gap-1 ml-3">
 
-
-                                {/* Right side actions */}
-                                <div className="flex gap-1 ml-3">
-
-                                    <a
-                                        href={document.file_url}
-                                        target="_blank"
-                                        className="
+                                        <a
+                                            href={document.file_url}
+                                            target="_blank"
+                                            className="
                   p-2 
-                  text-blue-600 
+                  text-primary/60
                   hover:bg-blue-50 
                   rounded-md
                 "
-                                    >
-                                        <Download className="w-4 h-4" />
-                                    </a>
+                                        >
+                                            <Download className="w-4 h-4" />
+                                        </a>
 
-                                    <button
-                                        className="p-2 
+                                        <button
+                                            className="p-2 
                   text-red-600 
                   hover:bg-red-50 
                   rounded-md
                 "
-                                        disabled={isDeleting}
-                                        onClick={() => handleDeleteDocument(document.id, document.title)}
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
+                                            disabled={isDeleting}
+                                            onClick={() => handleDeleteDocument(document.id, document.title)}
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+
+                                    </div>
 
                                 </div>
 
-                            </div>
+                            ))}
 
-                        ))}
-
+                        </div>
                     </div>
                 )}
 
-                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h3 className="text-sm font-semibold text-blue-900 mb-2">Recommended Documents</h3>
-                    <ul className="text-sm text-blue-800 space-y-1">
-                        <li>• Contract or Purchase Order</li>
-                        <li>• Preliminary Notice (if already sent)</li>
-                        <li>• Invoices and Payment Applications</li>
-                        <li>• Change Orders or Amendments</li>
-                        <li>• Proof of Delivery or Work Performed</li>
-                    </ul>
-                </div>
+
             </div>
 
-            <WizardFooterButton
-                onBack={onBack}
-                onSaveAndExit={onSaveAndExit}
-                onNext={onNext}
-            />
         </div>
     );
 }

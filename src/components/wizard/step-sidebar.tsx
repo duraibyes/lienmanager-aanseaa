@@ -27,30 +27,25 @@ type Props = {
 
 export function StepSidebar({ data }: Props) {
     const { currentStep, setCurrentStep, completedSteps } = useWizard();
-    console.log('  data ', data);
 
-    // Split steps into two columns for better use of space
-    const leftColumnSteps = wizardSteps // Steps 1-6
-
-    const hasFurnishingDates = (data: ProjectWizardData) =>
+    const hasFurnishingDates = (data: ProjectWizardData): boolean =>
         Object.keys(data?.furnishingDates || {}).length > 0;
 
-    const hasDocuments = (data: ProjectWizardData) =>
-        data?.documents?.length > 0 ||
-        (data?.uploaded_documents?.length ?? 0) > 0;
+    const hasDocuments = (data: ProjectWizardData): boolean =>
+        !!(data?.documents?.length || data?.uploaded_documents?.length);
 
-    const isDetailsFilled = (data: ProjectWizardData) =>
-        data.stateId && data.projectTypeId && data.roleId && data.projectName;
+    const isDetailsFilled = (data: ProjectWizardData): boolean =>
+        Boolean(data.stateId && data.projectTypeId && data.roleId && data.projectName && data.customerTypeId);
 
     const isContactsFilled = (data: ProjectWizardData) =>
-        data.selectedCustomerContacts > 0 &&
-        data.selectedProjectContacts?.length > 0;
+        Boolean(data.selectedCustomerContacts > 0 &&
+            data.selectedProjectContacts?.length > 0);
 
     const isDescriptionFilled = (data: ProjectWizardData) =>
-        data.jobName && data.jobAddress;
+        Boolean(data.jobName && data.jobAddress);
 
     const isInfoSheetFilled = (data: ProjectWizardData) =>
-        data.signatureDate && data.customerSignature;
+        Boolean(data.signatureDate && data.customerSignature);
 
     const steps = useMemo(() => [
         {
@@ -59,7 +54,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Upload",
             icon: "upload",
             description: "Upload contracts, agreements, or project documents",
-            entered: false
+            entered: false,
+            isClickable: true
         },
         {
             id: 2,
@@ -67,7 +63,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Details",
             icon: "file-text",
             description: "Enter basic project information",
-            entered: isDetailsFilled(data)
+            entered: isDetailsFilled(data),
+            isClickable: true
         },
         {
             id: 3,
@@ -75,7 +72,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Dates",
             icon: "calendar",
             description: "Set key project milestones and deadlines",
-            entered: hasFurnishingDates(data)
+            entered: hasFurnishingDates(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 4,
@@ -83,7 +81,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Description",
             icon: "align-left",
             description: "Add detailed project description",
-            entered: isDescriptionFilled(data)
+            entered: isDescriptionFilled(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 5,
@@ -91,7 +90,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Contract",
             icon: "file-signature",
             description: "Contract details and terms",
-            entered: false
+            entered: false,
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 6,
@@ -99,7 +99,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Contacts",
             icon: "users",
             description: "Add project stakeholders and contacts",
-            entered: isContactsFilled(data)
+            entered: isContactsFilled(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 7,
@@ -107,7 +108,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Documents",
             icon: "folder",
             description: "Manage additional project documents",
-            entered: hasDocuments(data)
+            entered: hasDocuments(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 8,
@@ -115,7 +117,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Deadlines",
             icon: "clock",
             description: "Set important deadlines and reminders",
-            entered: hasFurnishingDates(data)
+            entered: hasFurnishingDates(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 9,
@@ -123,7 +126,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Tasks",
             icon: "check-square",
             description: "Create and assign project tasks",
-            entered: data.tasks?.length > 0
+            entered: data.tasks?.length > 0,
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 10,
@@ -131,7 +135,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Summary",
             icon: "clipboard-list",
             description: "Review all entered information",
-            entered: true
+            entered: isDetailsFilled(data),
+            isClickable: isDetailsFilled(data)
         },
         {
             id: 11,
@@ -139,7 +144,8 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Info Sheet",
             icon: "file-check",
             description: "Generate final project info sheet",
-            entered: isInfoSheetFilled(data)
+            entered: isInfoSheetFilled(data),
+            isClickable: isDetailsFilled(data)
         },
 
     ], [data]);
@@ -147,18 +153,20 @@ export function StepSidebar({ data }: Props) {
     const renderStep = (step: typeof wizardSteps[0]) => {
         // const Icon = iconMap[step.icon] || FileText
         const isActive = currentStep === step.id
-        const isCompleted = completedSteps.includes(step.id)
+        const isCompleted = step.entered
         // const isPast = step.id < currentStep
 
         return (
             <button
                 key={step.id}
                 onClick={() => setCurrentStep(step.id)}
+                disabled={!step.isClickable}
                 className={cn(
                     "group relative flex items-center gap-2 rounded-lg p-2 transition-all duration-300 focus:outline-none focus:ring-0",
                     "hover:bg-primary/20 hover:text-primary",
                     isActive && "bg-primary/30 focus:ring-bg-primary ring-primary/50 border border-primary",
-                    !isActive && !isCompleted && "opacity-60 hover:opacity-100"
+                    !isActive && !isCompleted && "opacity-60 hover:opacity-100",
+                    !step.isClickable && "hover:bg-slate-200 hover:text-slate-500 cursor-not-allowed"
                 )}
             >
                 {/* Step Number/Icon Circle */}
@@ -225,7 +233,7 @@ export function StepSidebar({ data }: Props) {
             <div className="flex flex-1 gap-1 overflow-hidden p-3">
                 {/* Left Column */}
                 <div className="flex flex-1 flex-col gap-1">
-                    {leftColumnSteps.map((step) => renderStep(step))}
+                    {steps.map((step) => renderStep(step))}
                 </div>
 
                 {/* Divider */}
