@@ -325,9 +325,6 @@ export function WizardLayout() {
                     <TasksStep
                         data={projectData}
                         onUpdate={updateProjectData}
-                        onNext={goToNextStep}
-                        onBack={prevStep}
-                        onSaveAndExit={saveAndExit}
                     />
                 );
 

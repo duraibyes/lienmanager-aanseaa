@@ -26,7 +26,7 @@ type Props = {
 }
 
 export function StepSidebar({ data }: Props) {
-    const { currentStep, setCurrentStep, completedSteps } = useWizard();
+    const { currentStep, setCurrentStep } = useWizard();
 
     const hasFurnishingDates = (data: ProjectWizardData): boolean =>
         Object.keys(data?.furnishingDates || {}).length > 0;
@@ -149,6 +149,8 @@ export function StepSidebar({ data }: Props) {
         },
 
     ], [data]);
+
+    const completedSteps = steps.filter(x => x.entered);
 
     const renderStep = (step: typeof wizardSteps[0]) => {
         // const Icon = iconMap[step.icon] || FileText

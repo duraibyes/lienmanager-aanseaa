@@ -165,23 +165,23 @@ export default function DocumentsStep({ data, onUpdate, uploadedDocuments, updat
 
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-8">
+            <div className="s p-4 md:p-8">
 
-                {/* Attachment Grid */}
-                <div className='flex flex-wrap gap-4 md:mt-4 mt-2 bg-primary/5 p-4 rounded-t-lg border border-t-primary'>
+                {data.length > 0 &&
+                    <div className='flex flex-wrap gap-4 md:mt-4 mt-2 bg-primary/5 p-4 rounded-t-lg border border-t-primary'>
 
-                    {data?.map((file, index) => {
-                        if (!file) {
-                            return;
-                        }
-                        const isImage = file.type.startsWith("image");
-                        const isPdf = file.type.includes("pdf");
+                        {data?.map((file, index) => {
+                            if (!file) {
+                                return;
+                            }
+                            const isImage = file.type.startsWith("image");
+                            const isPdf = file.type.includes("pdf");
 
-                        return (
-                            <div key={index} className="relative border rounded-lg p-2 shadow bg-white w-[120px]" >
-                                <button
-                                    onClick={() => removeFile(index)}
-                                    className="absolute top-2 right-2 bg-primary/10
+                            return (
+                                <div key={index} className="relative border rounded-lg p-2 shadow bg-white w-[120px]" >
+                                    <button
+                                        onClick={() => removeFile(index)}
+                                        className="absolute top-2 right-2 bg-primary/10
                                         p-[5px]
                                         rounded
                                         text-[12px]
@@ -190,38 +190,39 @@ export default function DocumentsStep({ data, onUpdate, uploadedDocuments, updat
                                         hover:bg-red-500
                                         hover:text-white
                                     "
-                                >
-                                    ✕
-                                </button>
+                                    >
+                                        ✕
+                                    </button>
 
-                                <div onClick={() => handlePreview(file)} className="cursor-pointer">
-                                    {isImage && (
-                                        <img
-                                            src={URL.createObjectURL(file)}
-                                            alt="thumb"
-                                            className="h-24 w-full object-cover rounded"
-                                        />
-                                    )}
+                                    <div onClick={() => handlePreview(file)} className="cursor-pointer">
+                                        {isImage && (
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt="thumb"
+                                                className="h-24 w-full object-cover rounded"
+                                            />
+                                        )}
 
-                                    {isPdf && <PdfThumbnail file={file} />}
+                                        {isPdf && <PdfThumbnail file={file} />}
 
-                                    {!isImage && !isPdf && (
-                                        <div className="h-24 flex items-center justify-center text-4xl">
-                                            📎
+                                        {!isImage && !isPdf && (
+                                            <div className="h-24 flex items-center justify-center text-4xl">
+                                                📎
+                                            </div>
+                                        )}
+
+                                        <div className="mt-2 text-sm">
+                                            <p className="truncate font-medium">{file.name}</p>
+                                            <p className="text-xs text-slate-500">
+                                                {formatFileSize(file.size)}
+                                            </p>
                                         </div>
-                                    )}
-
-                                    <div className="mt-2 text-sm">
-                                        <p className="truncate font-medium">{file.name}</p>
-                                        <p className="text-xs text-slate-500">
-                                            {formatFileSize(file.size)}
-                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                }
 
                 {/* Preview Modal */}
                 {previewFile && (
