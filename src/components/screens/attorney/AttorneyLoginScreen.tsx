@@ -1,4 +1,4 @@
-import { AlertCircle, Eye, EyeOff, Lock, Mail, Scale } from "lucide-react"
+import {Eye, EyeOff, Lock, Mail, Scale, ArrowRight, Home } from "lucide-react"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,9 @@ import { useLoginMutation } from "../../../features/auth/authApi";
 import { setCredentials } from "../../../features/auth/authSlice";
 import { LoginErrors } from "../LoginScreen";
 import { validateEmail } from "../../../utils/validation";
+import { Button } from '../../ui/button';
+import { AuthLeftAttorneyPanel } from '../../layout/auth/AuthLeftAttorneyPanel';
+import ErrorBox from '../../Parts/ErrorBox';
 
 const AttorneyLoginScreen = () => {
 
@@ -66,119 +69,120 @@ const AttorneyLoginScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <Scale className="w-10 h-10 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Lien Manager</h1>
-        </div>
+    <div className="min-h-screen flex font-serif">
+      {/* Left Side - Branding */}
+      <AuthLeftAttorneyPanel />
 
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Sign In</h2>
-
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <p className="text-blue-700 font-medium">New user?</p>
-          <p className="text-blue-600">
-            Click{' '}
-            <button
-              onClick={() => navigate('/attorney/signup')}
-              className="text-blue-700 font-semibold underline hover:text-blue-800"
-            >
-              Sign up
-            </button>{' '}
-            below to create your account.
-          </p>
-        </div>
-
-        {errors && Object.keys(errors).length > 0 && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{Object.values(errors)[0]}</p>
-          </div>
-        )}
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your password"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-              >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => navigate('/attorney/signup')}
-            className="text-blue-600 hover:text-blue-700 font-medium"
-          >
-            Don't have an account? Sign up
-          </button>
-          <p className="text-slate-600">
-            Switch to
-            <Link
-              to="/"
-              className="text-blue-600 font-semibold hover:text-blue-700 transition-colors ml-2"
-            >
-              Main View
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-background">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden mb-8 text-center">
+            <Link to="/" className="inline-flex items-center gap-2">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg gradient-primary glow-primary">
+                <Scale className="h-5 w-5 text-white" />
+              </div>
+              <span className="font-serif font-bold text-2xl text-foreground">LienPilot</span>
             </Link>
-          </p>
+          </div>
+          <div>
+            <div className="space-y-2 mb-4">
+
+              <h2 className="text-3xl font-serif font-bold text-foreground">Welcome back, Counselor</h2>
+              <p className="text-muted-foreground">
+                Sign in to handle your client liens and legal workflows
+              </p>
+            </div>
+          </div>
+
+          {(error || Object.keys(errors).length > 0) && (
+            <ErrorBox error={error || Object.values(errors)[0]} />
+          )}
+          <form onSubmit={handleLogin} className="space-y-6 mt-2">
+            {/* Email */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold ml-1"
+              >Email Address</label>
+              <div className="relative group">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@company.com"
+                  className="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center ml-1">
+                <label className="text-sm font-semibold">Password</label>
+                <Link to="/attorney/forgot-password" className="text-primary text-sm font-semibold">
+                  Forgot?
+                </Link>
+              </div>
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full pl-12 pr-12 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 focus:text-primary"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+
+            <div className="space-y-3">
+              <Button
+                type="submit"
+                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                size="lg"
+                disabled={loading}
+              >
+                {loading ? "Signing in..." : "Sign In"}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+
+
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                size="lg"
+                onClick={() => navigate('/')}
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Go to Main View
+              </Button>
+
+              <p className="text-sm text-center text-muted-foreground">
+                Don't have an account?{" "}
+                <button
+                  onClick={() => navigate('/attorney/signup')}
+                  className="text-primary font-semibold hover:underline"
+                >
+                  Sign Up
+                </button>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  )
+
+  );
 }
 
 export default AttorneyLoginScreen

@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { Eye, EyeOff, Lock, Scale } from "lucide-react"
+import { Eye, EyeOff, Lock, Scale, ArrowRight, Home, Mail, Phone, MapPin, Building, User } from "lucide-react"
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import CompanyAutocompleteLien from "../../../utils/CompanyAutoCompleteLien";
@@ -9,6 +9,8 @@ import { useAppDispatch } from "../../../store/hooks";
 import { useLienSignupMutation } from "../../../features/lienAuth/auth";
 import { setCredentials } from "../../../features/auth/authSlice";
 import { ROLES } from "../../../utils/constant";
+import { Button } from '../../ui/button';
+import ErrorBox from '../../Parts/ErrorBox';
 
 export interface CompanyNew {
     id: string;
@@ -225,303 +227,348 @@ const AttorneySignupScreen = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
-            <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
-                <div className="flex items-center justify-center gap-3 mb-8">
-                    <Scale className="w-10 h-10 text-blue-600" />
-                    <h1 className="text-3xl font-bold text-gray-900">Lien Manager</h1>
+        <div className="min-h-screen bg-background flex items-start sm:items-center justify-center font-serif py-8 px-4">
+            <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-4 sm:p-8">
+                <div className="flex flex-col items-center mb-6">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg gradient-primary glow-primary mb-3">
+                        <Scale className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground text-center">Create your account</h2>
+                    <p className="text-muted-foreground text-center text-sm sm:text-base mt-1">Join our legal practice platform</p>
                 </div>
 
-                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Create Account</h2>
+                {error && <ErrorBox error={error} />}
 
-                {error && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
-                        <p className="text-red-700 text-sm">{error}</p>
-                    </div>
-                )}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Company Information */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <Building className="w-5 h-5" />
+                                Company Information
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <CompanyAutocompleteLien isFetching={isCompanyFetching} companies={companies?.data || []} customer={formData} updateCustomer={updateForm} />
 
-                <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="border-b pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Company Information</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <CompanyAutocompleteLien isFetching={isCompanyFetching} companies={companies?.data || []} customer={formData} updateCustomer={updateForm} />
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1 flex items-center gap-2">
+                                        <Phone className="w-4 h-4" />
+                                        Company Phone
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.companyPhone}
+                                        onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter company phone"
+                                    />
+                                </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Company Phone
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.companyPhone}
-                                    onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Fax
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.fax}
-                                    onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="border-b pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Role Information</h3>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Role <span className="text-red-600">*</span>
-                            </label>
-                            <select
-                                value={formData.role}
-                                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                required
-                            >
-                                <option value="">Select a role</option>
-                                {ROLES.map(role => (
-                                    <option key={role} value={role}>
-                                        {role}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="border-b pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Personal Information</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    First Name <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.firstName}
-                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Last Name <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.lastName}
-                                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                    required
-                                />
-                            </div>
-
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                    required
-                                />
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1 flex items-center gap-2">
+                                        <Phone className="w-4 h-4" />
+                                        Fax
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.fax}
+                                        onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter fax number"
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="border-b pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Contact Information</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Phone
+                        {/* Role Information */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <User className="w-5 h-5" />
+                                Role Information
+                            </h3>
+                            <div className="space-y-2">
+                                <label className="text-sm font-semibold ml-1">
+                                    Role <span className="text-red-600">*</span>
                                 </label>
-                                <input
-                                    type="text"
-                                    value={formData.phone}
-                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                />
+                                <select
+                                    value={formData.role}
+                                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                    className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                    required
+                                >
+                                    <option value="">Select a role</option>
+                                    {ROLES.map(role => (
+                                        <option key={role} value={role}>
+                                            {role}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
+                        </div>
 
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Address
-                                </label>
-                                <textarea
-                                    value={formData.address}
-                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                    rows={3}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
-                                />
+                        {/* Personal Information */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <User className="w-5 h-5" />
+                                Personal Information
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        First Name <span className="text-red-600">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.firstName}
+                                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter first name"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        Last Name <span className="text-red-600">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.lastName}
+                                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter last name"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="col-span-1 sm:col-span-2 space-y-2">
+                                    <label className="text-sm font-semibold ml-1 flex items-center gap-2">
+                                        <Mail className="w-4 h-4" />
+                                        Email <span className="text-red-600">*</span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="name@company.com"
+                                        required
+                                    />
+                                </div>
                             </div>
+                        </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    City
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.city}
-                                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                />
-                            </div>
+                        {/* Contact Information */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <Phone className="w-5 h-5" />
+                                Contact Information
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="col-span-1 sm:col-span-2 space-y-2">
+                                    <label className="text-sm font-semibold ml-1 flex items-center gap-2">
+                                        <Phone className="w-4 h-4" />
+                                        Phone
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter phone number"
+                                    />
+                                </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    ZIP
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.zip}
-                                    onChange={(e) => {
-                                        const value = e.target.value.replace(/[^0-9]/g, "");
-                                        setFormData({ ...formData, zip: value })
-                                    }}
-                                    maxLength={6}
-                                    inputMode="numeric"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                                />
-                            </div>
+                                <div className="col-span-1 sm:col-span-2 space-y-2">
+                                    <label className="text-sm font-semibold ml-1 flex items-center gap-2">
+                                        <MapPin className="w-4 h-4" />
+                                        Address
+                                    </label>
+                                    <textarea
+                                        value={formData.address}
+                                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                        rows={3}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white resize-none"
+                                        placeholder="Enter address"
+                                    />
+                                </div>
 
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    State (Multi-select) <span className="text-red-600">*</span>
-                                </label>
-                                <div className="border border-gray-300 rounded-lg p-4 max-h-48 overflow-y-auto">
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                                        {isStatesFetching ? (<div className="col-span-full text-center text-gray-500">
-                                            Loading States...
-                                        </div>) : (
-                                            states?.data?.map(state => (
-                                                <label key={state.id} className="flex flex-wrap items-center gap-2 cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={formData.states.includes(String(state?.id))}
-                                                        onChange={() => handleStateToggle(String(state?.id))}
-                                                        className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                                                    />
-                                                    <span className="text-sm">{state?.name}</span>
-                                                </label>
-                                            ))
-                                        )}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        City
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.city}
+                                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter city"
+                                    />
+                                </div>
 
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        ZIP
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.zip}
+                                        onChange={(e) => {
+                                            const value = e.target.value.replace(/[^0-9]/g, "");
+                                            setFormData({ ...formData, zip: value })
+                                        }}
+                                        maxLength={6}
+                                        inputMode="numeric"
+                                        className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                        placeholder="Enter ZIP"
+                                    />
+                                </div>
+
+                                <div className="col-span-1 sm:col-span-2 space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        State (Multi-select) <span className="text-red-600">*</span>
+                                    </label>
+                                    <div className="border border-slate-200 rounded-xl p-4 max-h-48 overflow-y-auto bg-white">
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                                            {isStatesFetching ? (
+                                                <div className="col-span-full text-center text-gray-500">
+                                                    Loading States...
+                                                </div>
+                                            ) : (
+                                                states?.data?.map(state => (
+                                                    <label key={state.id} className="flex items-center gap-2 cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={formData.states.includes(String(state?.id))}
+                                                            onChange={() => handleStateToggle(String(state?.id))}
+                                                            className="w-4 h-4 text-primary rounded focus:ring-primary"
+                                                        />
+                                                        <span className="text-sm">{state?.name}</span>
+                                                    </label>
+                                                ))
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="border-b pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Authentication Information</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Password <span className="text-red-600">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        value={formData.password}
-                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                                    >
-                                        {showPassword ? (
-                                            <EyeOff className="w-5 h-5" />
-                                        ) : (
-                                            <Eye className="w-5 h-5" />
-                                        )}
-                                    </button>
+                        {/* Authentication Information */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <Lock className="w-5 h-5" />
+                                Authentication Information
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        Password <span className="text-red-600">*</span>
+                                    </label>
+                                    <div className="relative group">
+                                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                            className="w-full pl-12 pr-12 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                            placeholder="••••••••"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 focus:text-primary"
+                                        >
+                                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Confirm Password <span className="text-red-600">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-
-                                    <input
-                                        type={showConfirmPassword ? "text" : "password"}
-                                        value={formData.confirmPassword}
-                                        onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                                    >
-                                        {showConfirmPassword ? (
-                                            <EyeOff className="w-5 h-5" />
-                                        ) : (
-                                            <Eye className="w-5 h-5" />
-                                        )}
-                                    </button>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold ml-1">
+                                        Confirm Password <span className="text-red-600">*</span>
+                                    </label>
+                                    <div className="relative group">
+                                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
+                                        <input
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            value={formData.confirmPassword}
+                                            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                                            className="w-full pl-12 pr-12 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white"
+                                            placeholder="••••••••"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 focus:text-primary"
+                                        >
+                                            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="pb-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Profile Image</h3>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Upload Image (JPEG, JPG, PNG)
-                            </label>
-                            <input
-                                type="file"
-                                accept="image/jpeg,image/jpg,image/png"
-                                onChange={handleImageChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                            />
-                            {profileImage && (
-                                <p className="text-sm text-green-600 mt-2">
-                                    Selected: {profileImage.name}
-                                </p>
-                            )}
+                        {/* Profile Image */}
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                                <User className="w-5 h-5" />
+                                Profile Image
+                            </h3>
+                            <div className="space-y-2">
+                                <label className="text-sm font-semibold ml-1">
+                                    Upload Image (JPEG, JPG, PNG)
+                                </label>
+                                <input
+                                    type="file"
+                                    accept="image/jpeg,image/jpg,image/png"
+                                    onChange={handleImageChange}
+                                    className="w-full pl-4 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all bg-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                                />
+                                {profileImage && (
+                                    <p className="text-sm text-green-600 mt-2">
+                                        Selected: {profileImage.name}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex gap-4">
-                        <button
-                            type="button"
-                            onClick={() => navigate('/attorney/login')}
-                            className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
-                        >
-                            Back to Login
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
-                        >
-                            {loading ? 'Creating Account...' : 'Sign Up'}
-                        </button>
-                    </div>
-                </form>
+                        <div className="space-y-3">
+                            <Button
+                                type="submit"
+                                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                                size="lg"
+                                disabled={loading}
+                            >
+                                {loading ? "Creating Account..." : "Sign Up"}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="w-full"
+                                size="lg"
+                                onClick={() => navigate('/attorney/login')}
+                            >
+                                <Home className="mr-2 h-4 w-4" />
+                                Back to Login
+                            </Button>
+
+                            <p className="text-sm text-center text-muted-foreground">
+                                Already have an account?{" "}
+                                <button
+                                    onClick={() => navigate('/attorney/login')}
+                                    className="text-primary font-semibold hover:underline"
+                                >
+                                    Sign In
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+    
     )
 }
 
