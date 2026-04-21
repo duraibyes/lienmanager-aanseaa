@@ -79,7 +79,7 @@ export default function RecentProjectsScreen() {
       },
     },
     {
-      field: "action", headerName: " Action", flex: 0, minWidth: 120, sortable: false,
+      field: "action", headerName: " Action", flex: 1, minWidth: 100, sortable: false,
       renderCell: (params) => {
         const row = params.row;
         return (
@@ -141,7 +141,7 @@ export default function RecentProjectsScreen() {
         />
       </div>
 
-      <div className="bg-white rounded-lg border border-primary/50">
+      <div className="bg-white rounded-lg border border-primary/50 mt-4">
         <div style={{ height: 600, width: "100%" }}>
           <DataGrid<DBProject>
             rows={rows}
@@ -179,11 +179,9 @@ export default function RecentProjectsScreen() {
               "& .MuiDataGrid-columnHeaders": {
                 borderBottom: "1px solid #e2e8f0",
               },
-              "& .MuiDataGrid-columnHeader:hover": {
-                backgroundColor: "orange",
-              },
+
               "& .MuiDataGrid-row:hover": {
-                backgroundColor: "#f8e9cd",
+                backgroundColor: "#fff",
               },
             }}
           />

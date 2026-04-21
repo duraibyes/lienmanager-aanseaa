@@ -8,7 +8,7 @@ type DeleteProps = {
 const DeleteIconButton = ({ id, handleDelete }: DeleteProps) => {
     return (
         <button
-            className="p-1.5 text-red-600 bg-red-50 hover:bg-red-100 rounded transition-colors"
+            className="p-1.5 text-primary  hover:bg-primary/10 rounded transition-colors"
             title="Delete"
             onClick={() => handleDelete(Number(id))}
         >

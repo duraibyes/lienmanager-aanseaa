@@ -87,9 +87,9 @@ export default function DeadlinesStep({ data }: DeadlinesStepProps) {
                                 return (
                                     <div
                                         key={index}
-                                        className={`shadow-sm rounded-md border border-1 border-primary/40 hover:shadow-lg`}
+                                        className={`shadow-sm rounded-md h-[220px] border border-1 border-primary/40 hover:shadow-lg`}
                                     >
-                                        <div className="flex flex-col sm:items-start sm:justify-between gap-3 sm:gap-4">
+                                        <div className="flex flex-col sm:items-start h-full sm:justify-between gap-3 sm:gap-4">
 
                                             <div className='p-4'>
                                                 <h3 className="text-lg font-bold mb-1 ">{deadline.title}</h3>

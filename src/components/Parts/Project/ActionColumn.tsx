@@ -62,7 +62,7 @@ const ActionColumn = ({ data }: ActionColumnProps) => {
     return (
         <div className="text-center">
             <button
-                className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                className="p-1.5 text-primary hover:bg-primary/10 rounded transition-colors"
                 title="View"
                 onClick={() => handleViewProject(navigate, data.id)}
             >

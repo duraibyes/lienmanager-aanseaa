@@ -17,6 +17,9 @@ export const hasFurnishingDates = (data: ProjectWizardData): boolean =>
 export const hasDocuments = (data: ProjectWizardData): boolean =>
     !!(data?.documents?.length || data?.uploaded_documents?.length);
 
+export const isContractFilled = (data: ProjectWizardData): boolean =>
+    !!(data?.contractAmount || data?.paymentsCredits || data?.baseContractAmount || data?.jobProjectNumber);
+
 export const isDetailsFilled = (data: ProjectWizardData): boolean =>
     Boolean(data.stateId && data.projectTypeId && data.roleId && data.projectName && data.customerTypeId);
 
@@ -77,7 +80,7 @@ export function StepSidebar({ data }: Props) {
             shortTitle: "Contract",
             icon: "file-signature",
             description: "Contract details and terms",
-            entered: false,
+            entered: isContractFilled(data),
             isClickable: isDetailsFilled(data)
         },
         {
