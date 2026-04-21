@@ -79,7 +79,7 @@ export default function RecentProjectsScreen() {
       },
     },
     {
-      field: "action", headerName: " Action", flex: 1, minWidth: 100, sortable: false,
+      field: "action", headerName: " Action", flex: 1, minWidth: 180, sortable: false,
       renderCell: (params) => {
         const row = params.row;
         return (

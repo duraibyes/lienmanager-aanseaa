@@ -144,7 +144,7 @@ const DocumentScreen = () => {
                         <div>
                             {filteredDocuments && (
 
-                                <div className="bg-gray-100 p-4 shadow-md">
+                                <div className="bg-primary/5 p-4 shadow-md">
                                     <div className="flex items-center justify-between">
                                         <p className="font-semibold text-lg text-slate-900 mb-1 sm:mb-2">{filteredDocuments.project_name}</p>
 

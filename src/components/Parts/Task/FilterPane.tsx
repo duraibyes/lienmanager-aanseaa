@@ -39,16 +39,15 @@ const FilterPane = ({
 
   return (
     <div className="flex flex-col gap-2 mb-6">
-      {/* ── Main Bar ── */}
-      <div className="flex items-center gap-2 flex-wrap bg-white rounded-2xl border border-slate-100 shadow-sm px-4 py-2.5">
+      <div className="flex items-center gap-2 flex-wrap bg-primary/5 rounded-2xl border border-slate-100 shadow-sm px-4 py-2.5">
 
-        <div className="relative group">
+        <div className="relative group w-full md:w-1/2">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors w-5 h-5" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by project, customer, or contact..."
+            placeholder="Search by project, task, or contact..."
             className="w-full pl-12 pr-12 py-2 bg-white border border-slate-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-input outline-none transition-all"
           />
           {search && (
@@ -62,10 +61,8 @@ const FilterPane = ({
           )}
         </div>
 
-
         <Divider />
 
-        {/* Task Action Select (Replacing State Select) */}
         <div className={`relative flex items-center ${H} min-w-[180px]`}>
           <select
             value={filterStatus}
@@ -82,7 +79,6 @@ const FilterPane = ({
           <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
         </div>
 
-        {/* Clear Button — Only visible when active */}
         {hasActiveFilters && (
           <>
             <Divider />
@@ -97,7 +93,6 @@ const FilterPane = ({
         )}
       </div>
 
-      {/* ── Active filter hint ── */}
       {hasActiveFilters && (
         <div className="flex items-center gap-1.5 px-1 text-[11px] text-slate-400 font-medium">
           <span

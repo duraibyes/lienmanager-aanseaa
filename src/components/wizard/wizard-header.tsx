@@ -150,13 +150,14 @@ export function WizardHeader({ saveAndExit, data }: Props) {
                     variant="outline"
                     size="sm"
                     onClick={saveAndExit}
+                    disabled={!disableNext?.entered && currentStep === 11}
                     className="gap-1.5 border-primary/30 text-primary hover:bg-primary/10"
                 >
                     <LogOut className="h-4 w-4" />
                     <span className="hidden sm:inline">Save & Exit</span>
                 </Button>
 
-                {!isLastStep ? (
+                {!isLastStep && (
                     <>
                         <Button
                             variant="ghost"
@@ -170,20 +171,12 @@ export function WizardHeader({ saveAndExit, data }: Props) {
                             size="sm"
                             disabled={!disableNext?.isClickable}
                             onClick={goToNextStep}
-                            className="gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90"
+                            className="gap-1.5 bg-gradient-to-r from-primary to-primary/60"
                         >
                             <span>Next</span>
                             <ChevronRight className="h-4 w-4" />
                         </Button>
                     </>
-                ) : (
-                    <Button
-                        size="sm"
-                        onClick={goToNextStep}
-                        className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/90"
-                    >
-                        <span>Complete</span>
-                    </Button>
                 )}
             </div>
         </header>

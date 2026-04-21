@@ -7,7 +7,6 @@ import { useGetTasksQuery } from '../../features/task/taskDataApi';
 import FilterPane from '../Parts/Task/FilterPane';
 import { DBTask } from '../../types/tasks';
 import TaskView from '../Parts/Task/TaskView';
-import IconButton from '../Button/IconButton';
 import { PageContainer, PageHeader } from '../layout/page-wrapper';
 import { PageSubtitle, PageTitle } from '../ui/typography';
 import { Button } from '../ui/button';
@@ -75,16 +74,18 @@ export default function ProjectTasks() {
             }
         },
         {
-            field: "action", headerName: " Action", flex: 0, minWidth: 100, sortable: false,
+            field: "action", headerName: " Action", flex: 0, minWidth: 100, sortable: false, align: "center",
             renderCell: (params) => {
                 const row = params.row;
                 return (
-                    <IconButton
-                        icon={Eye}
-                        variant="primary"
-                        title="View Details"
+                    <button
+                        className="p-1.5 text-primary hover:bg-primary/10 rounded transition-colors"
+                        title="View"
                         onClick={() => setSelectedTask(row.id)}
-                    />
+                    >
+                        <Eye className="w-4 h-4" />
+                    </button>
+
                 );
             }
         }
@@ -167,11 +168,9 @@ export default function ProjectTasks() {
                             "& .MuiDataGrid-columnHeaders": {
                                 borderBottom: "1px solid #e2e8f0",
                             },
-                            "& .MuiDataGrid-columnHeader:hover": {
-                                backgroundColor: "orange",
-                            },
+
                             "& .MuiDataGrid-row:hover": {
-                                backgroundColor: "#f8e9cd",
+                                backgroundColor: "#fff",
                             },
                         }}
                     />

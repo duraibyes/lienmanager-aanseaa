@@ -31,7 +31,7 @@ export const isDescriptionFilled = (data: ProjectWizardData) =>
     Boolean(data.jobName && data.jobAddress);
 
 export const isInfoSheetFilled = (data: ProjectWizardData) =>
-    Boolean(data.signatureDate && data.customerSignature);
+    Boolean(data.signatureDate || data.customerSignature);
 
 export function StepSidebar({ data }: Props) {
     const { currentStep, setCurrentStep } = useWizard();

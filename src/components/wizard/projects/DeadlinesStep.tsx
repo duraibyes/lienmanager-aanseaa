@@ -80,7 +80,7 @@ export default function DeadlinesStep({ data }: DeadlinesStepProps) {
                         <p className="text-slate-600">  Deadlines will appear once you complete the Dates step </p>
                     </div>
                 ) : (
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-3 sm:space-y-4 overflow-auto max-h-[450px]">
                         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2'>
 
                             {Object.entries(data.furnishingDates).length > 0 && calculatedDeadlineData.map((deadline, index) => {

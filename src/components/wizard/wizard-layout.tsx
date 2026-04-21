@@ -335,10 +335,7 @@ export function WizardLayout() {
                         countries={countries}
                         projectTypes={projectTypes}
                         roles={roles}
-                        onNext={goToNextStep}
-                        onBack={prevStep}
                         onEdit={goToStep}
-                        onSaveAndExit={saveAndExit}
                         documentData={documentData}
                     />
                 );
@@ -347,7 +344,6 @@ export function WizardLayout() {
                     <InfoSheetStep
                         data={projectData}
                         onUpdate={updateProjectData}
-                        onBack={prevStep}
                         onComplete={saveAndExit}
                         countries={countries}
                         projectTypes={projectTypes}

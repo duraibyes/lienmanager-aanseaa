@@ -83,15 +83,15 @@ const DocumentListCard = ({ document }: DocumentProps) => {
                 <a
                     href={document.file_url}
                     target="_blank"
-                    className=" p-2  text-primary  hover:bg-blue-50  rounded-md"
+                    className=" p-2  text-primary  hover:bg-primary/10  rounded-md"
                 >
                     <Download className="w-4 h-4" />
                 </a>
 
                 <button
                     className="p-2 
-                                                              text-red-600 
-                                                              hover:bg-red-50 
+                                                              text-primary 
+                                                              hover:bg-primary/10 
                                                               rounded-md
                                                             "
                     disabled={isDeleting}
