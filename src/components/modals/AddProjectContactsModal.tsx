@@ -1,4 +1,4 @@
-import { X} from 'lucide-react';
+import { X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Customer, CustomerContact, initialCustomer } from '../../types/customer';
@@ -8,6 +8,9 @@ import { isValidEmail, isValidPhone } from '../../utils/validation';
 import CompanyAutocomplete from '../../utils/CompanyAutocomplete';
 import { useSubmitProjectContactMutation } from '../../features/project/ProjectContactApi';
 import AddSingleContactForm from './AddSingleContactForm';
+import IconButton from '../Button/IconButton';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 interface AddProjectContactsModalProps {
     readonly isOpen: boolean;
@@ -194,15 +197,15 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+            <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh]">
+                <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-2 flex justify-between items-center rounded-md">
                     <h2 className="text-xl font-bold text-slate-900">Project Contact</h2>
-                    <button
-                        onClick={onClose}
-                        className="text-slate-400 hover:text-slate-600 rounded-full transition-colors"
-                    >
-                        <X className="w-6 h-6" />
-                    </button>
+
+                    <IconButton icon={X} onClick={() => {
+                        onClose();
+                        setCustomer(initialCustomer);
+                    }
+                    } />
                 </div>
 
                 <div className="p-6 space-y-6">
@@ -214,7 +217,7 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                             <select
                                 value={customer.role_id}
                                 onChange={(e) => updateCustomer('role_id', Number(e.target.value))}
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-1.5 border border-slate-300 rounded focus:ring-4 focus:ring-primary/20 focus:border-primary focus:outline-none"
                             >
                                 {isProjectContactRoleLoading ? (
                                     <option value="">Loading roles...</option>
@@ -240,40 +243,39 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Website:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={customer.website}
                                 onChange={(e) => updateCustomer('website', e.target.value)}
                                 placeholder="Enter Website"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+
                             />
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Address:
-                        </label>
-                        <textarea
-                            value={customer.address}
-                            onChange={(e) => updateCustomer('address', e.target.value)}
-                            placeholder="Enter Address"
-                            rows={3}
-                            className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                        />
-                    </div>
 
                     <div className="grid md:grid-cols-3 gap-6">
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                Address:
+                            </label>
+                            <Input
+                                value={customer.address}
+                                onChange={(e) => updateCustomer('address', e.target.value)}
+                                placeholder="Enter Address"
+
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 City<span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={customer.city}
                                 onChange={(e) => updateCustomer('city', e.target.value)}
                                 placeholder="Enter City"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+
                             />
                         </div>
 
@@ -284,7 +286,7 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                             <select
                                 value={customer.state_id}
                                 onChange={(e) => updateCustomer('state_id', Number(e.target.value))}
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-1.5 border border-slate-300 rounded focus:ring-4 focus:ring-primary/20 focus:border-primary focus:outline-none"
                             >
                                 {isStatesLoading || isStatesFetching ? (
                                     <option value="">Loading states...</option>
@@ -305,7 +307,7 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Zip<span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={customer.zip}
                                 onChange={(e) => {
@@ -314,17 +316,15 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                                 }}
                                 placeholder="Enter Zip Code"
                                 maxLength={6}
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+
                             />
                         </div>
-                    </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Phone <span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={customer.phone}
                                 onChange={(e) => {
@@ -332,7 +332,7 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                                     updateCustomer('phone', value)
                                 }}
                                 placeholder="Enter Phone Number"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+
                             />
                         </div>
 
@@ -340,7 +340,7 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Fax:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={customer.fax}
                                 onChange={(e) => {
@@ -348,7 +348,6 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                                     updateCustomer('fax', value)
                                 }}
                                 placeholder="Enter Fax Number"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
                     </div>
@@ -366,20 +365,15 @@ export default function AddProjectContactsModal({ isOpen, data, onClose, initial
                     </div>
                 </div>
 
-                <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end gap-3">
-                    <button
-                        onClick={onClose}
-                        className="px-6 py-2.5 text-slate-700 font-medium rounded-lg border border-slate-300 hover:bg-slate-100 transition-colors"
-                    >
+                <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end rounded-md gap-3">
+                    <Button variant="outline" onClick={() => {
+                        onClose(); setCustomer(initialCustomer);
+                    }}>
                         Cancel
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        disabled={!isValid || saveLoading}
-                        className="disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                        Save Customer
-                    </button>
+                    </Button>
+                    <Button type="submit" disabled={!isValid || saveLoading} className="gradient-primary hover:opacity-90" onClick={handleSave}>
+                        {saveLoading ? "Saving.." : "Save Customer"}
+                    </Button>
                 </div>
             </div>
         </div>

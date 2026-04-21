@@ -6,6 +6,9 @@ import { initialSubUserData, SubUser } from "../../types/user";
 import { useGetStatesQuery } from "../../features/master/masterDataApi";
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { useSubmitSubUserMutation } from "../../features/master/subUserDataApi";
+import IconButton from "../Button/IconButton";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 interface AddSubUserProps {
     readonly isOpen: boolean;
@@ -122,15 +125,10 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+            <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh]">
+                <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-2 flex justify-between rounded-md items-center ">
                     <h2 className="text-xl font-bold text-slate-900">Sub User</h2>
-                    <button
-                        onClick={onClose}
-                        className="text-slate-400 hover:text-slate-600 rounded-full transition-colors"
-                    >
-                        <X className="w-6 h-6" />
-                    </button>
+                    <IconButton icon={X} onClick={onClose} />
                 </div>
 
                 <div className="p-6 space-y-6">
@@ -146,39 +144,49 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 First name<span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={subuser.first_name}
                                 onChange={(e) => updateSubuser('first_name', e.target.value)}
                                 placeholder="Enter First name"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Last name:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={subuser.last_name}
                                 onChange={(e) => updateSubuser('last_name', e.target.value)}
                                 placeholder="Enter Last name"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                Address:
+                            </label>
+                            <Input
+                                value={subuser.address}
+                                onChange={(e) => updateSubuser('address', e.target.value)}
+                                placeholder="Enter Address"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                Phone<span className="text-red-600">*</span>:
+                            </label>
+                            <Input
+                                type="text"
+                                value={subuser.phone}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+                                    updateSubuser('phone', value)
+                                }}
+                                placeholder="Enter Phone Number"
                                 className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Address:
-                        </label>
-                        <textarea
-                            value={subuser.address}
-                            onChange={(e) => updateSubuser('address', e.target.value)}
-                            placeholder="Enter Address"
-                            rows={3}
-                            className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                        />
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-6">
@@ -186,12 +194,11 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 City<span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={subuser.city}
                                 onChange={(e) => updateSubuser('city', e.target.value)}
                                 placeholder="Enter City"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
 
@@ -202,7 +209,7 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                             <select
                                 value={subuser.state_id}
                                 onChange={(e) => updateSubuser('state_id', Number(e.target.value))}
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-1.5 border border-slate-300 rounded focus:ring-2 focus:ring-primary/20 focus:border-primary"
                             >
                                 {isStatesLoading || isStatesFetching ? (
                                     <option value="">Loading states...</option>
@@ -223,7 +230,7 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
                                 Zip<span className="text-red-600">*</span>:
                             </label>
-                            <input
+                            <Input
                                 type="text"
                                 value={subuser.zip_code}
                                 onChange={(e) => {
@@ -232,29 +239,10 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                                 }}
                                 placeholder="Enter Zip Code"
                                 maxLength={6}
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Phone<span className="text-red-600">*</span>:
-                            </label>
-                            <input
-                                type="text"
-                                value={subuser.phone}
-                                onChange={(e) => {
-                                    const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
-                                    updateSubuser('phone', value)
-                                }}
-                                placeholder="Enter Phone Number"
-                                className="w-full px-4 py-2.5 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
-                        </div>
-
-                    </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -266,9 +254,9 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                                 value={subuser.email}
                                 onChange={(e) => updateSubuser('email', e.target.value)}
                                 placeholder="Enter Email"
-                                className={`w-full px-4 py-2 border rounded-lg 
+                                className={`w-full px-4 py-1.5 border rounded-lg 
       ${errors.email ? "border-red-500" : "border-slate-300"}
-      focus:ring-2 focus:ring-blue-500`}
+      focus:ring-4 focus:ring-primary/20 focus:border-primary focus:outline-none`}
                             />
                             {errors.email && (
                                 <p className="text-red-600 text-sm mt-1">
@@ -287,9 +275,9 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                                     autoComplete="new-password"
                                     value={subuser.password}
                                     onChange={(e) => updateSubuser('password', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg 
+                                    className={`w-full px-4 py-1.5 border rounded-lg 
       ${errors.password ? "border-red-500" : "border-slate-300"}
-      focus:ring-2 focus:ring-blue-500`}
+      focus:ring-4 focus:ring-primary/20 focus:border-primary focus:outline-none`}
                                     placeholder="At least 6 characters"
                                     required
                                 />
@@ -312,9 +300,9 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                                     autoComplete="off"
                                     value={subuser.password_confirmation}
                                     onChange={(e) => updateSubuser('password_confirmation', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg 
+                                    className={`w-full px-4 py-1.5 border rounded-lg 
       ${errors.password_confirmation ? "border-red-500" : "border-slate-300"}
-      focus:ring-2 focus:ring-blue-500`}
+      focus:ring-4 focus:ring-primary/20 focus:border-primary focus:outline-none`}
                                     placeholder="Confirm your password"
                                     required
                                 />
@@ -328,20 +316,13 @@ const AddSubUserModal = ({ isOpen, data, onClose, initialData }: AddSubUserProps
                     </div>
                 </div>
 
-                <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end gap-3">
-                    <button
-                        onClick={onClose}
-                        className="px-6 py-2.5 text-slate-700 font-medium rounded-lg border border-slate-300 hover:bg-slate-100 transition-colors"
-                    >
+                <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end gap-3 rounded-md">
+                    <Button variant="outline" onClick={onClose}>
                         Cancel
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        disabled={isLoading || !isValid || saveLoading}
-                        className="disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                        Save Sub User
-                    </button>
+                    </Button>
+                    <Button type="submit" disabled={isLoading || !isValid || saveLoading} className="gradient-primary hover:opacity-90" onClick={handleSave}>
+                        {saveLoading ? "Saving.." : "Save Sub User"}
+                    </Button>
                 </div>
             </div>
         </div>

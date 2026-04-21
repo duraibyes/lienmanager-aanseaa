@@ -127,7 +127,7 @@ const DocumentScreen = () => {
             <div>
                 {isLoading ? (
                     <div className="flex items-center justify-center py-12">
-                        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_3fr] gap-4">

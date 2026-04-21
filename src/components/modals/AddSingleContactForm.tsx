@@ -28,7 +28,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                     <select
                                         value={contact.role_id}
                                         onChange={(e) => updateContact(index, 'role_id', Number(e.target.value))}
-                                        className="w-full px-2 py-1 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-2 py-1 border border-slate-300 rounded text-sm focus:ring-4 focus:ring-primary/20 focus:border-primary"
                                     >
                                         {customerContactRoles?.map((role: ContactRole) => (
                                             <option key={role.id} value={role.id}>
@@ -49,7 +49,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                             validateContactField(index, "firstName", e.target.value);
                                         }}
                                         placeholder="N/A"
-                                        className={`w-full px-2 py-1 border  rounded text-sm focus:ring-2 focus:ring-blue-500  ${contactErrors[index]?.firstName ? "border-red-500" : "border-slate-300"}`}
+                                        className={`w-full px-2 py-1 border  rounded text-sm focus:ring-4 focus:ring-primary/20 focus:outline-none focus:border-primary  ${contactErrors[index]?.firstName ? "border-red-500" : "border-slate-300"}`}
 
                                     />
                                     {contactErrors[index]?.firstName && (
@@ -67,7 +67,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                         value={contact.lastName}
                                         onChange={(e) => updateContact(index, 'lastName', e.target.value)}
                                         placeholder="N/A"
-                                        className={`w-full px-2 py-1 border  rounded text-sm focus:ring-2 focus:ring-blue-500  border-slate-300`}
+                                        className={`w-full px-2 py-1 border  rounded text-sm focus:ring-4 focus:ring-primary/20 focus:outline-none focus:border-primary  border-slate-300`}
                                     />
                                 </div>
                                 <div className="">
@@ -83,7 +83,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                         }}
 
                                         placeholder="N/A"
-                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500
+                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-4 focus:ring-primary/20 focus:outline-none focus:border-primary
       ${contactErrors[index]?.email ? "border-red-500" : "border-slate-300"}
     `}
                                     />
@@ -106,7 +106,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                             validateContactField(index, "directPhone", value);
                                         }}
                                         placeholder="Direct Phone"
-                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500
+                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-4 focus:ring-primary/20 focus:outline-none focus:border-primary
       ${contactErrors[index]?.directPhone ? "border-red-500" : "border-slate-300"}
     `}
                                     />
@@ -129,7 +129,7 @@ const AddSingleContactForm = ({ contacts, customerContactRoles, updateContact, c
                                             validateContactField(index, "cell", value);
                                         }}
                                         placeholder="Cell Phone"
-                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500
+                                        className={`w-full px-2 py-1 border rounded text-sm focus:ring-4 focus:ring-primary/20 focus:outline-none focus:border-primary
       ${contactErrors[index]?.cell ? "border-red-500" : "border-slate-300"}
     `}
                                     />

@@ -89,7 +89,7 @@ export default function ContactsSelectionStep({ data, onUpdate }: ContactsSelect
         <div className="">
 
             <div className='grid grid-cols-1 gap-4'>
-                <div className="flex flex-col  sm:justify-between  gap-3 bg-primary/4 p-5 rounded-lg shadow-lg border-t border-t-primary">
+                <div className="flex flex-col  sm:justify-between  gap-3 bg-primary/4 p-2 rounded-lg shadow-lg border-t border-t-primary">
                     <h3 className="text-lg font-semibold text-slate-900">
                         Customer Contacts
                     </h3>
@@ -149,12 +149,12 @@ export default function ContactsSelectionStep({ data, onUpdate }: ContactsSelect
 
                     </div>
                 </div>
-                <div className=" bg-primary/4 p-5 rounded-md shadow-lg border-t border-t-primary">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                <div className=" bg-primary/4 p-2 rounded-md shadow-lg border-t border-t-primary">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-1">
                         <h3 className="text-lg md:text-xl font-bold text-slate-900 text-center sm:text-left">Project Contacts</h3>
                         <OutlinePrimaryIcon label='Add New' onClickFunction={() => setShowAddForm(!showAddForm)} icon={Plus} />
                     </div>
-                    <div className="border-t border-slate-200 pt-6">
+                    <div className="border-t border-slate-200 pt-6 h-[400px] overflow-auto">
 
 
                         {isProjectContactDataFetching ? (
@@ -231,12 +231,6 @@ export default function ContactsSelectionStep({ data, onUpdate }: ContactsSelect
                         )}
                     </div>
                 </div>
-
-            </div>
-
-            <div className="bg-white rounded-xl border border-slate-200 p-4 md:p-8">
-
-
 
             </div>
 
