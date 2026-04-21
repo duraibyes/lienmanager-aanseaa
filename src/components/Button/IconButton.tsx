@@ -42,13 +42,13 @@ const IconButton: React.FC<IconButtonProps> = ({
       onClick={onClick}
       title={title}
       className={clsx(
-        "flex items-center gap-2 justify-center rounded-lg transition-all bg-primary/20 hover:bg-primary hover:text-white  duration-200 border-primary w-auto px-4",
+        "flex items-center gap-2 justify-center rounded-lg transition-all bg-primary/20 hover:bg-primary  duration-200 border-primary w-auto px-4",
         variantStyles[variant],
         sizeStyles[size],
         className
       )}
     >
-      <Icon className="w-4 h-4 text-primary hover:text-white" />
+      <Icon className="w-4 h-4 text-primary" />
 
       {label}
     </button>

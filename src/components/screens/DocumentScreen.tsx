@@ -1,4 +1,4 @@
-import { ArrowRight, Plus, Search, Upload } from "lucide-react"
+import { ArrowRight, File, Files, Plus, Search, Upload } from "lucide-react"
 import { Link, useLocation } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { useGetAllProjectsQuery, useGetProjectDocumentQuery } from "../../features/document/DocumentApi";
@@ -8,6 +8,7 @@ import DocumentListCard from "../Parts/Document/DocumentListCard";
 import { PageContainer, PageHeader } from "../layout/page-wrapper";
 import { PageSubtitle, PageTitle } from "../ui/typography";
 import { Button } from "../ui/button";
+import { Divider } from "@mui/material";
 
 const DocumentScreen = () => {
     const location = useLocation();
@@ -68,7 +69,8 @@ const DocumentScreen = () => {
 
     console.log('  filteredDocuments ', filteredDocuments);
     console.log(' selectedProject ', selectedProject)
-    console.log(' selectedId ', selectedId)
+    console.log(' projects ', projects)
+    console.log(' projectOptions ', projectOptions)
 
     return (
         <PageContainer>
@@ -119,9 +121,6 @@ const DocumentScreen = () => {
                         />
                     </div>
 
-
-
-
                 </div>
 
             </div>
@@ -134,9 +133,22 @@ const DocumentScreen = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_3fr] gap-4">
                         <div>
                             <ul className="rounded-md shadow-md p-2 border border-gray-300">
+                                <li className="text-lg font-semibold py-2 text-center border border-b-red mb-4">
+                                    Projects
+                                </li>
                                 {projectOptions.map((project) => (
-                                    <li key={project.id} onClick={() => setSelectedId(project.id)} className={`p-4  ${selectedId === project.id ? "border rounded-md border-primary text-primary" : "bg-white text-blue-950"} font-semibold  cursor-pointer hover:bg-primary/40 hover:text-white`}>
-                                        {project.name}
+                                    <li key={project.id} onClick={() => setSelectedId(project.id)} className={`p-4  ${selectedId === project.id ? "border rounded-md border-primary text-primary" : "border  rounded-md bg-white text-blue-950"} font-semibold  cursor-pointer hover:bg-primary/5 hover:text-white`}>
+
+                                        <div className="flex flex-row items-center gap-4">
+                                            <div className="bg-primary/10 p-2 rounded-md">
+                                                <File className="text-primary w-4" />
+                                            </div>
+                                            <div>
+
+                                                <p className="font-semibold text-sm text-primary mb-1 sm:mb-2">{project.name}</p>
+
+                                            </div>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
@@ -144,9 +156,20 @@ const DocumentScreen = () => {
                         <div>
                             {filteredDocuments && (
 
-                                <div className="bg-primary/5 p-4 shadow-md">
-                                    <div className="flex items-center justify-between">
-                                        <p className="font-semibold text-lg text-slate-900 mb-1 sm:mb-2">{filteredDocuments.project_name}</p>
+                                <div className=" p-4 shadow-md rounded-md bg-white">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex flex-row items-center gap-4">
+                                            <div className="bg-primary/10 p-4 rounded-lg">
+                                                <File className="text-primary " />
+                                            </div>
+                                            <div>
+
+                                                <p className="font-bold text-lg text-slate-900 mb-1 sm:mb-2">{filteredDocuments.project_name}</p>
+                                                <p className="flex flex-row items-center gap-4 text-primary/60">
+                                                    <Files className="w-4 " /> {filteredDocuments.documents.length} files
+                                                </p>
+                                            </div>
+                                        </div>
 
                                         <IconButton onClick={() => {
                                             setShowModal(true)
@@ -156,7 +179,8 @@ const DocumentScreen = () => {
                                             size="sm"
                                         />
                                     </div>
-                                    <div className="bg-slate-50 my-4">
+                                    <Divider />
+                                    <div className=" my-4">
                                         {filteredDocuments.documents.map(document => (
                                             <DocumentListCard document={document} />
                                         ))}

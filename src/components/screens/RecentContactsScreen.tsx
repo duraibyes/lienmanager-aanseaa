@@ -99,7 +99,7 @@ export default function RecentContactsScreen() {
               <div className="flex flex-wrap sm:flex-nowrap items-center gap-4 w-full">
 
                 {/* Avatar */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-blue-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center">
                   <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
 

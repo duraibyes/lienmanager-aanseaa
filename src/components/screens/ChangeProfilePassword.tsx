@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Lock } from "lucide-react";
+import { Eye, EyeOff, Lock, X } from "lucide-react";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { validatePassword } from "../../utils/validation";
 import { useUpdatePasswordMutation } from "../../features/lienAuth/profileApi";
 import { useAppDispatch } from "../../store/hooks";
 import { setView } from "../../store/slices/viewSlice";
 import { logout } from "../../features/auth/authSlice";
-import ModalCloseBtn from "../Button/ModalCloseBtn";
+import IconButton from "../Button/IconButton";
+import { Button } from "../ui/button";
 
 const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () => void }) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -104,13 +105,21 @@ const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () =
         <Dialog
             open={show}
             onClose={onClose}
-            maxWidth="sm"
+            maxWidth="xs"
             fullWidth
+            className="rounded-lg"
         >
             <DialogTitle className="flex items-center justify-between">
-                Change Password
-                <ModalCloseBtn onClose={onClose} />
+                <div>
+                    <p>Change Password</p>
+                    <p className="text-muted-foreground text-xs">
+                        Enter your current password and choose a new secure password.
+                    </p>
+                </div>
+                <IconButton icon={X}
+                    onClick={onClose} />
             </DialogTitle>
+
 
             <DialogContent className="space-y-5">
 
@@ -132,7 +141,7 @@ const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () =
                                 type={showCurrentPassword ? "text" : "password"}
                                 value={passwordForm.currentPassword}
                                 onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full pl-10 pr-4 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                 required
                             />
                             <button
@@ -159,7 +168,7 @@ const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () =
                                 type={showPassword ? "text" : "password"}
                                 value={passwordForm.newPassword}
                                 onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full pl-10 pr-4 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                 required
                             />
                             <button
@@ -186,7 +195,7 @@ const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () =
                                 type={showConfirmPassword ? "text" : "password"}
                                 value={passwordForm.confirmPassword}
                                 onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full pl-10 pr-4 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                                 required
                             />
                             <button
@@ -204,41 +213,29 @@ const ChangeProfilePassword = ({ show, onClose }: { show: boolean; onClose: () =
                     </div>
 
                     <div className="mt-2 text-sm space-y-1">
-                        <p className={`flex items-center gap-2 text-gray-500`}>
+                        <p className={`flex items-center gap-2 text-primary/70 text-xs`}>
                             * At least 8 characters
                         </p>
-                        <p className={`flex items-center gap-2 text-gray-500`}>
+                        <p className={`flex items-center gap-2 text-primary/70 text-xs`}>
                             * Contains numbers
                         </p>
-
-                        <p className={`flex items-center gap-2 text-gray-500`}>
+                        <p className={`flex items-center gap-2 text-primary/70 text-xs`}>
                             * Contains letters
                         </p>
                     </div>
                     <DialogActions className="px-6 pb-4">
-                        <div className="w-full mb-4 space-y-3 sm:space-y-0 sm:flex sm:gap-3">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    onClose();
-                                    setPasswordForm({ newPassword: '', confirmPassword: '', currentPassword: '' });
-                                    setShowPassword(false);
-                                    setShowConfirmPassword(false);
-                                }}
-                                className="w-full sm:w-1/2 py-3 border border-gray-300 text-gray-700 rounded-md bg-white hover:bg-gray-100 transition"
-                            >
+                        <div className="w-full justify-end mb-4 space-y-3 sm:space-y-0 sm:flex sm:gap-3">
+                            <Button variant="outline" onClick={() => {
+                                onClose();
+                                setPasswordForm({ newPassword: '', confirmPassword: '', currentPassword: '' });
+                                setShowPassword(false);
+                                setShowConfirmPassword(false);
+                            }}>
                                 Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={!isFormValid || isLoading}
-                                className={`w-full sm:w-1/2 py-3 rounded-md text-white transition ${isFormValid
-                                    ? 'bg-blue-600 hover:bg-blue-700'
-                                    : 'bg-gray-400 cursor-not-allowed'
-                                    }`}
-                            >
-                                Update Password
-                            </button>
+                            </Button>
+                            <Button type="submit" disabled={!isFormValid || isLoading} className="gradient-primary hover:opacity-90" onClick={handlePasswordChange}>
+                                {isLoading ? "Updating.." : "Update Password"}
+                            </Button>
                         </div>
                     </DialogActions>
                 </form>
