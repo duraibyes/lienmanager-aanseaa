@@ -137,7 +137,7 @@ const DocumentScreen = () => {
                                     Projects
                                 </li>
                                 {projectOptions.map((project) => (
-                                    <li key={project.id} onClick={() => setSelectedId(project.id)} className={`p-4  ${selectedId === project.id ? "border rounded-md border-primary text-primary" : "border  rounded-md bg-white text-blue-950"} font-semibold  cursor-pointer hover:bg-primary/5 hover:text-white`}>
+                                    <li key={project.id} onClick={() => setSelectedId(project.id)} className={`p-4  ${selectedId === project.id ? "border rounded-md border-primary text-primary" : "border  rounded-md bg-white text-slate-500"} font-semibold  cursor-pointer hover:bg-primary/5`}>
 
                                         <div className="flex flex-row items-center gap-4">
                                             <div className="bg-primary/10 p-2 rounded-md">
@@ -145,7 +145,7 @@ const DocumentScreen = () => {
                                             </div>
                                             <div>
 
-                                                <p className="font-semibold text-sm text-primary mb-1 sm:mb-2">{project.name}</p>
+                                                <p className="font-semibold text-sm mb-1 sm:mb-2">{project.name}</p>
 
                                             </div>
                                         </div>
@@ -154,7 +154,7 @@ const DocumentScreen = () => {
                             </ul>
                         </div>
                         <div>
-                            {filteredDocuments && (
+                            {filteredDocuments ? (
 
                                 <div className=" p-4 shadow-md rounded-md bg-white">
                                     <div className="flex items-center justify-between mb-4">
@@ -184,6 +184,12 @@ const DocumentScreen = () => {
                                         {filteredDocuments.documents.map(document => (
                                             <DocumentListCard document={document} />
                                         ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className=" p-4 shadow-md rounded-md bg-white">
+                                    <div className="flex items-center justify-center my-4">
+                                        <p> No files uploaded for this project</p>
                                     </div>
                                 </div>
                             )}
