@@ -113,12 +113,12 @@ export default function LandingPage() {
                             <span className="font-serif font-bold text-2xl text-white">LienPilot</span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight text-balance">
-                            Master Construction Lien{" "}
-                            <span className="text-transparent bg-clip-text gradient-accent bg-gradient-to-r from-primary to-accent">
-                                Compliance
-                            </span>
-                        </h1>
+                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight text-balance">
+                           Master Construction Lien{" "}
+                           <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                             Compliance
+                           </span>
+                         </h1>
 
                         <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed text-pretty">
                             The smart platform for managing construction liens, notices, deadlines, and documentation.
