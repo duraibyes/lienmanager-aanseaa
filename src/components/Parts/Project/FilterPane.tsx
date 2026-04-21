@@ -1,5 +1,6 @@
-import { SetStateAction, useCallback, useMemo } from "react";
+import { SetStateAction, useCallback } from "react";
 import { Search, X, ChevronDown } from "lucide-react";
+
 import { State } from "../../../types/master";
 interface FilterProps {
   search: string;
@@ -11,10 +12,8 @@ interface FilterProps {
   stateData: State[];
 }
 
-// ── Shared input/control height so every element sits on the same baseline ──
 const H = "h-[38px]";
 
-// ── Thin vertical rule between control groups ─────────────────────────────
 function Divider() {
   return <div className="w-px h-5 bg-slate-200 flex-shrink-0" />;
 }
@@ -30,14 +29,6 @@ export default function FilterPane({
 }: FilterProps) {
   const hasActiveFilters =
     stateFilter !== "all" || statusFilter !== "all" || search !== "";
-
-  const activeCount = useMemo(() => {
-    let n = 0;
-    if (search !== "") n++;
-    if (statusFilter !== "all") n++;
-    if (stateFilter !== "all") n++;
-    return n;
-  }, [search, statusFilter, stateFilter]);
 
   const handleClear = useCallback(() => {
     setSearch("");
