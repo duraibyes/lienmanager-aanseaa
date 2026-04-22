@@ -528,43 +528,40 @@ const AttorneySignupScreen = () => {
                             )}
                         </div>
                     </div>
-
+                    <div className="space-y-4">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            size="lg"
+                            onClick={() => navigate('/attorney/login')}
+                        >
+                            <Home className="mr-2 h-4 w-4" />
+                            Back to Login
+                        </Button>
+                    </div>
+                    <div className="space-y-4">
+                        <Button
+                            type="submit"
+                            className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                            size="lg"
+                            disabled={loading}
+                        >
+                            {loading ? "Creating Account..." : "Sign Up"}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                    </div>
+                    <div className="space-y-4"></div>
                     <div className="flex flex-col items-center gap-4 w-full">
-                        <div className="flex gap-4 flex-col md:flex-row items-center w-full">
-
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="w-full"
-                                size="lg"
+                        <p className="text-sm text-center text-muted-foreground">
+                            Already have an account?{" "}
+                            <button
                                 onClick={() => navigate('/attorney/login')}
+                                className="text-primary font-semibold hover:underline"
                             >
-                                <Home className="mr-2 h-4 w-4" />
-                                Back to Login
-                            </Button>
-                            <Button
-                                type="submit"
-                                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                                size="lg"
-                                disabled={loading}
-                            >
-                                {loading ? "Creating Account..." : "Sign Up"}
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Button>
-                        </div>
-                        <div className="w-full flex flex-row items-center justify-center">
-
-                            <p className="text-sm text-center text-muted-foreground">
-                                Already have an account?{" "}
-                                <button
-                                    onClick={() => navigate('/attorney/login')}
-                                    className="text-primary font-semibold hover:underline"
-                                >
-                                    Sign In
-                                </button>
-                            </p>
-                        </div>
-
+                                Sign In
+                            </button>
+                        </p>
 
                     </div>
                 </form>
