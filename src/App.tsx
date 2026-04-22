@@ -30,6 +30,7 @@ import DashboardLayout from "./page/DashboardLayout";
 import DashboardPage from "./page/DashboardPage";
 import { WizardLayout } from "./components/wizard/wizard-layout";
 import { WizardProvider } from "./contexts/wizard-context";
+import AttorneyForgotPasswordScreen from "./components/screens/attorney/AttorneyForgotPasswordScreen";
 
 function App() {
   return (
@@ -120,6 +121,11 @@ function App() {
           <Route path="/attorney/signup" element={
             <AttorneyRoute>
               <AttorneySignupScreen />
+            </AttorneyRoute>
+          } />
+          <Route path="/attorney/forgot-password" element={
+            <AttorneyRoute>
+              <AttorneyForgotPasswordScreen />
             </AttorneyRoute>
           } />
 
