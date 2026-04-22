@@ -79,9 +79,9 @@ const ProjectDashboard = () => {
     // const averageAmount = totalCalculate?.data?.average_amount;
 
     // Locate these lines (approx line 60-63)
-const totalContracts = totalCalculate?.data?.total_contracts || 42; // Dummy: 42
-const totalAmount = totalCalculate?.data?.total_amount || 125500.50; // Dummy: $125,500.50
-const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy: $2,988.10
+    const totalContracts = totalCalculate?.data?.total_contracts || 42; // Dummy: 42
+    const totalAmount = totalCalculate?.data?.total_amount || 125500.50; // Dummy: $125,500.50
+    const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy: $2,988.10
 
     const columns: GridColDef<DBLienProject>[] = [
         { field: "project_name", headerName: "Project", flex: 1, minWidth: 180, },
@@ -159,30 +159,38 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
         { name: "Pending", value: 15, color: "var(--accent)" }
       ],
       barData: [
-        { month: "Jan", count: 5 },
-        { month: "Feb", count: 8 },
-        { month: "Mar", count: 12 },
-        { month: "Apr", count: 7 }
+        { month: "Jan", active: 5, pending: 2, amount: 45000 },
+        { month: "Feb", active: 8, pending: 3, amount: 62000 },
+        { month: "Mar", active: 12, pending: 5, amount: 115000 },
+        { month: "Apr", active: 5, pending: 2, amount: 48000 }
       ]
     };
   } //dummy ended
 
     // 1. Distribution Logic (Pie Chart)
-    const activeCount = rows.filter(r => r.status === '1').length;
+    const activeCount = rows.filter((r: { status: string; }) => r.status === '1').length;
     const pendingCount = rows.length - activeCount;
 
-    // 2. Trend Logic (Bar Chart - grouped by month)
-    const months: Record<string, number> = {};
-    rows.forEach(row => {
-    const month = new Date(row.created_at).toLocaleString('default', { month: 'short' });
-    months[month] = (months[month] || 0) + 1;
+    const monthMap: Record<string, { active: number; pending: number; amount: number }> = {};
+
+    rows.forEach((row: any) => {
+        const month = new Date(row.created_at).toLocaleString('default', { month: 'short' });
+        if (!monthMap[month]) monthMap[month] = { active: 0, pending: 0, amount: 0 };
+        
+        if (row.status === '1') monthMap[month].active += 1;
+        else monthMap[month].pending += 1;
+        
+        // Summing contract value (if field exists in your DBProject type)
+        monthMap[month].amount += Number(row.project_contract_value || 0);
     });
   
-    const formattedBarData = Object.keys(months).map(m => ({ 
-    month: m, 
-    count: months[m] 
+    const formattedBarData = Object.keys(monthMap).map(m => ({ 
+        month: m, 
+        active: monthMap[m].active,
+        pending: monthMap[m].pending,
+        amount: monthMap[m].amount
     }));
-
+    
    return {
     pieData: [
         { name: "Active", value: activeCount, color: "var(--primary)" },
@@ -228,14 +236,12 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
           />
         </div>
 
- {/* Insert this between the Stats Grid and the Project Registry Card */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-  {/* Bar Chart */}
+
   <Card className="lg:col-span-2 border-none shadow-sm hover:shadow-md transition-shadow duration-300">
   <CardHeader className="pb-2">
     <div className="flex items-center justify-between">
       <CardTitle className="text-xl font-semibold tracking-tight flex items-center gap-3">
-        {/* Icon wrapper with soft background to match the "Recent Projects" look */}
         <div className="p-2 rounded-lg bg-primary/10">
           <BarChart3 className="h-5 w-5 text-primary" />
         </div>
@@ -260,7 +266,8 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
             tickLine={false} 
             axisLine={false} 
             tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-          />
+            tickFormatter={(value) => `$${value >= 1000 ? (value / 1000) + 'k' : value}`}
+          />           
           <ChartTooltip 
             cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }} 
             content={<ChartTooltipContent hideLabel />} 
@@ -268,11 +275,16 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
           
           {/* Bar with a subtle opacity state for a cleaner aesthetic */}
           <Bar 
-            dataKey="count" 
-            fill="var(--primary)" 
-            radius={[6, 6, 0, 0]} 
-            barSize={40}
-            className="opacity-90 hover:opacity-100 transition-opacity"
+           dataKey="active" 
+           fill="var(--primary)" 
+           radius={[4, 4, 0, 0]} 
+           barSize={30}
+          />
+          <Bar 
+           dataKey="pending" 
+           fill="var(--accent)" 
+           radius={[4, 4, 0, 0]} 
+           barSize={30}
           />
         </BarChart>
       </ResponsiveContainer>
@@ -309,7 +321,10 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
       <div className="flex justify-center gap-4 mt-4">
         {pieData.map((item, index) => (
           <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
+            <div 
+             className="w-3 h-3 rounded-full border border-black/15 shadow-sm" 
+             style={{ backgroundColor: item.color }} 
+             />
             {item.name} ({item.value})
           </div>
         ))}
@@ -318,8 +333,8 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
   </Card>
   </div>
         {/* Main Data Table Card */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between border-b pb-4">
+        <Card className="bg-white rounded-lg border border-primary/50 overflow-hidden py-0 gap-0 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between border-b px-6 py-4">
             <CardTitle className="text-lg font-semibold flex items-center gap-2">
               <FolderKanban className="h-5 w-5 text-primary" />
               Project Registry
@@ -336,7 +351,7 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
                   onChange={(e) => setSearch(e.target.value)}
                   className="pl-9 pr-4 py-1.5 text-sm border rounded-md focus:ring-2 focus:ring-primary outline-none min-w-[240px]"
                 />
-              </div>
+              </div> 
               <Button variant="outline" size="sm" className="gap-2">
                 <Filter className="w-4 h-4" />
                 Filters
@@ -353,8 +368,10 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
                 onRowClick={(params) => navigate(`/attorney/projects/${params.row.id}`)}
                 slots={{
                   noRowsOverlay: () => (
-                    <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                      <p>{debouncedSearch ? `No results for "${debouncedSearch}"` : "No projects available"}</p>
+                    <div className="p-6 text-center">
+                      {debouncedSearch
+                        ? `No results for "${debouncedSearch}"`
+                        : "No projects available"}
                     </div>
                   ),
                 }}
@@ -372,22 +389,25 @@ const averageAmount = totalCalculate?.data?.average_amount || 2988.10; // Dummy:
                 sx={{
                   border: "none",
                   "& .MuiDataGrid-columnHeader": {
-                    backgroundColor: "transparent",
-                    borderBottom: "1px solid hsl(var(--border))",
+                    marginTop: 0,
+                    backgroundColor: "#d0744b",
                   },
                   "& .MuiDataGrid-columnHeaderTitle": {
                     fontWeight: 600,
-                    color: "hsl(var(--foreground))",
+                    color: "#fff",
                   },
-                  "& .MuiDataGrid-cell": {
-                    borderBottom: "1px solid hsl(var(--border))",
+                  "& .MuiDataGrid-columnHeaders": {
+                    borderBottom: "1px solid #e2e8f0",
+                  },
+                  "& .MuiDataGrid-columnHeader:hover": {
+                    backgroundColor: "orange",
                   },
                   "& .MuiDataGrid-row:hover": {
-                    backgroundColor: "hsl(var(--muted)/0.5)",
+                    backgroundColor: "#f8e9cd",
                     cursor: "pointer",
                   },
-                  "& .MuiDataGrid-footerContainer": {
-                    borderTop: "1px solid hsl(var(--border))",
+                  "& .MuiDataGrid-cell": {
+                    borderBottom: "1px solid #e2e8f0",
                   },
                 }}
               />

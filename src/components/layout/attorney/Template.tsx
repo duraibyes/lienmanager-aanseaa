@@ -46,15 +46,15 @@ export default function Template({ children, currentPage }: TemplateProps) {
                             <button
                                 onClick={() => navigate("/attorney/dashboard")}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all",
-                                    currentPage === "dashboard"
-                                        ? "bg-primary/10 text-primary"
-                                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                                )}
-                            >
-                                <LayoutDashboard className="w-4 h-4" />
-                                Dashboard
-                            </button>
+                                "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all",
+                                currentPage === "dashboard"
+                                ? "bg-[#f8e9cd] text-[#d0744b] shadow-sm" // Light tan background with the brown text
+                                : "text-slate-600 hover:text-[#d0744b] hover:bg-[#f8e9cd]/50" // Muted slate with subtle hover
+                                     )}
+                                    >
+                                    <LayoutDashboard className="w-4 h-4" />
+                                  Dashboard
+                                </button>
                         </nav>
 
               
