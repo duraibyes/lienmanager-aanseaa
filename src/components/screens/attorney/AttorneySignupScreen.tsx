@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { Eye, EyeOff, Lock, Scale, ArrowRight, Home, Mail, Phone, MapPin, Building, User } from "lucide-react"
 import { useCallback, useEffect, useState } from "react";
+import { AuthLeftAttorneyPanel } from '../../layout/auth/AuthLeftAttorneyPanel';
 import { useNavigate } from "react-router-dom"
 import CompanyAutocompleteLien from "../../../utils/CompanyAutoCompleteLien";
 import { useGetAllStatesQuery, useLazyGetAllCompaniesQuery } from "../../../features/master/masterDataApi";
@@ -227,19 +228,23 @@ const AttorneySignupScreen = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-background flex items-start sm:items-center justify-center font-serif py-8 px-4">
-            <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-4 sm:p-8">
-                <div className="flex flex-col items-center mb-6">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg gradient-primary glow-primary mb-3">
-                        <Scale className="h-6 w-6 text-white" />
+        <div className="h-screen flex font-serif">
+            <AuthLeftAttorneyPanel />
+
+            <div className="w-full lg:w-1/2 bg-background">
+                <div className="flex items-center justify-center p-6 md:p-12 min-h-screen">
+                    <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-4 sm:p-8 max-h-[calc(100vh-6rem)] overflow-y-auto">
+                    <div className="flex flex-col items-center mb-6">
+                        <div className="flex items-center justify-center w-12 h-12 rounded-lg gradient-primary glow-primary mb-3">
+                            <Scale className="h-6 w-6 text-white" />
+                        </div>
+                        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground text-center">Register your account</h2>
+                        <p className="text-muted-foreground text-center text-sm sm:text-base mt-1">Become part of our legal practice platform</p>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground text-center">Create your account</h2>
-                    <p className="text-muted-foreground text-center text-sm sm:text-base mt-1">Join our legal practice platform</p>
-                </div>
 
-                {error && <ErrorBox error={error} />}
+                    {error && <ErrorBox error={error} />}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Company Information */}
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
@@ -544,7 +549,7 @@ const AttorneySignupScreen = () => {
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </Button>
 
-                            <Button
+                            {/* <Button
                                 type="button"
                                 variant="outline"
                                 className="w-full"
@@ -553,7 +558,7 @@ const AttorneySignupScreen = () => {
                             >
                                 <Home className="mr-2 h-4 w-4" />
                                 Back to Login
-                            </Button>
+                            </Button> */}
 
                             <p className="text-sm text-center text-muted-foreground">
                                 Already have an account?{" "}
@@ -568,8 +573,10 @@ const AttorneySignupScreen = () => {
                     </form>
                 </div>
             </div>
-    
+        </div>
+        </div>
     )
 }
+
 
 export default AttorneySignupScreen
