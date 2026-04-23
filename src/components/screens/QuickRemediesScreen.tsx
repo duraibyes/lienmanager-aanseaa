@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Calculator, Calendar, Info } from 'lucide-react';
+import { ArrowRight, Calculator, Calendar, Info } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { useGetCountriesQuery, useGetProjectRolesQuery, useGetProjectTypesQuery, useGetStatesQuery, useLazyGetCustomerTypesQuery } from '../../features/master/masterDataApi';
 import { useGetRemedyDatesQuery } from '../../features/project/projectDataApi';
 import { CalculatedDeadline, DeadLineRequestType } from '../../types/deadline';
 import { useCalculateDeadlineMutation } from '../../features/project/ProjectDeadlineApi';
 import DeadlineCalculation from '../Parts/DeadlineCalculation';
+import { PageContainer, PageHeader } from '../layout/page-wrapper';
+import { PageSubtitle, PageTitle } from '../ui/typography';
+import { Link } from 'react-router-dom';
+import { Button } from '../ui/button';
 
 export default function QuickRemediesScreen() {
   const [countryId, setCountryId] = useState(0);
@@ -14,6 +18,7 @@ export default function QuickRemediesScreen() {
   const [contractType, setContractType] = useState(0);
   const [projectType, setProjectType] = useState(0);
   const [furnishingDates, setFurnishingDates] = useState<Record<number, string>>({});
+  const [loading, setLoading] = useState(false);
 
   const [calculatedDeadlineData, setCalculatedDeadlineData] = useState<CalculatedDeadline[]>([]);
 
@@ -59,6 +64,7 @@ export default function QuickRemediesScreen() {
   ] = useCalculateDeadlineMutation();
 
   const doDeadlineCalculation = async () => {
+    setLoading(true);
     const payload: DeadLineRequestType = {
       role_id: role,
       state_id: projectState,
@@ -72,9 +78,10 @@ export default function QuickRemediesScreen() {
       if (response.data.deadlines) {
         setCalculatedDeadlineData(response?.data?.deadlines ?? []);
       }
+      setLoading(false);
 
     } catch (err) {
-
+      setLoading(false);
       const errorResponse = (err as any)?.data;
 
       let errorMessage = "Something went wrong";
@@ -128,16 +135,28 @@ export default function QuickRemediesScreen() {
     }
   }, [projectState, projectType, role]);
 
-  return (
-    <div className="min-h-screen bg-slate-50">
+  console.log(' furnishingDates ', furnishingDates)
 
-      <div className="px-2 sm:px-6">
-        {/* <div className="mb-6">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Quick Remedies Calculator</h1>
-          <p className="text-lg text-slate-600">
-            Calculate construction lien and bond claim deadlines quickly without creating a full project
-          </p>
-        </div> */}
+  return (
+    <PageContainer>
+      <PageHeader>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <PageTitle> Get Quick Remedies </PageTitle>
+            <PageSubtitle className="mt-1">
+              View your deadline calculation before creating a project. Fill in the details and click calculate to see important deadlines for your project.
+            </PageSubtitle>
+          </div>
+          <Link to="/project/create">
+            <Button className="gradient-primary hover:opacity-90">
+              New Project
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
+      </PageHeader>
+
+      <div className="">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-md">
@@ -155,7 +174,7 @@ export default function QuickRemediesScreen() {
                       setCountryId(Number(e.target.value));
                       setCalculatedDeadlineData([]);
                     }}
-                    className="w-full p px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full p px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary/40 focus:border-primary"
                   >
                     {countriesRes?.data?.map((country) => (
                       <option key={country.id} value={country.id}>{country.name}</option>
@@ -174,7 +193,7 @@ export default function QuickRemediesScreen() {
                       setCalculatedDeadlineData([]);
                     }
                     }
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
                   >
                     {/* Loading state */}
                     {isStatesFetching ? (
@@ -202,7 +221,7 @@ export default function QuickRemediesScreen() {
                       setRole(Number(e.target.value));
                       setCalculatedDeadlineData([]);
                     }}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
                   >
                     {/* Loading state */}
                     {isRoleFetching ? (
@@ -229,7 +248,7 @@ export default function QuickRemediesScreen() {
                       setProjectType(Number(e.target.value));
                       setCalculatedDeadlineData([]);
                     }}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
                   >
 
                     {isTypeFetching ? (
@@ -284,7 +303,7 @@ export default function QuickRemediesScreen() {
                   )}
                 </div>
               </div>
-              {datesRes && datesRes.data.length > 0 && (
+              {datesRes && shouldFetchRemedyDates && datesRes.data.length > 0 && (
                 <div className="border-t border-slate-200 pt-6">
                   <div className="flex items-center gap-2 mb-4">
                     <Calendar className="w-5 h-5 text-slate-600" />
@@ -327,13 +346,17 @@ export default function QuickRemediesScreen() {
                 </div>
               )}
 
-              <button
+
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={doDeadlineCalculation}
-                className="w-full py-3 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
+                disabled={loading}
+                className="gap-1.5 border-primary/30 text-primary hover:bg-primary/10 w-full"
               >
-                <Calculator className="w-5 h-5" />
-                Calculate Deadlines
-              </button>
+                <Calculator className="h-4 w-4" />
+                <span className="hidden sm:inline"> Get Deadlines </span>
+              </Button>
 
               {calculatedDeadlineData.length > 0 && (
                 <button
@@ -349,6 +372,6 @@ export default function QuickRemediesScreen() {
 
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }
