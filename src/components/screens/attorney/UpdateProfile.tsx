@@ -6,8 +6,10 @@ import CompanyAutocompleteLien from "../../../utils/CompanyAutoCompleteLien";
 import { useGetAllStatesQuery, useLazyGetAllCompaniesQuery } from "../../../features/master/masterDataApi";
 import { validatePhoneNumber } from "../../../utils/validation";
 import { ROLES } from "../../../utils/constant";
-import Template from "../../layout/attorney/Template";
 import { useGetProfileQuery, useUpdateLienProfileMutation } from "../../../features/lienAuth/profileApi";
+import { PageContainer, PageHeader } from "@/components/layout/page-wrapper";
+import { PageTitle } from "@/components/ui/typography";
+import { Input } from "@/components/ui/input";
 
 const UpdateProfile = () => {
     const navigate = useNavigate();
@@ -208,13 +210,19 @@ const UpdateProfile = () => {
     }, [profile]);
 
     return (
-        <Template currentPage="profile">
-            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
-                <div className="max-w-5xl mx-auto">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900">Update Profile</h1>
-
+        <PageContainer>
+            <PageHeader>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <PageTitle>Update Your Profile </PageTitle>
                     </div>
+
+
+                </div>
+            </PageHeader>
+            <div className="bg-white">
+                <div className="bg-white p-4">
+
                     {error && (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
                             <p className="text-red-700 text-sm">{error}</p>
@@ -230,11 +238,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Company Phone
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.companyPhone}
                                         onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                     />
                                 </div>
 
@@ -242,11 +249,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Fax
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.fax}
                                         onChange={(e) => setFormData({ ...formData, fax: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                     />
                                 </div>
                             </div>
@@ -261,7 +267,7 @@ const UpdateProfile = () => {
                                 <select
                                     value={formData.role}
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-1.5 border border-gray-300 rounded-lg focus:ring-4 focus:ring-primary/40 focus:border-transparent outline-none"
                                     required
                                 >
                                     <option value="">Select a role</option>
@@ -281,11 +287,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         First Name <span className="text-red-600">*</span>
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.firstName}
                                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                         required
                                     />
                                 </div>
@@ -294,11 +299,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Last Name <span className="text-red-600">*</span>
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.lastName}
                                         onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                         required
                                     />
                                 </div>
@@ -307,11 +311,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Email <span className="text-red-600">*</span>
                                     </label>
-                                    <input
+                                    <Input
                                         type="email"
                                         value={formData.email}
                                         disabled
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                         required
                                     />
                                 </div>
@@ -325,11 +328,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Phone
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.phone}
                                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                     />
                                 </div>
 
@@ -341,7 +343,7 @@ const UpdateProfile = () => {
                                         value={formData.address}
                                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                         rows={3}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-4 focus:ring-primary/40 focus:border-transparent outline-none resize-none"
                                     />
                                 </div>
 
@@ -349,11 +351,10 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         City
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.city}
                                         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                     />
                                 </div>
 
@@ -361,7 +362,7 @@ const UpdateProfile = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         ZIP
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={formData.zip}
                                         onChange={(e) => {
@@ -370,7 +371,6 @@ const UpdateProfile = () => {
                                         }}
                                         maxLength={6}
                                         inputMode="numeric"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                                     />
                                 </div>
 
@@ -389,7 +389,7 @@ const UpdateProfile = () => {
                                                             type="checkbox"
                                                             checked={formData.states.includes(String(state?.id))}
                                                             onChange={() => handleStateToggle(String(state?.id))}
-                                                            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                                            className="w-4 h-4 text-primary rounded focus:ring-primary/40"
                                                         />
                                                         <span className="text-sm">{state?.name}</span>
                                                     </label>
@@ -412,7 +412,7 @@ const UpdateProfile = () => {
                                     type="file"
                                     accept="image/jpeg,image/jpg,image/png"
                                     onChange={handleImageChange}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/40 focus:border-transparent outline-none"
                                 />
                                 {profileImage && (
                                     <p className="text-sm text-green-600 mt-2">
@@ -433,15 +433,16 @@ const UpdateProfile = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
+                                className="flex-1 bg-primary/60 text-white py-3 rounded-lg font-semibold hover:bg-primary disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
                             >
                                 {loading ? 'Updating...' : 'Update Profile'}
                             </button>
+
                         </div>
                     </form>
                 </div>
             </div>
-        </Template>
+        </PageContainer>
     )
 }
 

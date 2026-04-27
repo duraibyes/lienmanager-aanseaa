@@ -258,6 +258,16 @@ const MemberProfile = () => {
     );
   }
 
+  const getInitials = (name: string) => {
+    if (!name) return 'NA';
+
+    return name
+      .split(' ')
+      .filter(Boolean) // remove empty spaces
+      .map(word => word[0].toUpperCase())
+      .join('');
+  };
+
   return (
     <PageContainer className="">
       <PageHeader>
@@ -354,15 +364,24 @@ const MemberProfile = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarFallback className="bg-secondary text-secondary-foreground">NA</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-medium text-foreground">Not Assigned</p>
-                  <p className="text-sm text-muted-foreground">Construction Law Specialist</p>
-                </div>
-              </div>
+              {
+                profile?.lienProvider && profile.lienProvider.map((lien, index) => (
+
+                  <div className="flex items-center gap-3" key={index}>
+                    <Avatar>
+                      <AvatarFallback className="bg-secondary text-secondary-foreground">{getInitials(lien.lien_name)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium text-foreground">{lien.lien_name}</p>
+                      {
+                        lien.role_name &&
+
+                        <p className="text-sm text-muted-foreground">{lien.role_name}</p>
+                      }
+                    </div>
+                  </div>
+                ))
+              }
             </CardContent>
           </Card>
 

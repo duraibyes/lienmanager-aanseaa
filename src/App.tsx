@@ -31,6 +31,7 @@ import DashboardPage from "./page/DashboardPage";
 import { WizardLayout } from "./components/wizard/wizard-layout";
 import { WizardProvider } from "./contexts/wizard-context";
 import AttorneyForgotPasswordScreen from "./components/screens/attorney/AttorneyForgotPasswordScreen";
+import AttorneyDashboardLayout from "./page/AttorneyDashboardLayout";
 
 function App() {
   return (
@@ -130,14 +131,14 @@ function App() {
           } />
 
           <Route path="/attorney/dashboard" element={
-            <ProjectDashboard />
+            <AttorneyDashboardLayout children={<ProjectDashboard />} />
           } />
 
           <Route path="/attorney/projects/:projectId" element={
-            <ProjectLienView />
+            <AttorneyDashboardLayout children={<ProjectLienView />} />
           } />
-          <Route path="attorney/profile" element={<Profile />} />
-          <Route path="attorney/profile/update" element={<UpdateProfile />} />
+          <Route path="attorney/profile" element={<AttorneyDashboardLayout children={<Profile />} />} />
+          <Route path="attorney/profile/update" element={<AttorneyDashboardLayout children={<UpdateProfile />} />} />
 
           <Route path="/tour" element={<ProtectedRoute><OnboardingScreen /></ProtectedRoute>} />
         </Routes>

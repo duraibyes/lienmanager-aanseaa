@@ -28,6 +28,12 @@ export interface ProfileData {
     user_details: UserDetailsResponse;
     lien: LienProfileRespose;
     company?: CompanyProfile;
+    lienProvider?: {
+        lien_id: number;
+        user_id: number;
+        lien_name: string;
+        role_name: string;
+    }[];
 }
 
 interface UserDetailsResponse {
